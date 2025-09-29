@@ -1,0 +1,26 @@
+.login-box{
+    width: 700px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
+
+}
+.flex{
+    height: 100%;
+}
+.signin-botton{
+    width: 100%;
+}
+.ant-col{
+    width: 100px;
+}
+.signup-nav{
+    cursor: pointer;
+}
+.forgot-password{
+    text-align:end;
+    color: #2f77ae;
+    cursor: pointer;
+}
+.signUp-describe{
+    text-align: center;
+}
