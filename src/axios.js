@@ -20,22 +20,22 @@ const register=[];
 const axiosInstance = axios.create({
     timeout: 3000,
 });
-export function LoginRequest(action){
-    return new promise
-    console.log(action)
-    setTimeout(()=>{
-         const username=login.filter(login=>login.Username===action.Username);
+export async function LoginRequest(action){
+   return await new Promise(resolve => setTimeout(resolve, 2000))
+    .then(()=>{
+
+    const username=login.filter(prev=>
+        prev.Username === action.Username);
     if(username.length>0){
-       if(username.Password===action.Password){
-        return username;
+       if(username[0].Password===action.Password){
+        console.log(username[0]);
+        return username[0];
        }
        else{
         console.log("ji")
         const reject="invalid username or password"
-         return  reject;
+         return {error:reject};
        }
-    }
-    },2000)
-   
-
+    }}
+)
 }

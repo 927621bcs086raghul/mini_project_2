@@ -5,6 +5,7 @@ const authSlice = createSlice({
     user: null,
     loading: false,
     error: null,
+    user:[]
   },
   reducers: {
     loginRequest: (state) => {
@@ -12,10 +13,10 @@ const authSlice = createSlice({
     },
     loginSuccess: (state, action) => {
       state.loading = false;
+      state.user=action.payload;
     },
     loginFailure: (state, action) => {
       state.loading = false;
-      state.error = action.payload;
     },
   },
 });

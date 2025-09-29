@@ -8,6 +8,7 @@ function* handleLogin(action){
     const resp=yield call(LoginRequest,action.payload);
     console.log(resp)
     yield put(loginSuccess(resp));
+    message.success("login successfully");
   }
   catch(Error){
     console.log(Error)
