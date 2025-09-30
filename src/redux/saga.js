@@ -7,15 +7,20 @@ function* handleLogin(action){
   try{
     const resp=yield call(LoginRequest,action.payload);
     console.log(resp)
+    if(resp?.error){
+      yield put(loginFailure());
+      console.log("failed");
+      message.error(resp.error);
+    }
+    else{
     yield put(loginSuccess(resp));
+    console.log("hi");
     message.success("login successfully");
   }
+  }
   catch(Error){
-    console.log(Error)
-    const errormsg=Error;
     yield put(loginFailure())
-
-    message.error(errormsg|| "failed to login")
+    message.error( "failed to login")
   }
 }
 

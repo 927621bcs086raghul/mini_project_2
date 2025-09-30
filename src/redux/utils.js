@@ -18,6 +18,18 @@ const authSlice = createSlice({
     loginFailure: (state, action) => {
       state.loading = false;
     },
+    registerRequest:(state,action) => {
+      state.loading=true;
+    },
+    registerSuccess:(state,action)=>{
+      state.loading = false;
+      state.user=action.payload;
+    },
+    registerFailure:(state,action)=>{
+      state.loading = false;
+    
+    }
+
   },
 });
 

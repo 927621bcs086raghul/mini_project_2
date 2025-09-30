@@ -1,5 +1,11 @@
 .login-box{
-    width: 700px;
+    width: 800px;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
+
+}
+.login-box-signup{
+    width: 850px;
     padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
 
@@ -12,6 +18,9 @@
 }
 .ant-col{
     width: 100px;
+}
+.signup-label .ant-col{
+    width: 130px;
 }
 .signup-nav{
     cursor: pointer;
