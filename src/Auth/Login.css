@@ -24,6 +24,25 @@
   width: 100%;
   background: black;
 }
+.ant-tabs-nav-wrap{
+        display: flex;
+    justify-content: center;
+}
+.ant-tabs-ink-bar{
+    display: none;
+}
+
+.ant-tabs-tab-btn{
+    padding: 10px;
+}
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    background: rgb(91, 87, 87);
+    color:white;
+    border-radius: 5px;
+}
+.active-menu{
+    background-color: #474444;
+}
 .ant-form-item-control-input .ant-form-item-control-input-content .signin-botton:hover{
     background: #474444;
 }

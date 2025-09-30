@@ -5,7 +5,8 @@ const authSlice = createSlice({
     user: null,
     loading: false,
     error: null,
-    user:[]
+    user:[],
+    formerror:true,
   },
   reducers: {
     loginRequest: (state) => {
@@ -14,9 +15,12 @@ const authSlice = createSlice({
     loginSuccess: (state, action) => {
       state.loading = false;
       state.user=action.payload;
+      state.formerror = false;
+
     },
     loginFailure: (state, action) => {
       state.loading = false;
+      state.formerror = true;
     },
     registerRequest:(state,action) => {
       state.loading=true;
@@ -24,9 +28,13 @@ const authSlice = createSlice({
     registerSuccess:(state,action)=>{
       state.loading = false;
       state.user=action.payload;
+      state.formerror = false;
+
     },
     registerFailure:(state,action)=>{
       state.loading = false;
+      state.formerror = true;
+
     }
 
   },

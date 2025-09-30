@@ -1,32 +1,49 @@
-import React from "react";
-import { Button, Form, Input, Flex } from "antd";
+import React, { useState,useEffect } from "react";
+import { Button, Form, Input, Flex, Tabs } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
-import { loginRequest } from "../redux/utils";
+import { loginRequest,registerRequest } from "../redux/utils";
+import { LoginOutlined, PauseCircleOutlined } from "@ant-design/icons";
+import SignUp from "./SignUp";
+import { icons } from "antd/es/image/PreviewGroup";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { loading,registrationError } = useSelector((state) => state.auth);
   const [form] = Form.useForm();
-  const handleSubmit = (values) => {
-    const { userId, password } = values;
+    const [activeKey, setActiveKey] = useState("login");
 
+const items = [
+  { key: 'login', label: 'Login',icon:<LoginOutlined/>, children: <LoginForm/> },
+  { key: 'signup', label: 'Signup',icon:<PauseCircleOutlined/>, children: <SignUp/> },
+];
+  const handleSubmit = (values) => {
+
+    const { userId, password } = values;
     dispatch(loginRequest({ UserId: userId, Password: password }));
+          
+
   };
-  const { loading } = useSelector((state) => state.auth);
-  return (
-    <Flex justify="center" align="center" className="flex"  vertical>
-      <div className="modal-signin-signup">
-        <Form
+  useEffect(() => {
+  if (!registrationError) {
+    form.resetFields();
+  }
+}, [registrationError]);
+  const onchange=(key)=>{
+    setActiveKey(key)
+  }
+  function LoginForm(){
+    return(
+      <>
+      <Form
           name="basic"
           form={form}
-          className="login-box"
-          layout="vertical" 
+          layout="vertical"
           onFinish={handleSubmit}
-          initialValues={{
-          }}
+          initialValues={{}}
         >
-          <Form.Item
+      <Form.Item
             label="UserId"
             name="userId"
             className="login-label"
@@ -35,7 +52,7 @@ const Login = () => {
               { type: "email", message: "Please enter a valid email!" },
             ]}
           >
-            <Input placeholder="Please enter your UserId"/> 
+            <Input placeholder="Please enter your UserId" />
           </Form.Item>
 
           <Form.Item
@@ -44,7 +61,8 @@ const Login = () => {
             className="login-label"
             rules={[
               { required: true, message: "Please input your password!" },
-              { min:8,
+              {
+                min: 8,
                 pattern: new RegExp(
                   "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])"
                 ),
@@ -53,7 +71,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input.Password placeholder="please enter your password"/>
+            <Input.Password placeholder="please enter your password" />
           </Form.Item>
           <p
             className="forgot-password"
@@ -62,8 +80,7 @@ const Login = () => {
             }}
           >
             Forgot Password
-          </p>
-
+          </p>   
           <Form.Item label={null}>
             {
               <Button
@@ -75,20 +92,21 @@ const Login = () => {
                 Submit
               </Button>
             }
-          </Form.Item>
-          <p className="signUp-describe">
-            If not register means please register?
-            <strong
-              className="signup-nav"
-              onClick={() => {
-                navigate("/signUp");
-              }}
-            >
-              {" "}
-              SignUp
-            </strong>
-          </p>
-        </Form>
+          </Form.Item>  
+          </Form>    
+      </>
+    )
+  }
+ 
+  return (
+    <Flex justify="center" align="center" className="flex" vertical>
+      <div className="modal-signin-signup login-box">
+        <Tabs
+          onChange={onchange}
+          activeKey={activeKey}
+          items={items}
+          >
+          </Tabs>
         <p></p>
       </div>
     </Flex>

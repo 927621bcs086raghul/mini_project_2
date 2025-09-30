@@ -6,10 +6,8 @@ import { message } from "antd";
 function* handleLogin(action){
   try{
     const resp=yield call(LoginRequest,action.payload);
-    console.log(resp)
     if(resp?.error){
       yield put(loginFailure());
-      console.log("failed");
       message.error(resp.error);
     }
     else{
@@ -25,8 +23,12 @@ function* handleLogin(action){
 function* handleRegister(action){
   try{
     const resp = yield call(Register,action.payload);
+    if(resp?.error){
+         yield put(registerFailure(resp))
+    message.error(resp.error);
+    }else{
     yield put(registerSuccess(resp));
-    message.success("user successfully registered");
+    message.success("user successfully registered");}
   }
   catch{
     put(registerFailure())
