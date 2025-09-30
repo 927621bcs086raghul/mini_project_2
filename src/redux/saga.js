@@ -1,6 +1,6 @@
 
-import { loginFailure,loginRequest,loginSuccess } from "./utils";
-import { LoginRequest } from "../axios";
+import { loginFailure,loginRequest,loginSuccess,registerFailure,registerRequest,registerSuccess } from "./utils";
+import { LoginRequest,Register } from "../axios";
 import { call,takeLatest,put } from "redux-saga/effects";
 import { message } from "antd";
 function* handleLogin(action){
@@ -14,16 +14,27 @@ function* handleLogin(action){
     }
     else{
     yield put(loginSuccess(resp));
-    console.log("hi");
     message.success("login successfully");
   }
   }
-  catch(Error){
+  catch{
     yield put(loginFailure())
     message.error( "failed to login")
+  }
+}
+function* handleRegister(action){
+  try{
+    const resp = yield call(Register,action.payload);
+    yield put(registerSuccess(resp));
+    message.success("user successfully registered");
+  }
+  catch{
+    put(registerFailure())
+    message.error("failed to register");
   }
 }
 
 export default function* rootSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
+  yield takeLatest(registerRequest.type,handleRegister);
 }

@@ -27,11 +27,10 @@ const authSlice = createSlice({
     },
     registerFailure:(state,action)=>{
       state.loading = false;
-    
     }
 
   },
 });
 
-export const { loginRequest, loginSuccess, loginFailure } = authSlice.actions;
+export const { loginRequest, loginSuccess, loginFailure,registerFailure,registerRequest,registerSuccess } = authSlice.actions;
 export default authSlice.reducer;

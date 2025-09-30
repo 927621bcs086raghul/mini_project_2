@@ -3,15 +3,15 @@ import { Button, Form, Input, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 import { useDispatch, useSelector } from "react-redux";
-import { loginRequest } from "../redux/utils";
+import { registerRequest } from "../redux/utils";
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const handleSubmit = (values) => {
-    const { userId, password } = values;
+    const { username,userId, password } = values;
 
-    dispatch(loginRequest({ UserId: userId, Password: password }));
+    dispatch(registerRequest({ username:username,UserId: userId, Password: password }));
   };
   const { loading } = useSelector((state) => state.auth);
   return (
@@ -22,7 +22,6 @@ const SignUp = () => {
           form={form}
           className="login-box-signup"
           layout="horizantal"
-          style={{ maxWidth: 450 }}
           initialValues={{}}
           onFinish={handleSubmit}
         >
@@ -52,10 +51,10 @@ const SignUp = () => {
             className="signup-label"
             rules={[
               { required: true, message: "Please input your password!" },
-              { min: 7, message: "Password must be at least 7 characters!" },
               {
+                min: 8,
                 pattern: new RegExp(
-                  "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$"
+                  "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])"
                 ),
                 message:
                   "Minimum eight characters, at least one letter, one number and one special character:",

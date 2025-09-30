@@ -21,7 +21,6 @@ const Login = () => {
           name="basic"
           form={form}
           className="login-box"
-          style={{ maxWidth: 400 }}
           onFinish={handleSubmit}
           initialValues={{
             userId: "",
