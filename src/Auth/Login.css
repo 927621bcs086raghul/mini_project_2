@@ -1,35 +1,55 @@
-.login-box{
-    width: 450px;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
 
+.login-box {
+  width: 450px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
-.login-box-signup{
-    width: 450px;
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); 
-
+.login-box-signup {
+  width: 450px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
-.flex{
-    height: 100%;
+.flex {
+  height: 100%;
+  background-color: #ccc;
+  background-image: linear-gradient(90deg, transparent -100%, #aaa 100%),
+  linear-gradient(0deg, #ccc 97%, #aaa 97%);
+  background-size: 50px 50px, 50px 50px;
 }
-.signin-botton{
-    width: 100%;
+.signin-botton {
+  width: 100%;
+  background: black;
 }
-.ant-col{
-    width: 90px;
+.ant-form-item-control-input .ant-form-item-control-input-content .signin-botton:hover{
+    background: #474444;
 }
-.signup-label .ant-col{
-    width: 130px;
+.ant-form-item .ant-form-item-label >label.ant-form-item-required::before{
+    display: none;
 }
-.signup-nav{
-    cursor: pointer;
+.ant-row .ant-col .ant-form-item-required{
+    font-weight: 400;
+    font-size: 16px;
 }
-.forgot-password{
-    text-align:end;
-    color: #2f77ae;
-    cursor: pointer;
+.signup-nav {
+  cursor: pointer;
 }
-.signUp-describe{
-    text-align: center;
+.forgot-password {
+  text-align: end;
+  color: rgb(76, 58, 58);
+  cursor: pointer;
+}
+.signUp-describe {
+  text-align: center;
+}
+@media (max-width:600px){
+    .login-box{
+        width: 310px;
+    }
+    .login-box-signup{
+        width: 310px;
+    }
 }

@@ -15,16 +15,15 @@ const Login = () => {
   };
   const { loading } = useSelector((state) => state.auth);
   return (
-    <Flex justify="center" align="center" className="flex" vertical>
-      <div>
+    <Flex justify="center" align="center" className="flex"  vertical>
+      <div className="modal-signin-signup">
         <Form
           name="basic"
           form={form}
           className="login-box"
+          layout="vertical" 
           onFinish={handleSubmit}
           initialValues={{
-            userId: "",
-            password: "",
           }}
         >
           <Form.Item
@@ -36,7 +35,7 @@ const Login = () => {
               { type: "email", message: "Please enter a valid email!" },
             ]}
           >
-            <Input />
+            <Input placeholder="Please enter your UserId"/> 
           </Form.Item>
 
           <Form.Item
@@ -54,7 +53,7 @@ const Login = () => {
               },
             ]}
           >
-            <Input.Password />
+            <Input.Password placeholder="please enter your password"/>
           </Form.Item>
           <p
             className="forgot-password"

@@ -16,12 +16,12 @@ const SignUp = () => {
   const { loading } = useSelector((state) => state.auth);
   return (
     <Flex justify="center" align="center" vertical className="flex">
-      <div>
+      <div className="modal-signin-signup">
         <Form
           name="basic"
           form={form}
           className="login-box-signup"
-          layout="horizantal"
+          layout="vertical" 
           initialValues={{}}
           onFinish={handleSubmit}
         >
@@ -31,7 +31,7 @@ const SignUp = () => {
             className="signup-label"
             rules={[{ required: true, message: "Please input your username!" }]}
           >
-            <Input className="input-field" />
+            <Input className="input-field" placeholder="Please enter Username" />
           </Form.Item>
           <Form.Item
             label="UserId"
@@ -42,7 +42,7 @@ const SignUp = () => {
               { type: "email", message: "Please enter a valid email!" },
             ]}
           >
-            <Input className="input-field" />
+            <Input className="input-field" placeholder="Please enter UserId"/>
           </Form.Item>
 
           <Form.Item
@@ -61,7 +61,7 @@ const SignUp = () => {
               },
             ]}
           >
-            <Input.Password className="input-field" />
+            <Input.Password className="input-field" placeholder="Please set password"/>
           </Form.Item>
           <Form.Item
             label="Confirm Password"
@@ -81,7 +81,7 @@ const SignUp = () => {
               }),
             ]}
           >
-            <Input.Password className="input-field" />
+            <Input.Password className="input-field" placeholder="re-enter the password" />
           </Form.Item>
           <Form.Item label={null}>
             {
