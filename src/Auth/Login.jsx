@@ -10,7 +10,8 @@ import { icons } from "antd/es/image/PreviewGroup";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { loading,formerror } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
+  const {formerror} =useSelector((state)=>state.auth);
   const [form] = Form.useForm();
     const [activeKey, setActiveKey] = useState("login");
 
@@ -23,11 +24,11 @@ const items = [
     const { userId, password } = values;
     dispatch(loginRequest({ userId: userId, Password: password }));
   };
-  useEffect(() => {
+    console.log(formerror)
   if (!formerror) {
+    console.log(formerror)
     form.resetFields();
   }
-}, [formerror]);
   const onchange=(key)=>{
     setActiveKey(key)
   }

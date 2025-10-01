@@ -4,6 +4,7 @@ import { LoginRequest,Register } from "../axios";
 import { call,takeLatest,put } from "redux-saga/effects";
 import { message } from "antd";
 function* handleLogin(action){
+  
   try{
     console.log(action.payload);
     const resp=yield call(LoginRequest,action.payload);
@@ -24,12 +25,14 @@ function* handleLogin(action){
   }
 }
 function* handleRegister(action){
+  debugger
   try{
     const resp = yield call(Register,action.payload);
     if(resp?.error){
-         yield put(registerFailure(resp))
+    yield put(registerFailure(resp))
     message.error(resp.error);
     }else{
+      console.log(resp)
     yield put(registerSuccess(resp));
     message.success("user successfully registered");}
   }

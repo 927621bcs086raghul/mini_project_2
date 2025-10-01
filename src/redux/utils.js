@@ -16,6 +16,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.user=action.payload;
       state.formerror = false;
+      console.log(state.formerror);
 
     },
     loginFailure: (state, action) => {
@@ -29,6 +30,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.user=action.payload;
       state.formerror = false;
+      console.log(state.formerror);
 
     },
     registerFailure:(state,action)=>{

@@ -66,8 +66,10 @@
 @media (max-width:600px){
     .login-box{
         width: 310px;
+        box-sizing: border-box;
     }
     .login-box-signup{
         width: 310px;
+        box-sizing: border-box;
     }
 }
