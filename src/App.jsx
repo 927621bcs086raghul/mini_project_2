@@ -7,6 +7,15 @@ import Dashboard from "./Auth/Dashboard";
 import { Provider } from "react-redux";
 import store from "./redux/middleware";
 import '@ant-design/v5-patch-for-react-19';
+const PublicRoute = ({ component }) => {
+  const token = localStorage.getItem("token");
+  return !token ? component : <Navigate to="/dashboard" />;
+};
+
+const ProtectedRoute = ({ component }) => {
+  const token = localStorage.getItem("token");  
+  return token ? component : <Navigate to="/login" />;
+};
 function App() {
 
   return (
@@ -14,10 +23,11 @@ function App() {
     <Provider store={store}>
       <Router>
         <Routes>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/" element={<Navigate to="/login"/>} />
+        <Route path="/login" element={<PublicRoute component={<Login/>}/>}/>
+        <Route path="*" element={<Navigate to="/login"/>} />
         <Route path="/resetPassword" element={<ForgotPassword/>}/>
-        <Route path="/dashboard" element={<Dashboard/>}/>
+        <Route path="/dashboard" element={<ProtectedRoute component={<Dashboard/>}/>}/>
+
         </Routes>
       </Router>
       </Provider>

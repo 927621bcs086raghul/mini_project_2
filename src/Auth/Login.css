@@ -63,6 +63,17 @@
 .signUp-describe {
   text-align: center;
 }
+
+                                            /* dashboard */
+.header{
+      display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #98a0a7;
+}
+.user-table{
+  width: 700px;
+}
 @media (max-width:600px){
     .login-box{
         width: 310px;

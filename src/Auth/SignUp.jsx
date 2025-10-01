@@ -8,9 +8,9 @@ const SignUp = () => {
 const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleSubmitSignup = (values) => {
-    const { username,userId, password } = values;
+    const { username,email, password } = values;
 
-    dispatch(registerRequest({ username:username,userId: userId, Password: password }));
+    dispatch(registerRequest({ username:username,email: email, password: password }));
      
   };
   const { loading } = useSelector((state) => state.auth);
@@ -25,7 +25,7 @@ const navigate = useNavigate();
         <Form
           name="basic"
           form={form}
-          layout="vertical" 
+          layout="vertical"
           initialValues={{}}
           onFinish={handleSubmitSignup}
         >
@@ -38,15 +38,15 @@ const navigate = useNavigate();
          <Input className="input-field" placeholder="Please enter Username" />
        </Form.Item>
         <Form.Item
-        label="UserId"
-        name="userId"
+        label="email"
+        name="email"
         className="signup-label"
         rules={[
           { required: true, message: "Please input your username!" },
           { type: "email", message: "Please enter a valid email!" },
         ]}
       >
-        <Input className="input-field" placeholder="Please enter UserId" />
+        <Input className="input-field" placeholder="Please enter email" />
       </Form.Item>
       <Form.Item
         label="Password"

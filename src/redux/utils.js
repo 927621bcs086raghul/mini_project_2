@@ -7,6 +7,9 @@ const authSlice = createSlice({
     error: null,
     user:[],
     formerror:true,
+    allUserLoading:false,
+    AllUser:[],
+    logoutLoading:false
   },
   reducers: {
     loginRequest: (state) => {
@@ -36,11 +39,26 @@ const authSlice = createSlice({
     registerFailure:(state,action)=>{
       state.loading = false;
       state.formerror = true;
-
+    },
+    getAllUserRequest:(state,action)=>{
+      state.allUserLoading=true;
+    },
+    getAllUserSuccess:(state,action)=>{
+      state.allUserLoading=false;
+      state.AllUser=action.payload.users;
+      console.log(state.AllUser)
+    },
+    getAllUserFailure:(state,action)=>{
+      state.allUserLoading=false;
+    },
+    userLogoutRequest:(state,action)=>{
+state.logoutLoading=true;
+    },
+    userLogoutSuccess:(state,action)=>{
+state.logoutLoading=false;
     }
-
   },
 });
 
-export const { loginRequest, loginSuccess, loginFailure,registerFailure,registerRequest,registerSuccess } = authSlice.actions;
+export const { loginRequest, loginSuccess, loginFailure,registerFailure,userLogoutRequest,userLogoutSuccess,registerRequest,registerSuccess,getAllUserFailure,getAllUserSuccess,getAllUserRequest} = authSlice.actions;
 export default authSlice.reducer;
