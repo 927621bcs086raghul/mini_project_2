@@ -13,13 +13,13 @@ const navigate = useNavigate();
     dispatch(registerRequest({ username:username,userId: userId, Password: password }));
      
   };
-  const { loading,registrationError } = useSelector((state) => state.auth);
+  const { loading, formerror } = useSelector((state) => state.auth);
   const [form] = Form.useForm();
     useEffect(() => {
-    if (!registrationError) {
+    if (formerror) {
       form.resetFields();
     }
-  }, [registrationError]);
+  }, [formerror]);
   return (
     
     <>

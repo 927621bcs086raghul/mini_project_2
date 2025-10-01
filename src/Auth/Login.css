@@ -15,7 +15,6 @@
 }
 .flex {
   height: 100%;
-  background-color: #ccc;
   background-image: linear-gradient(90deg, transparent -100%, #aaa 100%),
   linear-gradient(0deg, #ccc 97%, #aaa 97%);
   background-size: 50px 50px, 50px 50px;

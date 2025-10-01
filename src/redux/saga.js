@@ -5,13 +5,16 @@ import { call,takeLatest,put } from "redux-saga/effects";
 import { message } from "antd";
 function* handleLogin(action){
   try{
+    console.log(action.payload);
     const resp=yield call(LoginRequest,action.payload);
+    console.log(resp)
     if(resp?.error){
       yield put(loginFailure());
       message.error(resp.error);
     }
     else{
     yield put(loginSuccess(resp));
+    console.log(resp)
     message.success("login successfully");
   }
   }

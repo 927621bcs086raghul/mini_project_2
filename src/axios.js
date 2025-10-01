@@ -8,7 +8,8 @@ export async function LoginRequest(action) {
   
     const users=JSON.parse(localStorage.getItem("users"));
 
-    const username = users.filter((prev) => prev.UserId === action.UserId);
+    const username = users.filter((prev) => prev.userId === action.userId);
+    
 
     if (username.length > 0) {
       if (username[0].Password === action.Password) {
