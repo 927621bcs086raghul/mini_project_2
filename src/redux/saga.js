@@ -1,7 +1,7 @@
 
-import { getAllUserRequest, loginFailure,loginRequest,loginSuccess,userLogoutRequest,userLogoutSuccess,registerFailure,registerRequest,registerSuccess,getAllUserFailure,getAllUserSuccess, } from "./utils";
+import { getAllUserRequest, loginFailure,loginRequest,loginSuccess,userLogoutRequest,userLogoutSuccess,registerFailure,registerRequest,registerSuccess,getAllUserFailure,getAllUserSuccess,userSearchFailure,userSearchRequest,userSearchSuccess } from "./utils";
 import { LoginRequest,Register,GetAllUser } from "../axios";
-import { call,takeLatest,put } from "redux-saga/effects";
+import { call,takeLatest,put, take } from "redux-saga/effects";
 import { message } from "antd";
 function* handleLogin(action){
   
@@ -58,10 +58,19 @@ function* handleLogout(){
 
   }
 }
-
+function* handleUserSearch(action){
+  
+try{
+  console.log(action.payload)
+yield put(userSearchSuccess(action.payload));
+}catch{
+yield put(userSearchFailure());
+}
+}
 export default function* rootSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(registerRequest.type,handleRegister);
   yield takeLatest(getAllUserRequest.type,handleAllUser);
   yield takeLatest(userLogoutRequest.type,handleLogout);
+  yield takeLatest(userSearchRequest.type,handleUserSearch);
 }

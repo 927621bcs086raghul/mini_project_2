@@ -9,7 +9,8 @@ const authSlice = createSlice({
     formerror:true,
     allUserLoading:false,
     AllUser:[],
-    logoutLoading:false
+    logoutLoading:false,
+    total:0,
   },
   reducers: {
     loginRequest: (state) => {
@@ -46,6 +47,8 @@ const authSlice = createSlice({
     getAllUserSuccess:(state,action)=>{
       state.allUserLoading=false;
       state.AllUser=action.payload.users;
+      state.total=action.payload.total;
+      console.log(state.total)
       console.log(state.AllUser)
     },
     getAllUserFailure:(state,action)=>{
@@ -56,9 +59,24 @@ state.logoutLoading=true;
     },
     userLogoutSuccess:(state,action)=>{
 state.logoutLoading=false;
+    },
+    userSearchRequest:(state,action)=>{
+      state.allUserLoading=true;
+    },
+    userSearchSuccess:(state,action)=>{
+      state.allUserLoading=false;
+      console.log(action.payload)
+      const searcheduser=action.payload.users;
+      console.log(action.payload.search)
+      console.log(searcheduser);
+      state.AllUser = searcheduser.filter(user => user.username.includes(action.payload.search));
+
+    },
+    userSearchFailure:(state,action)=>{
+      state.allUserLoading=false;
     }
   },
 });
 
-export const { loginRequest, loginSuccess, loginFailure,registerFailure,userLogoutRequest,userLogoutSuccess,registerRequest,registerSuccess,getAllUserFailure,getAllUserSuccess,getAllUserRequest} = authSlice.actions;
+export const { loginRequest, loginSuccess, loginFailure,registerFailure,userLogoutRequest,userLogoutSuccess,registerRequest,registerSuccess,getAllUserFailure,getAllUserSuccess,getAllUserRequest,userSearchFailure,userSearchRequest,userSearchSuccess} = authSlice.actions;
 export default authSlice.reducer;

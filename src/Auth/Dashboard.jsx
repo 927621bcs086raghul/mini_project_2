@@ -1,10 +1,24 @@
-import { Layout, Table, Avatar, Popover, Flex } from "antd";
-import React, { useEffect } from "react";
-import { getAllUserRequest, userLogoutRequest } from "../redux/utils";
+import { Layout, Table, Avatar, Popover, Flex,Tabs,Input } from "antd";
+import React, { useEffect, useState } from "react";
+import { getAllUserRequest, userLogoutRequest,userSearchRequest } from "../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { UserOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { SearchOutlined} from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 import { data, useNavigate } from "react-router-dom";
+import { jwtDecode } from 'jwt-decode';
+import { calc } from "antd/es/theme/internal";
+import DashboardTable from "./dashboard/DashboardTable";
+import DashboardCard from "./dashboard/DashboardCard";
+import '../Auth/Dashboard.css';
+function useDebounce(value, delay) {
+  const [debounced, setDebounced] = useState(value);
+  useEffect(() => {
+    const handler = setTimeout(() => setDebounced(value), delay);
+    return () => clearTimeout(handler);
+  }, [value, delay]);
+  return debounced;
+}
 const columns = [
   {
     title: "username",
@@ -29,18 +43,52 @@ const columns = [
     sorter: (a, b) => a.phone.localeCompare(b.phone),
   },
 ];
-
+  const items = [
+    {
+      key: "Table",
+      label: "Table",
+      children: <DashboardTable />,
+    },
+    {
+      key: "card",
+      label: "card",
+      children: <DashboardCard/>,
+    },
+  ];
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allUserLoading, AllUser } = useSelector((state) => state.auth);
-  console.log("ji");
+  const { allUserLoading, AllUser, total } = useSelector((state) => state.auth);
+    const [search, setSearch] = useState("");
+    const debouncedSearch = useDebounce(search, 500);
   useEffect(()=>{
 if(!localStorage.getItem("token")){
   navigate("/login")
 }
   },[localStorage.getItem("token")])
-
+const token =localStorage.getItem("token");
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (isTokenExpired(token)) {
+      localStorage.removeItem('token');
+      window.location.href = '/login';
+    }
+  }, []);
+const isTokenExpired = (token) => {
+  if (!token) return true;
+  try {
+    const decodedToken = jwtDecode(token);
+    const currentTime = Date.now() / 1000;
+    return decodedToken.exp < currentTime;
+  } catch (error) {
+    return true;
+  }
+};
+useEffect(()=>{
+  console.log("hi")
+  dispatch(userSearchRequest({search:search,users:AllUser}))
+console.log(AllUser)
+},[debouncedSearch])
   useEffect(() => {
     dispatch(getAllUserRequest());
   }, []);
@@ -67,16 +115,23 @@ if(!localStorage.getItem("token")){
           <Avatar shape="square" size={32} icon={<UserOutlined />} />
         </Popover>
       </Header>
-      <Flex justify="center" style={{background:"blanchedalmond", padding:"10px"}}>
-        <Table
-          columns={columns}
-          className="user-table"
-          dataSource={dataSource}
-          pagination={{ pageSize: 50 }}
-          loading={allUserLoading}
-          scroll={{ y: 44 * 13 }}
-        ></Table>
+
+      <div className="dashboard" style={{background:"blanchedalmond",height: "calc(100vh - 64px)"}}>
+              <Flex className="table-heading" justify="space-between">
+        <h2>USER</h2>
+         <Input
+                    placeholder="Search "
+                    value={search}
+                    className="input-search-user-dashboard"
+                    onChange={(e) => {
+                      setSearch(e.target.value);
+                    }}
+                    prefix={<SearchOutlined className="search-icon" />}
+                  />
       </Flex>
+              <Tabs className="card-table-user-view" items={items}></Tabs>
+
+      </div>
     </div>
   );
 };
