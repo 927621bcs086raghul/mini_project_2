@@ -85,7 +85,7 @@ const isTokenExpired = (token) => {
   }
 };
 useEffect(()=>{
-  console.log("hi")
+  console.log(search)
   dispatch(userSearchRequest({search:search,users:AllUser}))
 console.log(AllUser)
 },[debouncedSearch])
@@ -116,7 +116,7 @@ console.log(AllUser)
         </Popover>
       </Header>
 
-      <div className="dashboard" style={{background:"blanchedalmond",height: "calc(100vh - 64px)"}}>
+      <div className="dashboard">
               <Flex className="table-heading" justify="space-between">
         <h2>USER</h2>
          <Input
@@ -125,6 +125,7 @@ console.log(AllUser)
                     className="input-search-user-dashboard"
                     onChange={(e) => {
                       setSearch(e.target.value);
+                      console.log(search);
                     }}
                     prefix={<SearchOutlined className="search-icon" />}
                   />
