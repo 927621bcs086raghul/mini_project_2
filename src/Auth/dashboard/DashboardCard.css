@@ -22,7 +22,7 @@
     justify-content: end;
 }
 .card-with-hover {
-  position: relative;
+    position: relative;
   overflow: hidden; 
 }
 
@@ -36,6 +36,11 @@
   display: flex;
   gap: 8px; 
   z-index: 3;
+}
+.hover-button{
+    
+  width: 50px !important;
+  height: 50px;
 }
  .card-with-hover:hover{
     background: rgba(0,0,0,0.2);

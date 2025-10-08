@@ -145,7 +145,7 @@ const Dashboard = () => {
         <div className="dashboard-body">
           <Flex className="table-heading" justify="space-between">
             <h2>Users</h2>
-            <Flex>
+            <Flex gap={15}>
             <Input
               placeholder="Input search text "
               value={search}
@@ -156,6 +156,7 @@ const Dashboard = () => {
               }}
               suffix={<SearchOutlined className="search-icon" />}
             />
+            <Button type="primary" style={{marginTop:"19px",borderRadius:"0"}}>Create User</Button>
             </Flex>
           </Flex>
           <Tabs className="card-table-user-view" items={items}></Tabs>

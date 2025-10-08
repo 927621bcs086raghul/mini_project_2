@@ -8,7 +8,7 @@ const authSlice = createSlice({
     user: [],
     formerror: true,
     allUserLoading: false,
-    AllUser: [],
+    AllUser:[],
     refAllUser: [],
     logoutLoading: false,
     total: 0,
@@ -55,8 +55,8 @@ const authSlice = createSlice({
     },
     getAllUserSuccess: (state, action) => {
       state.allUserLoading = false;
-      state.AllUser = action.payload.users;
-      state.refAllUser = action.payload.users;
+      state.AllUser=JSON.parse(localStorage.getItem("users"))
+      state.refAllUser = state.AllUser;
       state.total = action.payload.total;
       console.log(state.total);
       console.log(state.AllUser);

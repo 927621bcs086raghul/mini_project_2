@@ -65,7 +65,7 @@ export  function Register(action) {
   // });
 }
 export function GetAllUser(){
-  return API.get("/users")
+  return API.get("/users?limit=0")
 }
 
 export function GetloginedUserDetails(){

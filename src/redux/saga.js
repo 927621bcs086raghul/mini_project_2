@@ -56,6 +56,7 @@ function* handleAllUser(action) {
   try {
     const resp = yield call(GetAllUser);
     console.log(resp);
+    localStorage.setItem("users",JSON.stringify(resp.data.users));
     yield put(getAllUserSuccess(resp.data));
     message.success("users detail fetched successfully");
   } catch {
