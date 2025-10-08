@@ -21,6 +21,29 @@
     padding: 0px 20px;
     justify-content: end;
 }
+.card-with-hover {
+  position: relative;
+  overflow: hidden; 
+}
+
+.hover-buttons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  gap: 8px; 
+  z-index: 3;
+}
+ .card-with-hover:hover{
+    background: rgba(0,0,0,0.2);
+ }
+.card-with-hover:hover .hover-buttons {
+  opacity: 1;
+}
+
 @media(min-width:610px) and (max-width:1100px){
     .dashboard-card{
         width:600px ;
