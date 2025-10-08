@@ -3,15 +3,20 @@
     flex-direction: column;
     align-content: space-around;
     align-items: center;
-    background:blanchedalmond ;
+    background:hsl(216deg 20% 95.1%) ;
     height:calc(100vh - 64px) ;
 }
-.card-table-user-view{
-
+.card-table-user-view .ant-tabs-nav-list{
+    border-radius: 3px;
+}
+.header-avatar{
+    background: hsl(359.33deg 100% 65.1%);
+    border-radius: 0px;
 }
 .input-search-user-dashboard{
     margin-top:19px ;
     width: 200px;
+    border-radius:0px ;
 }
 .dashboard .ant-tabs{
     display: flex;
@@ -19,32 +24,95 @@
      align-items: center;
 }
 .card-table-user-view .ant-tabs-nav{
-    padding: 0px;
+    padding: 0px 50px;
     margin: 0px;
-    width: 1100px;
+    width: 100%;
 }
 .card-table-user-view .ant-tabs-nav .ant-tabs-nav-list .ant-tabs-tab{
     padding: 0px;
-    padding-top: 10px;
+    margin: 0px;
 }
+.card-table-user-view .ant-tabs-tab {
+    border: solid 1px hsl(0deg 0% 85.1%);
+  border-radius: 0px;
+  margin: 0;
+  padding: 6px 16px;
+  transition: all 0.2s ease;
+}
+
+.card-table-user-view .ant-tabs-tab-active:nth-child(1) {
+  border-top-left-radius: 3px ;
+  border-bottom-left-radius: 3px ;
+  border-top-right-radius: 0 ;
+  border-bottom-right-radius: 0 ;
+}
+
+.card-table-user-view .ant-tabs-tab-active:nth-child(2) {
+  border-top-right-radius: 3px ;
+  border-bottom-right-radius: 3px ;
+  border-top-left-radius: 0 ;
+  border-bottom-left-radius: 0 ;
+  border-right:solid 1px #1677ff ;
+}
+
+.card-table-user-view .ant-tabs-tab-active {
+  border-color: #1677ff;
+  color: #1677ff;
+  border:solid 1px #1677ff;
+}
+
+
+.card-table-user-view .ant-tabs-tab:nth-child(1) {
+  border-top-left-radius: 3px ;
+  border-bottom-left-radius: 3px ;
+  border-top-right-radius: 0 ;
+  border-bottom-right-radius: 0 ;
+}
+
+.card-table-user-view .ant-tabs-tab:nth-child(2) {
+  border-top-right-radius: 3px ;
+  border-bottom-right-radius: 3px ;
+  border-top-left-radius: 0 ;
+  border-bottom-left-radius: 0 ;
+}
+
+
 .card-table-user-view .ant-tabs-nav .ant-tabs-nav-list .ant-tabs-tab-btn{
     padding: 2px 10px;
     border-radius: 0;
 }
+
 .dashboard .ant-flex h2{
     margin-bottom: 0px;
 }
+.ant-tabs-nav::before{
+    border-bottom: none !important;
+}
+    
+.dashboard-body{
+    background: white;
+    width: calc(100vw - 80px);
+    margin: 20px;
+}
 .table-heading{
-    width: 1100px;
+    padding: 0px 50px;
 }
 .card-table-user-view .ant-tabs-nav .ant-tabs-nav-wrap{
     display: flex;
         justify-content: flex-start;
+        padding-top: 35px;
 } 
 .card-table-user-view .ant-tabs-content-holder{
     display: flex;
 }
-@media(min-width:610px) and (max-width:1100px){
+@media(min-width:810px) and (max-width:1200px){
+        
+    .user-table{
+       width: 800px;
+    }
+}
+
+@media(min-width:610px) and (max-width:810px){
     .card-table-user-view .ant-tabs-nav{
         width: 200px;
     }
@@ -54,9 +122,8 @@
     .dashboard .ant-tabs{
         display: flex;
     }
-    .table-heading{
-    width: 600px;
-}
+    
+    
     .user-table{
         width: 600px;
     }
@@ -71,7 +138,6 @@
     .card-table-user-view .ant-tabs-nav{
         width: 310px;
     }
-        .table-heading{
-    width: 410px;
-}
+        
+    
 }

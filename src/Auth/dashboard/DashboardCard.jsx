@@ -6,7 +6,7 @@ import "./DashboardCard.css";
 const DashboardCard = () => {
   const { allUserLoading, AllUser, total } = useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -20,7 +20,7 @@ const DashboardCard = () => {
             {/* Remember to add a unique 'key' prop */}
             <Card
               style={{ width: "250px" }}
-              cover={<Avatar className="avatar-card"></Avatar>}
+              cover={<Avatar className="avatar-card" src={item.image} size={"large"}>{item.username[0].toUpperCase()}</Avatar>}
             >
               <Meta
                 title={item.username}

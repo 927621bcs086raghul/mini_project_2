@@ -1,0 +1,5 @@
+table tr td:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

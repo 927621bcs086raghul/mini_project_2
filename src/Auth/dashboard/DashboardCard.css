@@ -3,13 +3,14 @@
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
-    width: 1100px;
         justify-content: space-between;
 }
 .ant-card .avatar-card{
     border-radius: 50%;
     width: 100px;
     height: 100px;
+    display: flex;
+    font-size: 34px;
 }
 .ant-card-cover{
     padding-top: 20px;

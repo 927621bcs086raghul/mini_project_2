@@ -40,6 +40,16 @@ const authSlice = createSlice({
       state.loading = false;
       state.formerror = true;
     },
+    getLogginedUserDetailsReq:(state,action)=>{
+      
+    },
+        getLogginedUserDetailsSuccess:(state,action)=>{
+      state.user=action.payload;
+    },
+        getLogginedUserDetailsFail:(state,action)=>{
+      
+    },
+
     getAllUserRequest: (state, action) => {
       state.allUserLoading = true;
     },
@@ -96,6 +106,9 @@ export const {
   getAllUserSuccess,
   getAllUserRequest,
   userSearchFailure,
+  getLogginedUserDetailsFail,
+  getLogginedUserDetailsReq,
+  getLogginedUserDetailsSuccess,
   userSearchRequest,
   userSearchSuccess,
 } = authSlice.actions;

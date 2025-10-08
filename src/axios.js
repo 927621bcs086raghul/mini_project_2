@@ -4,6 +4,23 @@ const API = axios.create({
   baseURL:"https://dummyjson.com/",
   timeout: 3000,
 });
+// Automatically attach Authorization header if a token exists in localStorage
+API.interceptors.request.use(
+  (config) => {
+    try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        // Attach token as Bearer token
+        config.headers = config.headers || {};
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    } catch (err) {
+      // ignore localStorage errors
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 export  function LoginRequest(action) {
       return API.post("auth/login",
         action,
@@ -52,4 +69,15 @@ export  function Register(action) {
 }
 export function GetAllUser(){
   return API.get("/users")
+}
+
+export function GetloginedUserDetails(){
+  const token=localStorage.getItem("token")
+  return API.get("auth/me",{
+      headers: {
+      Authorization: `Bearer ${token}`,
+      },
+    
+  }
+  )
 }

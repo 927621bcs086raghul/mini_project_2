@@ -1,39 +1,47 @@
 
-import { Tabs,Table,Flex } from 'antd';
+import { Tabs,Table,Flex, Avatar } from 'antd';
 import React from 'react'
 import { useSelector } from 'react-redux';
+import './DashboardTable.css'
 const columns = [
   {
-    title: "username",
-    dataIndex: "username",
+    title: "",
+    dataIndex: "image",
     width: 150,
-    sorter: (a, b) => a.username.localeCompare(b.username), 
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-    width: 150,
-    sorter: (a, b) => a.age - b.age,
+    render:(image)=>{
+      return (
+        <>
+        <Avatar src={image} ></Avatar>
+        </>
+      )
+    }    
   },
   {
     title: "email",
     dataIndex: "email",
     sorter: (a, b) => a.email.localeCompare(b.email),
   },
+{
+    title: "First name",
+    dataIndex: "firstname",
+    sorter: (a, b) => a.firstname.localeCompare(b.firstname),
+  },
+
   {
-    title: "phone",
-    dataIndex: "phone",
-    sorter: (a, b) => a.phone.localeCompare(b.phone),
+    title: "Last name",
+    dataIndex: "lastname",
+    sorter: (a, b) => a.lastname.localeCompare(b.lastname),
   },
 ];
 const DashboardTable = () => {
   const { allUserLoading, AllUser, total } = useSelector((state) => state.auth);
   const dataSource = AllUser.map((user) => ({
     key: user.id,
-    username: user.username,
+  image:user.image,
     age: user.age,
     email: user.email,
-    phone: user.phone,
+    firstname:user.firstName,
+    lastname:user.lastName,
   }));
   return (
 <Flex justify="center">
@@ -43,7 +51,7 @@ const DashboardTable = () => {
           dataSource={dataSource}
           pagination={{ pageSize: 50 }}
           loading={allUserLoading}
-          scroll={{ y: 38 * 13 }}
+          scroll={{ y: 30 * 13 }}
         ></Table>
         </Flex>
   )
