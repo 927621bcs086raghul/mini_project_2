@@ -20,8 +20,22 @@ import {
   AddUserRequest,
   AddUserSuccess,
   modalOperatorClose,
+  getUserdataFail,
+  getUserdataReq,
+  getUserdataSuccess,
+  updateUserRequest,
+  updateUserSuccess,
+  updateUserFailed,
 } from "./utils";
-import { LoginRequest, Register, GetAllUser ,GetloginedUserDetails,Adduser} from "../axios";
+import {
+  LoginRequest,
+  Register,
+  GetAllUser,
+  GetloginedUserDetails,
+  Adduser,
+  GetSingleUser,
+  UpdateUSer
+} from "../axios";
 import { call, takeLatest, put, take } from "redux-saga/effects";
 import { message } from "antd";
 function* handleLogin(action) {
@@ -60,7 +74,16 @@ function* handleAllUser(action) {
   try {
     const resp = yield call(GetAllUser);
     console.log(resp);
-    localStorage.setItem("users",JSON.stringify(resp.data.users));
+    const existingUsers = localStorage.getItem("users");
+    if (
+      !existingUsers ||
+      existingUsers === "undefined" ||
+      existingUsers === "null" ||
+      existingUsers.length === 0
+    ) {
+      console.log(resp);
+      localStorage.setItem("users", JSON.stringify(resp.data.users));
+    }
     yield put(getAllUserSuccess(resp.data));
     message.success("users detail fetched successfully");
   } catch {
@@ -83,24 +106,46 @@ function* handleUserSearch(action) {
     yield put(userSearchFailure());
   }
 }
-function* handleLoginedUserDetails(){
-    try {
-      const res=yield call(GetloginedUserDetails)
+function* handleLoginedUserDetails() {
+  try {
+    const res = yield call(GetloginedUserDetails);
     yield put(getLogginedUserDetailsSuccess(res));
   } catch {
     yield put(getLogginedUserDetailsFail());
   }
 }
-function* handleAddUser(action){
-  try{
-    const resp =yield call(Adduser,action.payload);
-    yield put(AddUserSuccess(resp));
+function* handleAddUser(action) {
+  try {
+    const resp = yield call(Adduser, action.payload);
+    console.log(resp);
+    const reducerRes = yield put(AddUserSuccess(resp));
+    console.log("ji");
     yield put(modalOperatorClose());
-    message.success("user added successfully")
+    message.success("user added successfully");
+  } catch (Error) {
+    yield put(AddUserFailure());
+    console.log(Error);
+    message.error("user already exist");
+  }
+}
+function* handleGetSingleUser(action) {
+  try {
+    const resp = yield call(GetSingleUser, action.payload);
+    yield put(getUserdataSuccess());
+  } catch {}
+}
+function* handleUpdateUser(action){
+  try{
+    console.log("1",action)
+    const resp= yield call(UpdateUSer,action.payload.values,action.payload.id);
+    console.log(resp)
+    yield put(updateUserSuccess(resp));
+    yield put(modalOperatorClose());
+    message.success("user Updated successfully")
   }
   catch{
-    yield put(AddUserFailure())
-    message.error("failed to add user")
+    yield put(updateUserFailed());
+    message.error("failed to update");
   }
 }
 export default function* rootSaga() {
@@ -109,6 +154,8 @@ export default function* rootSaga() {
   yield takeLatest(getAllUserRequest.type, handleAllUser);
   yield takeLatest(userLogoutRequest.type, handleLogout);
   yield takeLatest(userSearchRequest.type, handleUserSearch);
-  yield takeLatest(getLogginedUserDetailsReq.type,handleLoginedUserDetails);
-  yield takeLatest(AddUserRequest.type,handleAddUser);
+  yield takeLatest(getLogginedUserDetailsReq.type, handleLoginedUserDetails);
+  yield takeLatest(AddUserRequest.type, handleAddUser);
+  yield takeLatest(getUserdataReq.type, handleGetSingleUser);
+  yield takeLatest(updateUserRequest.type,handleUpdateUser);
 }

@@ -1,20 +1,26 @@
 import js from "@eslint/js";
 import { createSlice } from "@reduxjs/toolkit";
+import { message } from "antd";
+import { act } from "react";
+import NewUser from "../Auth/User_CRUD_Operation/NewUser";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
     loading: false,
-    userLoading:false,
-    error: null,
+    userLoading: false,
+    error: "",
     user: [],
     formerror: true,
     allUserLoading: false,
-    AllUser:[],
+    AllUser: [],
     refAllUser: [],
+    modalValue: [],
+    EditUserData: [],
     logoutLoading: false,
-    modal:false,
+    modal: false,
     total: 0,
+    userUpdateId:null
   },
   reducers: {
     loginRequest: (state) => {
@@ -43,22 +49,18 @@ const authSlice = createSlice({
       state.loading = false;
       state.formerror = true;
     },
-    getLogginedUserDetailsReq:(state,action)=>{
-      
+    getLogginedUserDetailsReq: (state, action) => {},
+    getLogginedUserDetailsSuccess: (state, action) => {
+      state.user = action.payload;
     },
-        getLogginedUserDetailsSuccess:(state,action)=>{
-      state.user=action.payload;
-    },
-        getLogginedUserDetailsFail:(state,action)=>{
-      
-    },
+    getLogginedUserDetailsFail: (state, action) => {},
 
     getAllUserRequest: (state, action) => {
       state.allUserLoading = true;
     },
     getAllUserSuccess: (state, action) => {
       state.allUserLoading = false;
-      state.AllUser=JSON.parse(localStorage.getItem("users"))
+      state.AllUser = JSON.parse(localStorage.getItem("users"));
       state.refAllUser = state.AllUser;
       state.total = state.AllUser.length;
       console.log(state.total);
@@ -83,7 +85,7 @@ const authSlice = createSlice({
       if (action.payload.search == "") {
         state.AllUser = state.refAllUser;
       } else {
-        console.log(state.AllUser)
+        console.log(state.AllUser);
         state.AllUser = searcheduser.filter((user) =>
           user.username
             .toLowerCase()
@@ -94,25 +96,65 @@ const authSlice = createSlice({
     userSearchFailure: (state, action) => {
       state.allUserLoading = false;
     },
-    AddUserRequest:(state,action)=>{
-      state.userLoading=true;
+    AddUserRequest: (state, action) => {
+      state.userLoading = true;
+      state.formerror = true;
     },
-    AddUserSuccess:(state,action)=>{
-      state.userLoading=false;
-    const users=JSON.parse(localStorage.getItem("users"));
-    users.push(action.payload.data);
-    localStorage.setItem("users",JSON.stringify(users));
-    state.AllUser=users
+    AddUserSuccess: (state, action) => {
+      debugger;
+      state.userLoading = false;
+      state.formerror = false;
+      const users = JSON.parse(localStorage.getItem("users"));
+      const newUser = action.payload.data;
+      const idcangedForNewUSer = [{ ...newUser, id: users.length + 1 }];
+
+      const userExists = users.some((user) => user.email === newUser.email);
+      console.log(userExists);
+
+      if (userExists) {
+        state.error = "user already exist";
+        return { error: state.error };
+      } else {
+        users.push(idcangedForNewUSer);
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+    },
+    AddUserFailure: (state, action) => {
+      state.userLoading = false;
+    },
+    modalOperatorOpen: (state, action) => {
+      console.log(action.payload)
+      state.modal = true;
+      state.modalValue = action?.payload?.option;
+      state.userUpdateId=action?.payload?.id;
+      const users = JSON.parse(localStorage.getItem("users"));
+      const ref=users.filter((user=>user?.id==action?.payload?.id));
+      state.EditUserData=ref[0];
+    },
+    modalOperatorClose: (state, action) => {
+      state.modal = false;
+    },
+    getUserdataReq: (state, action) => {},
+    getUserdataSuccess: (state, action) => {
+    },
+    getUserdataFail: (state, action) => {},
+    updateUserRequest: (state, action) => {
+      state.userLoading = true;
+    },
+    updateUserSuccess: (state, action) => {
+      state.userLoading = false;
+      const users = JSON.parse(localStorage.getItem("users"));
+      const newUser = action.payload.data;
+      const index = users.findIndex((user) => user.id === newUser.id);
+      if (index !== -1) {
+        users[index] = { ...users[index], ...newUser };
+        localStorage.setItem("users", JSON.stringify(users));
+      }
+      state.AllUser=users
+    },
     
-    },
-    AddUserFailure:(state,action)=>{
+    updateUserFailed:(state,action)=>{
       state.userLoading=false;
-    },
-    modalOperatorOpen:(state,action)=>{
-      state.modal=true;
-    },
-    modalOperatorClose:(state,action)=>{
-      state.modal=false;
     }
   },
 });
@@ -140,5 +182,11 @@ export const {
   AddUserSuccess,
   modalOperatorClose,
   modalOperatorOpen,
+  getUserdataFail,
+  getUserdataReq,
+  getUserdataSuccess,
+  updateUserRequest,
+  updateUserSuccess,
+  updateUserFailed,
 } = authSlice.actions;
 export default authSlice.reducer;

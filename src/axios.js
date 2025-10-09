@@ -81,3 +81,10 @@ export function GetloginedUserDetails(){
 export function Adduser(action){
   return API.post("users/add",action)
 }
+export function GetSingleUser(action){
+  return API.get(`users/${action}`)
+}
+export function UpdateUSer(action,id){
+  console.log(action,id)
+  return API.put(`users/${id}`,action)
+}

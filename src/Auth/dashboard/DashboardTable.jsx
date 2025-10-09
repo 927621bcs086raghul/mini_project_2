@@ -1,9 +1,24 @@
 
 import { Tabs,Table,Flex, Avatar, Button } from 'antd';
 import React from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import './DashboardTable.css'
-const columns = [
+import { getUserdataReq,modalOperatorOpen } from '../../redux/utils';
+
+const DashboardTable = () => {
+  console.log("2.hi")
+  const { allUserLoading, AllUser, total,modalValue, } = useSelector((state) => state.auth);
+  console.log(AllUser)
+  const dataSource = AllUser.map((user) => ({
+    key: user.id,
+  image:user.image,
+    age: user.age,
+    email: user.email,
+    firstname:user.firstName,
+    lastname:user.lastName,
+  }));
+  const dispatch=useDispatch();
+  const columns = [
   {
     title: "",
     dataIndex: "image",
@@ -33,10 +48,14 @@ const columns = [
   },
   {
     title:"Action",
-    render:()=>{
+    render: (_, record) => {
         return(
           <Flex gap={15}>
-          <Button type='primary'className="create-user-edit-delete-table-button">
+          <Button
+            type='primary'
+            className="create-user-edit-delete-table-button"
+            onClick={() => {handleEdit(record.key)}}
+          >
             Edit
           </Button>
           <Button type='primary' className="create-user-edit-delete-table-button" danger>
@@ -47,17 +66,12 @@ const columns = [
     }
   }
 ];
-const DashboardTable = () => {
-  console.log("2.hi")
-  const { allUserLoading, AllUser, total } = useSelector((state) => state.auth);
-  const dataSource = AllUser.map((user) => ({
-    key: user.id,
-  image:user.image,
-    age: user.age,
-    email: user.email,
-    firstname:user.firstName,
-    lastname:user.lastName,
-  }));
+const handleEdit=(id)=>{
+  dispatch(getUserdataReq(id));
+  dispatch(modalOperatorOpen({option:'edit',id:id}));
+
+
+}
   return (
         <Table
           columns={columns}

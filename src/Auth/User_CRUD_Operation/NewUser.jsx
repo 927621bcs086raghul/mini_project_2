@@ -1,27 +1,56 @@
 import { Modal, Form, Input, Button, Flex } from "antd";
-import React from "react";
-import { AddUserRequest } from "../../redux/utils";
+import React, { useEffect } from "react";
+import { AddUserRequest,updateUserRequest } from "../../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
 const NewUser = ({ handleClose, isModalOpen }) => {
   const dispatch=useDispatch();
   const [form] = Form.useForm();
-  const {modal,userLoading } = useSelector(
+  const {modal,userLoading,formerror,modalValue,EditUserData,userUpdateId} = useSelector(
     (state) => state.auth
   );
-  const onFinish = (values) => {
-    dispatch(AddUserRequest(values));
-  };
+      if(!formerror){
+      console.log("")
+      form.resetFields();}
 
+  const onFinish = (values) => {
+    if(modalValue=='edit'){
+      dispatch(updateUserRequest({values:values,id:userUpdateId}))
+    }
+    else{
+dispatch(AddUserRequest(values));
+        console.log(formerror)
+
+    }
+        console.log(formerror)
+
+    
+  };
+  
+  const formButtonValue=(modalValue=='edit')?"Update":"Add user";
+useEffect(() => {
+  console.log("22",EditUserData,modalValue)
+  if (modalValue === "edit" && EditUserData) {
+    console.log("hi")
+    form.setFieldsValue({
+      firstName: EditUserData.firstName || "",
+      lastName: EditUserData.lastName || "",
+      username: EditUserData.username || "",
+      email: EditUserData.email || "",
+    });
+  } else {
+    form.resetFields();
+  }
+}, [modalValue,EditUserData, form, modal]);
   return (
     <div>
       <Modal
         title="New user"
         open={modal}
         footer={false}
-        // okText="Add"
         onCancel={() => {
           handleClose();
         }}
+        
       >
         <Form
           form={form}
@@ -29,6 +58,7 @@ const NewUser = ({ handleClose, isModalOpen }) => {
           name="new_user_form"
           onFinish={onFinish}
           preserve={false}
+          
         >
           <Form.Item
             label="First name"
@@ -57,9 +87,10 @@ const NewUser = ({ handleClose, isModalOpen }) => {
           <Form.Item
             label="email"
             name="email"
-            rules={[{ required: true, message: "Please enter password" }]}
+            rules={[{ required: true, message: "Please enter email" },
+    { type: "email", message: "Please enter a valid email address" },]}
           >
-            <Input placeholder="Password" />
+            <Input placeholder="email" />
           </Form.Item>
           <Flex justify="end" gap={10} className="form-buttons">
             <Button
@@ -72,7 +103,7 @@ const NewUser = ({ handleClose, isModalOpen }) => {
               Cancel
             </Button>
             <Button type="primary" htmlType="submit" loading={userLoading}>
-              Submit
+              {formButtonValue}
             </Button>
           </Flex>
         </Form>

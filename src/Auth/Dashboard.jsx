@@ -34,7 +34,7 @@ import DashboardTable from "./dashboard/DashboardTable";
 import DashboardCard from "./dashboard/DashboardCard";
 import "../Auth/Dashboard.css";
 import { icons } from "antd/es/image/PreviewGroup";
-import NewUser from "./dashboard/NewUser";
+import NewUser from "./User_CRUD_Operation/NewUser";
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -84,7 +84,6 @@ const Dashboard = () => {
   );
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
-  const [isModalOpen,SetIsModalOpen]=useState(false)
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
@@ -185,7 +184,7 @@ const Dashboard = () => {
           </Flex>
           <Tabs className="card-table-user-view" items={items}></Tabs>
         </div>
-        <NewUser isModalOpen={isModalOpen} handleClose={handleClose}></NewUser>
+        <NewUser  handleClose={handleClose}></NewUser>
       </div>
     </div>
   );
