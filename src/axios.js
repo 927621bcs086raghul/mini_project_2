@@ -88,3 +88,6 @@ export function UpdateUSer(action,id){
   console.log(action,id)
   return API.put(`users/${id}`,action)
 }
+export function DeleteUser(id){
+  return API.delete(`users/${id}`)
+}

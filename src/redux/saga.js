@@ -100,7 +100,7 @@ function* handleLogout() {
 }
 function* handleUserSearch(action) {
   try {
-    console.log(action.payload);
+    console.log(action.payload.search);
     yield put(userSearchSuccess(action.payload));
   } catch {
     yield put(userSearchFailure());

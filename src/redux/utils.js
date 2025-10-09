@@ -81,16 +81,24 @@ const authSlice = createSlice({
     },
     userSearchSuccess: (state, action) => {
       state.allUserLoading = false;
+      state.AllUser = JSON.parse(localStorage.getItem("users"));
+      console.log(state.AllUser)
+      console.log(action)
+      state.refAllUser =state.AllUser
       const searcheduser = state.refAllUser;
+      console.log(searcheduser)
       if (action.payload.search == "") {
         state.AllUser = state.refAllUser;
       } else {
+        console.log(action.payload.search)
         console.log(state.AllUser);
-        state.AllUser = searcheduser.filter((user) =>
-          user.username
-            .toLowerCase()
-            .includes(action.payload.search.toLowerCase())
-        );
+state.AllUser = searcheduser?.filter((user) =>
+  (user?.username || "")
+    .toLowerCase()
+    .includes((action.payload?.search || "").toLowerCase())
+);
+
+        console.log(state.AllUser)
       }
     },
     userSearchFailure: (state, action) => {
@@ -106,7 +114,7 @@ const authSlice = createSlice({
       state.formerror = false;
       const users = JSON.parse(localStorage.getItem("users"));
       const newUser = action.payload.data;
-      const idcangedForNewUSer = [{ ...newUser, id: users.length + 1 }];
+      const idcangedForNewUSer = { ...newUser, id: users.length + 1 };
 
       const userExists = users.some((user) => user.email === newUser.email);
       console.log(userExists);
@@ -117,6 +125,7 @@ const authSlice = createSlice({
       } else {
         users.push(idcangedForNewUSer);
         localStorage.setItem("users", JSON.stringify(users));
+        state.AllUser=users
       }
     },
     AddUserFailure: (state, action) => {
@@ -155,6 +164,11 @@ const authSlice = createSlice({
     
     updateUserFailed:(state,action)=>{
       state.userLoading=false;
+    },
+    deleteUserRequest:(state,action)=>{
+    },
+    deleteUserSuccess:(state,action)=>{
+
     }
   },
 });

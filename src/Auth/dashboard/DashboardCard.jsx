@@ -13,7 +13,7 @@ const DashboardCard = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentUsers = AllUser.slice(startIndex, endIndex);
-  console.log(currentUsers)
+  console.log(currentUsers);
 const handleEdit=(id)=>{
 console.log(id);
  dispatch(getUserdataReq(id));
@@ -32,7 +32,7 @@ console.log(id);
               style={{ width: "250px" }}
               cover={
                 <Avatar className="avatar-card" src={item.image} size={"large"}>
-                  {item.username[0].toUpperCase()}
+                  
                 </Avatar>
               }
               className="card-with-hover"

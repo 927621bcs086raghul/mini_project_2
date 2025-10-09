@@ -128,7 +128,7 @@ const Dashboard = () => {
       </p>
     </div>
   );
-  const dataSource = AllUser.map((user) => ({
+  const dataSource = AllUser?.map((user) => ({
     key: user.id,
     username: user.username,
     age: user.age,
