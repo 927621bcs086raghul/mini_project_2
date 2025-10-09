@@ -2,10 +2,10 @@ import { Tabs, Table, Flex, Avatar, Button } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DashboardTable.css";
-import { getUserdataReq, modalOperatorOpen } from "../../redux/utils";
+import { getUserdataReq, modalOperatorOpen,deleteUserRequest } from "../../redux/utils";
 
 const DashboardTable = () => {
-  const { allUserLoading, AllUser, total, modalValue } = useSelector(
+  const { allUserLoading, AllUser, total, modalValue,loading } = useSelector(
     (state) => state.auth
   );
   console.log(AllUser);
@@ -63,6 +63,8 @@ const DashboardTable = () => {
               type="primary"
               className="create-user-edit-delete-table-button"
               danger
+              loading={loading}
+              onClick={()=>{handleDelete(record.key)}}
             >
               Delete
             </Button>
@@ -75,6 +77,10 @@ const DashboardTable = () => {
     dispatch(getUserdataReq(id));
     dispatch(modalOperatorOpen({ option: "edit", id: id }));
   };
+  const handleDelete =(id) =>{
+    console.log(id)
+    dispatch(deleteUserRequest(id))
+  }
   return (
     <Table
       columns={columns}

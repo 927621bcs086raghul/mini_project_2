@@ -26,6 +26,9 @@ import {
   updateUserRequest,
   updateUserSuccess,
   updateUserFailed,
+  deleteUserFailed,
+  deleteUserRequest,
+  deleteUserSuccess,
 } from "./utils";
 import {
   LoginRequest,
@@ -34,7 +37,8 @@ import {
   GetloginedUserDetails,
   Adduser,
   GetSingleUser,
-  UpdateUSer
+  UpdateUSer,
+  DeleteUser
 } from "../axios";
 import { call, takeLatest, put, take } from "redux-saga/effects";
 import { message } from "antd";
@@ -148,6 +152,15 @@ function* handleUpdateUser(action){
     message.error("failed to update");
   }
 }
+function* handleDeleteUser(action){
+  try{
+    const resp =yield call(DeleteUser,action.payload)
+    yield put(deleteUserSuccess(action.payload));
+    message.success("user deleted successfuly");
+  }catch{
+    
+  }
+}
 export default function* rootSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(registerRequest.type, handleRegister);
@@ -158,4 +171,5 @@ export default function* rootSaga() {
   yield takeLatest(AddUserRequest.type, handleAddUser);
   yield takeLatest(getUserdataReq.type, handleGetSingleUser);
   yield takeLatest(updateUserRequest.type,handleUpdateUser);
+  yield takeLatest(deleteUserRequest.type,handleDeleteUser)
 }

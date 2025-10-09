@@ -115,10 +115,8 @@ state.AllUser = searcheduser?.filter((user) =>
       const users = JSON.parse(localStorage.getItem("users"));
       const newUser = action.payload.data;
       const idcangedForNewUSer = { ...newUser, id: users.length + 1 };
-
       const userExists = users.some((user) => user.email === newUser.email);
       console.log(userExists);
-
       if (userExists) {
         state.error = "user already exist";
         return { error: state.error };
@@ -166,9 +164,18 @@ state.AllUser = searcheduser?.filter((user) =>
       state.userLoading=false;
     },
     deleteUserRequest:(state,action)=>{
+      state.loading=true;
     },
     deleteUserSuccess:(state,action)=>{
-
+      debugger
+      state.loading=false;
+      const users = JSON.parse(localStorage.getItem("users"));
+      state.AllUser=users.filter(user=>user.id != action.payload);
+      localStorage.setItem("users", JSON.stringify(state.AllUser));
+      console.log(state.AllUser)
+    },
+    deleteUserFailed:(state,action)=>{
+      state.loading=false;
     }
   },
 });
@@ -202,5 +209,8 @@ export const {
   updateUserRequest,
   updateUserSuccess,
   updateUserFailed,
+  deleteUserFailed,
+  deleteUserSuccess,
+  deleteUserRequest,
 } = authSlice.actions;
 export default authSlice.reducer;
