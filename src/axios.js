@@ -78,3 +78,6 @@ export function GetloginedUserDetails(){
   }
   )
 }
+export function Adduser(action){
+  return API.post("users/add",action)
+}

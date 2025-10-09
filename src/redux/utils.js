@@ -1,9 +1,11 @@
+import js from "@eslint/js";
 import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
     loading: false,
+    userLoading:false,
     error: null,
     user: [],
     formerror: true,
@@ -11,6 +13,7 @@ const authSlice = createSlice({
     AllUser:[],
     refAllUser: [],
     logoutLoading: false,
+    modal:false,
     total: 0,
   },
   reducers: {
@@ -57,7 +60,7 @@ const authSlice = createSlice({
       state.allUserLoading = false;
       state.AllUser=JSON.parse(localStorage.getItem("users"))
       state.refAllUser = state.AllUser;
-      state.total = action.payload.total;
+      state.total = state.AllUser.length;
       console.log(state.total);
       console.log(state.AllUser);
       console.log(state.refAllUser);
@@ -80,6 +83,7 @@ const authSlice = createSlice({
       if (action.payload.search == "") {
         state.AllUser = state.refAllUser;
       } else {
+        console.log(state.AllUser)
         state.AllUser = searcheduser.filter((user) =>
           user.username
             .toLowerCase()
@@ -90,6 +94,26 @@ const authSlice = createSlice({
     userSearchFailure: (state, action) => {
       state.allUserLoading = false;
     },
+    AddUserRequest:(state,action)=>{
+      state.userLoading=true;
+    },
+    AddUserSuccess:(state,action)=>{
+      state.userLoading=false;
+    const users=JSON.parse(localStorage.getItem("users"));
+    users.push(action.payload.data);
+    localStorage.setItem("users",JSON.stringify(users));
+    state.AllUser=users
+    
+    },
+    AddUserFailure:(state,action)=>{
+      state.userLoading=false;
+    },
+    modalOperatorOpen:(state,action)=>{
+      state.modal=true;
+    },
+    modalOperatorClose:(state,action)=>{
+      state.modal=false;
+    }
   },
 });
 
@@ -111,5 +135,10 @@ export const {
   getLogginedUserDetailsSuccess,
   userSearchRequest,
   userSearchSuccess,
+  AddUserFailure,
+  AddUserRequest,
+  AddUserSuccess,
+  modalOperatorClose,
+  modalOperatorOpen,
 } = authSlice.actions;
 export default authSlice.reducer;

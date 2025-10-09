@@ -3,3 +3,6 @@ table tr td:first-child {
   justify-content: center;
   align-items: center;
 }
+.user-table{
+      width: 94vw;
+}

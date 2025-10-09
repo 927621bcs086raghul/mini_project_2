@@ -1,10 +1,22 @@
-import { Layout, Table, Avatar, Popover, Flex, Tabs, Input, Button } from "antd";
+import {
+  Layout,
+  Table,
+  Avatar,
+  Popover,
+  Flex,
+  Tabs,
+  Input,
+  Button,
+  Modal,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import {
   getAllUserRequest,
   userLogoutRequest,
   userSearchRequest,
   getLogginedUserDetailsReq,
+  modalOperatorClose,
+  modalOperatorOpen,
 } from "../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuUnfoldOutlined } from "@ant-design/icons";
@@ -22,6 +34,7 @@ import DashboardTable from "./dashboard/DashboardTable";
 import DashboardCard from "./dashboard/DashboardCard";
 import "../Auth/Dashboard.css";
 import { icons } from "antd/es/image/PreviewGroup";
+import NewUser from "./dashboard/NewUser";
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -66,11 +79,12 @@ const items = [
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allUserLoading, AllUser, total, user } = useSelector(
+  const { allUserLoading, AllUser, total, user,userLoading } = useSelector(
     (state) => state.auth
   );
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
+  const [isModalOpen,SetIsModalOpen]=useState(false)
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
@@ -122,6 +136,9 @@ const Dashboard = () => {
     email: user.email,
     phone: user.phone,
   }));
+  const handleClose=()=>{
+    dispatch(modalOperatorClose())
+  }
   return (
     <div>
       <Header className="header">
@@ -146,21 +163,29 @@ const Dashboard = () => {
           <Flex className="table-heading" justify="space-between">
             <h2>Users</h2>
             <Flex gap={15}>
-            <Input
-              placeholder="Input search text "
-              value={search}
-              className="input-search-user-dashboard"
-              onChange={(e) => {
-                setSearch(e.target.value);
-                console.log(search);
-              }}
-              suffix={<SearchOutlined className="search-icon" />}
-            />
-            <Button type="primary" style={{marginTop:"19px",borderRadius:"0"}}>Create User</Button>
+              <Input
+                placeholder="Input search text "
+                value={search}
+                className="input-search-user-dashboard"
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  console.log(search);
+                }}
+                suffix={<SearchOutlined className="search-icon" />}
+              />
+              <Button
+                type="primary"
+                className="create-user-edit-delete-table-button"
+                style={{ marginTop: "19px", borderRadius: "0" }}
+                onClick={()=>{dispatch(modalOperatorOpen())}}
+              >
+                Create User
+              </Button>
             </Flex>
           </Flex>
           <Tabs className="card-table-user-view" items={items}></Tabs>
         </div>
+        <NewUser isModalOpen={isModalOpen} handleClose={handleClose}></NewUser>
       </div>
     </div>
   );

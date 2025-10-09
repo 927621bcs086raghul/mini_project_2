@@ -5,6 +5,7 @@
     align-items: center;
     background:hsl(216deg 20% 95.1%) ;
     height:calc(100vh - 64px) ;
+        
 }
 .card-table-user-view .ant-tabs-nav-list{
     border-radius: 3px;
@@ -88,7 +89,9 @@
 .ant-tabs-nav::before{
     border-bottom: none !important;
 }
-    
+.ant-table-body{
+    scrollbar-width: none;
+}
 .dashboard-body{
     background: white;
     width: calc(100vw - 80px);
@@ -96,6 +99,9 @@
 }
 .table-heading{
     padding: 0px 50px;
+}
+.create-user-edit-delete-table-button{
+    border-radius: 0;
 }
 .card-table-user-view .ant-tabs-nav .ant-tabs-nav-wrap{
     display: flex;
@@ -106,7 +112,9 @@
     display: flex;
 }
 @media(min-width:810px) and (max-width:1200px){
-        
+    .dashboard{
+        height: 100vh;
+    }
     .user-table{
        width: 800px;
     }

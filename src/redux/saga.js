@@ -16,8 +16,12 @@ import {
   getLogginedUserDetailsFail,
   getLogginedUserDetailsReq,
   getLogginedUserDetailsSuccess,
+  AddUserFailure,
+  AddUserRequest,
+  AddUserSuccess,
+  modalOperatorClose,
 } from "./utils";
-import { LoginRequest, Register, GetAllUser ,GetloginedUserDetails} from "../axios";
+import { LoginRequest, Register, GetAllUser ,GetloginedUserDetails,Adduser} from "../axios";
 import { call, takeLatest, put, take } from "redux-saga/effects";
 import { message } from "antd";
 function* handleLogin(action) {
@@ -87,6 +91,18 @@ function* handleLoginedUserDetails(){
     yield put(getLogginedUserDetailsFail());
   }
 }
+function* handleAddUser(action){
+  try{
+    const resp =yield call(Adduser,action.payload);
+    yield put(AddUserSuccess(resp));
+    yield put(modalOperatorClose());
+    message.success("user added successfully")
+  }
+  catch{
+    yield put(AddUserFailure())
+    message.error("failed to add user")
+  }
+}
 export default function* rootSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(registerRequest.type, handleRegister);
@@ -94,4 +110,5 @@ export default function* rootSaga() {
   yield takeLatest(userLogoutRequest.type, handleLogout);
   yield takeLatest(userSearchRequest.type, handleUserSearch);
   yield takeLatest(getLogginedUserDetailsReq.type,handleLoginedUserDetails);
+  yield takeLatest(AddUserRequest.type,handleAddUser);
 }

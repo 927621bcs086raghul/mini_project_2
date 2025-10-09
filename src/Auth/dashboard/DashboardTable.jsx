@@ -1,5 +1,5 @@
 
-import { Tabs,Table,Flex, Avatar } from 'antd';
+import { Tabs,Table,Flex, Avatar, Button } from 'antd';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import './DashboardTable.css'
@@ -7,7 +7,6 @@ const columns = [
   {
     title: "",
     dataIndex: "image",
-    width: 150,
     render:(image)=>{
       return (
         <>
@@ -32,8 +31,24 @@ const columns = [
     dataIndex: "lastname",
     sorter: (a, b) => a.lastname.localeCompare(b.lastname),
   },
+  {
+    title:"Action",
+    render:()=>{
+        return(
+          <Flex gap={15}>
+          <Button type='primary'className="create-user-edit-delete-table-button">
+            Edit
+          </Button>
+          <Button type='primary' className="create-user-edit-delete-table-button" danger>
+            Delete
+          </Button>
+          </Flex>
+        )
+    }
+  }
 ];
 const DashboardTable = () => {
+  console.log("2.hi")
   const { allUserLoading, AllUser, total } = useSelector((state) => state.auth);
   const dataSource = AllUser.map((user) => ({
     key: user.id,
@@ -44,16 +59,17 @@ const DashboardTable = () => {
     lastname:user.lastName,
   }));
   return (
-<Flex justify="center">
         <Table
           columns={columns}
           className="user-table"
           dataSource={dataSource}
-          pagination={{ pageSize: 50 }}
           loading={allUserLoading}
-          scroll={{ y: 30 * 13 }}
+          scroll={{y:390, x:"max-content"}}
+          pagination={{
+            showSizeChanger: false,
+          }
+          }
         ></Table>
-        </Flex>
   )
 }
 

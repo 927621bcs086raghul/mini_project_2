@@ -48,7 +48,6 @@
 .card-with-hover:hover .hover-buttons {
   opacity: 1;
 }
-
 @media(min-width:610px) and (max-width:1100px){
     .dashboard-card{
         width:600px ;

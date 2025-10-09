@@ -56,8 +56,8 @@ const DashboardCard = () => {
 
       <Pagination
         current={currentPage}
-        pageSize={itemsPerPage}
         total={AllUser.length}
+        showSizeChanger={false}
         onChange={(page) => setCurrentPage(page)}
       />
     </div>
