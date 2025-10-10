@@ -21,7 +21,7 @@ import {
   drawerOperatorClose,
 } from "../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { MenuUnfoldOutlined } from "@ant-design/icons";
+import { MenuUnfoldOutlined,ProfileOutlined } from "@ant-design/icons";
 import {
   SearchOutlined,
   TableOutlined,
@@ -108,6 +108,10 @@ const Dashboard = () => {
   }
   const content = (
     <div>
+      <p style={{ margin: "0px", cursor: "pointer" }}> 
+        <ProfileOutlined style={{paddingRight:"5px"}} />Profile
+      </p>
+      <hr></hr>
       <p style={{ margin: "0px", cursor: "pointer" }} onClick={handleLogout}>
         <LogoutOutlined style={{paddingRight:"5px"}}/>logout
       </p>
