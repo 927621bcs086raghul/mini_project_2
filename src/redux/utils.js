@@ -109,7 +109,6 @@ state.AllUser = searcheduser?.filter((user) =>
       state.formerror = true;
     },
     AddUserSuccess: (state, action) => {
-      debugger;
       state.userLoading = false;
       state.formerror = false;
       const users = JSON.parse(localStorage.getItem("users"));
@@ -157,10 +156,14 @@ state.AllUser = searcheduser?.filter((user) =>
         drawerOperatorClose:(state,action)=>{
       state.drawer=false;
     },
-    getUserdataReq: (state, action) => {},
+    getUserdataReq: (state, action) => {
+
+    },
     getUserdataSuccess: (state, action) => {
     },
-    getUserdataFail: (state, action) => {},
+    getUserdataFail: (state, action) => {
+
+    },
     updateUserRequest: (state, action) => {
       state.userLoading = true;
     },
