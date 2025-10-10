@@ -17,6 +17,8 @@ import {
   getLogginedUserDetailsReq,
   modalOperatorClose,
   modalOperatorOpen,
+  drawerOperatorOpen,
+  drawerOperatorClose,
 } from "../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuUnfoldOutlined } from "@ant-design/icons";
@@ -32,7 +34,8 @@ import { jwtDecode } from "jwt-decode";
 import DashboardTable from "./dashboard/DashboardTable";
 import DashboardCard from "./dashboard/DashboardCard";
 import "../Auth/Dashboard.css";
-import NewUser from "./User_CRUD_Operation/EditUser";
+import EditUser from "./User_CRUD_Operation/EditUser";
+import NewUser from "./User_CRUD_Operation/NewUser";
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -138,6 +141,9 @@ const Dashboard = () => {
   const handleClose=()=>{
     dispatch(modalOperatorClose())
   }
+    const handleDrawerClose=()=>{
+    dispatch(drawerOperatorClose())
+  }
   return (
     <div>
       <Header className="header">
@@ -175,7 +181,7 @@ const Dashboard = () => {
                 type="primary"
                 className="create-user-edit-delete-table-button"
                 style={{ marginTop: "19px", borderRadius: "0" }}
-                onClick={()=>{dispatch(modalOperatorOpen())}}
+                onClick={()=>{dispatch(drawerOperatorOpen())}}
               >
                 Create User
               </Button>
@@ -183,7 +189,8 @@ const Dashboard = () => {
           </Flex>
           <Tabs className="card-table-user-view" items={items}></Tabs>
         </div>
-        <NewUser  handleClose={handleClose}></NewUser>
+        <EditUser  handleClose={handleClose}></EditUser>
+        <NewUser handleClose={handleDrawerClose}></NewUser>
       </div>
     </div>
   );

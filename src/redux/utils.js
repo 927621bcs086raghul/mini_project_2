@@ -18,6 +18,7 @@ const authSlice = createSlice({
     EditUserData: [],
     logoutLoading: false,
     modal: false,
+    drawer:false,
     total: 0,
     userUpdateId:null,
     loadingId:null
@@ -145,6 +146,12 @@ state.AllUser = searcheduser?.filter((user) =>
     modalOperatorClose: (state, action) => {
       state.modal = false;
     },
+    drawerOperatorOpen:(state,action)=>{
+      state.drawer=true;
+    },
+        drawerOperatorClose:(state,action)=>{
+      state.drawer=false;
+    },
     getUserdataReq: (state, action) => {},
     getUserdataSuccess: (state, action) => {
     },
@@ -209,6 +216,8 @@ export const {
   AddUserSuccess,
   modalOperatorClose,
   modalOperatorOpen,
+  drawerOperatorClose,
+  drawerOperatorOpen,
   getUserdataFail,
   getUserdataReq,
   getUserdataSuccess,

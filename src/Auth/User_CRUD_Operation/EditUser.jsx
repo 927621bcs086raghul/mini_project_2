@@ -2,7 +2,7 @@ import { Modal, Form, Input, Button, Flex } from "antd";
 import React, { useEffect } from "react";
 import { AddUserRequest,updateUserRequest } from "../../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
-const NewUser = ({ handleClose, isModalOpen }) => {
+const EditUser = ({ handleClose, isModalOpen }) => {
   const dispatch=useDispatch();
   const [form] = Form.useForm();
   const {modal,userLoading,formerror,modalValue,EditUserData,userUpdateId} = useSelector(
@@ -45,7 +45,7 @@ useEffect(() => {
   return (
     <div>
       <Modal
-        title="New user"
+        title="Edit User"
         open={modal}
         footer={false}
         onCancel={() => {
@@ -59,6 +59,12 @@ useEffect(() => {
           name="new_user_form"
           onFinish={onFinish}
           preserve={false}
+          initialValues={{
+      firstName: EditUserData.firstName || "",
+      lastName: EditUserData.lastName || "",
+      username: EditUserData.username || "",
+      email: EditUserData.email || "",
+    }}
           
         >
           <Form.Item
@@ -113,4 +119,4 @@ useEffect(() => {
   );
 };
 
-export default NewUser;
+export default EditUser;
