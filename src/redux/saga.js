@@ -142,9 +142,10 @@ function* handleUpdateUser(action){
   try{
     console.log("1",action)
     console.log(action?.payload?.id)
-    if(action?.payload?.id > 207){
-      console
-          yield put(updateUserSuccess(action?.payload?.id));
+    console.log(typeof(action.payload?.id)=='number');
+    if(action?.payload?.id > 207 || !(typeof(action.payload?.id)=='number')){
+      console.log(action?.payload?.id)
+          yield put(updateUserSuccess(action?.payload));
     yield put(modalOperatorClose());
     message.success("user Updated successfully")
     }
@@ -165,7 +166,14 @@ function* handleUpdateUser(action){
 }
 function* handleDeleteUser(action){
   try{
+    if(action?.payload?.id > 207 || !(typeof(action.payload?.id)=='number')){
+    yield put(deleteUserSuccess(action.payload));
+
+    }
+    else{
     const resp =yield call(DeleteUser,action.payload)
+
+    }
     yield put(deleteUserSuccess(action.payload));
     message.success("user deleted successfuly");
   }catch{

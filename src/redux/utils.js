@@ -2,6 +2,7 @@ import js from "@eslint/js";
 import { createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { act } from "react";
+import { v4 as uuid } from "uuid";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -60,6 +61,7 @@ const authSlice = createSlice({
       state.allUserLoading = true;
     },
     getAllUserSuccess: (state, action) => {
+      debugger
       state.allUserLoading = false;
       state.AllUser = JSON.parse(localStorage.getItem("users"));
       state.refAllUser = state.AllUser;
@@ -112,7 +114,10 @@ state.AllUser = searcheduser?.filter((user) =>
       state.formerror = false;
       const users = JSON.parse(localStorage.getItem("users"));
       const newUser = action.payload.data;
-      const idcangedForNewUSer = { ...newUser, id: users.length + 1 };
+          const unique_id = uuid();
+          const small_id = unique_id.slice(0, 4);
+      const idcangedForNewUSer = { ...newUser, id: small_id };
+      console.log(idcangedForNewUSer)
       const userExists = users.some((user) => user.email === newUser.email);
       console.log(userExists);
       if (userExists) {
@@ -162,9 +167,13 @@ state.AllUser = searcheduser?.filter((user) =>
     updateUserSuccess: (state, action) => {
       state.userLoading = false;
       const users = JSON.parse(localStorage.getItem("users"));
-      const newUser = action.payload.data || {id:action.payload};
-      const index = users.findIndex((user) => user.id === newUser.id);
+      console.log(users)
+      const newUser = action.payload.data || {id:action?.payload.id,email:action?.payload.values.email,firstName:action?.payload.values.firstName,lastName:action?.payload.values.lastName,username:action?.payload.values.username};
+      console.log(newUser)
+      const index = users.findIndex((user) => user.id == newUser.id);
+      console.log(index)
       if (index !== -1) {
+      console.log(index)
         users[index] = { ...users[index], ...newUser };
         localStorage.setItem("users", JSON.stringify(users));
       }

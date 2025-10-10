@@ -8,22 +8,11 @@ const EditUser = ({ handleClose, isModalOpen }) => {
   const {modal,userLoading,formerror,modalValue,EditUserData,userUpdateId} = useSelector(
     (state) => state.auth
   );
-      if(!formerror){
-      console.log("")
-      form.resetFields();}
+   
 
   const onFinish = (values) => {
-    if(modalValue=='edit'){
       dispatch(updateUserRequest({values:values,id:userUpdateId}))
-    }
-    else{
-dispatch(AddUserRequest(values));
-        console.log(formerror)
-
-    }
-        console.log(formerror)
-
-    
+   
   };
   
 useEffect(() => {
@@ -40,7 +29,6 @@ useEffect(() => {
   }
   
 }, [modalValue,EditUserData, form, modal]);
-  const formButtonValue=(modalValue=='edit')?"Update":"Add user";
 
   return (
     <div>
@@ -110,7 +98,7 @@ useEffect(() => {
               Cancel
             </Button>
             <Button type="primary" htmlType="submit" loading={userLoading}>
-              {formButtonValue}
+              Edit User
             </Button>
           </Flex>
         </Form>

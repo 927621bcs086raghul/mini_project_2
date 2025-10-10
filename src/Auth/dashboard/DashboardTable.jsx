@@ -8,7 +8,7 @@ const DashboardTable = () => {
   const { allUserLoading, AllUser, total, modalValue,loading,loadingId } = useSelector(
     (state) => state.auth
   );
-  const dataSource = AllUser.map((user) => ({
+  const dataSource = AllUser?.map((user) => ({
     key: user.id,
     image: user.image,
     age: user.age,

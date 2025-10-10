@@ -44,25 +44,7 @@ function useDebounce(value, delay) {
   }, [value, delay]);
   return debounced;
 }
-const columns = [
-  {
-    title: "username",
-    dataIndex: "username",
-    width: 150,
-    sorter: (a, b) => a.username.localeCompare(b.username),
-  },
-  {
-    title: "Age",
-    dataIndex: "age",
-    width: 150,
-    sorter: (a, b) => a.age - b.age,
-  },
-  {
-    title: "email",
-    dataIndex: "email",
-    sorter: (a, b) => a.email.localeCompare(b.email),
-  },
-];
+
 const items = [
   {
     key: "Table",
@@ -127,17 +109,11 @@ const Dashboard = () => {
   const content = (
     <div>
       <p style={{ margin: "0px", cursor: "pointer" }} onClick={handleLogout}>
-        logout
+        <LogoutOutlined style={{paddingRight:"5px"}}/>logout
       </p>
     </div>
   );
-  const dataSource = AllUser?.map((user) => ({
-    key: user.id,
-    username: user.username,
-    age: user.age,
-    email: user.email,
-    phone: user.phone,
-  }));
+
   const handleClose=()=>{
     dispatch(modalOperatorClose())
   }

@@ -14,10 +14,7 @@ const NewUser = ({ handleClose }) => {
     userUpdateId,
     drawer,
   } = useSelector((state) => state.auth);
-  if (!formerror) {
-    console.log("");
-    form.resetFields();
-  }
+
 
   const onFinish = (values) => {
     dispatch(AddUserRequest(values));
