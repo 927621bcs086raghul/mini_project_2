@@ -20,7 +20,8 @@ const authSlice = createSlice({
     logoutLoading: false,
     modal: false,
     total: 0,
-    userUpdateId:null
+    userUpdateId:null,
+    loadingId:null
   },
   reducers: {
     loginRequest: (state) => {
@@ -165,10 +166,12 @@ state.AllUser = searcheduser?.filter((user) =>
     },
     deleteUserRequest:(state,action)=>{
       state.loading=true;
+      state.loadingId=action.payload;
     },
     deleteUserSuccess:(state,action)=>{
       debugger
       state.loading=false;
+      state.loadingId=null;
       const users = JSON.parse(localStorage.getItem("users"));
       state.AllUser=users.filter(user=>user.id != action.payload);
       localStorage.setItem("users", JSON.stringify(state.AllUser));

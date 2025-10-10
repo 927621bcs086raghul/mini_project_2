@@ -1,11 +1,11 @@
-import { Tabs, Table, Flex, Avatar, Button } from "antd";
+import { Tabs, Table, Flex, Avatar, Button,Popconfirm} from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DashboardTable.css";
 import { getUserdataReq, modalOperatorOpen,deleteUserRequest } from "../../redux/utils";
 
 const DashboardTable = () => {
-  const { allUserLoading, AllUser, total, modalValue,loading } = useSelector(
+  const { allUserLoading, AllUser, total, modalValue,loading,loadingId } = useSelector(
     (state) => state.auth
   );
   console.log(AllUser);
@@ -59,15 +59,22 @@ const DashboardTable = () => {
             >
               Edit
             </Button>
+            <Popconfirm
+            title="Are you sure to delete this user"
+          placement="top"
+          okText="Yes"
+          loading={loading}
+          cancelText="No"
+          onConfirm={()=>{handleDelete(record.key)}}
+        >
             <Button
               type="primary"
               className="create-user-edit-delete-table-button"
               danger
-              loading={loading}
-              onClick={()=>{handleDelete(record.key)}}
+              loading={loadingId==record.key}
             >
               Delete
-            </Button>
+            </Button></Popconfirm>
           </Flex>
         );
       },
