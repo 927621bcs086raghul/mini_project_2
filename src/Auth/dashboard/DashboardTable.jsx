@@ -8,7 +8,6 @@ const DashboardTable = () => {
   const { allUserLoading, AllUser, total, modalValue,loading,loadingId } = useSelector(
     (state) => state.auth
   );
-  console.log(AllUser);
   const dataSource = AllUser.map((user) => ({
     key: user.id,
     image: user.image,
@@ -63,7 +62,6 @@ const DashboardTable = () => {
             title="Are you sure to delete this user"
           placement="top"
           okText="Yes"
-          loading={loading}
           cancelText="No"
           onConfirm={()=>{handleDelete(record.key)}}
         >
@@ -71,7 +69,7 @@ const DashboardTable = () => {
               type="primary"
               className="create-user-edit-delete-table-button"
               danger
-              loading={loadingId==record.key}
+              // loading={loadingId==record.key}
             >
               Delete
             </Button></Popconfirm>
@@ -81,6 +79,7 @@ const DashboardTable = () => {
     },
   ];
   const handleEdit = (id) => {
+    console.log("id",id)
     dispatch(getUserdataReq(id));
     dispatch(modalOperatorOpen({ option: "edit", id: id }));
   };
@@ -93,7 +92,7 @@ const DashboardTable = () => {
       columns={columns}
       className="user-table"
       dataSource={dataSource}
-      loading={allUserLoading}
+      loading={allUserLoading||loading}
       scroll={{ y: 390, x: "max-content" }}
       pagination={{
         showSizeChanger: false,

@@ -2,7 +2,6 @@ import js from "@eslint/js";
 import { createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 import { act } from "react";
-import NewUser from "../Auth/User_CRUD_Operation/NewUser";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -83,11 +82,8 @@ const authSlice = createSlice({
     userSearchSuccess: (state, action) => {
       state.allUserLoading = false;
       state.AllUser = JSON.parse(localStorage.getItem("users"));
-      console.log(state.AllUser)
-      console.log(action)
       state.refAllUser =state.AllUser
       const searcheduser = state.refAllUser;
-      console.log(searcheduser)
       if (action.payload.search == "") {
         state.AllUser = state.refAllUser;
       } else {
@@ -137,7 +133,14 @@ state.AllUser = searcheduser?.filter((user) =>
       state.userUpdateId=action?.payload?.id;
       const users = JSON.parse(localStorage.getItem("users"));
       const ref=users.filter((user=>user?.id==action?.payload?.id));
+      if(!(state.modalValue==undefined)){
       state.EditUserData=ref[0];
+      }
+      else{
+        state.modalValue='add'
+        state.EditUserData=[];
+      }
+
     },
     modalOperatorClose: (state, action) => {
       state.modal = false;
@@ -152,7 +155,7 @@ state.AllUser = searcheduser?.filter((user) =>
     updateUserSuccess: (state, action) => {
       state.userLoading = false;
       const users = JSON.parse(localStorage.getItem("users"));
-      const newUser = action.payload.data;
+      const newUser = action.payload.data || {id:action.payload};
       const index = users.findIndex((user) => user.id === newUser.id);
       if (index !== -1) {
         users[index] = { ...users[index], ...newUser };

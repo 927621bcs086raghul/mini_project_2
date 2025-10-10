@@ -34,7 +34,13 @@
 .ant-tabs-tab-btn{
     padding: 10px;
 }
-.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+.login-tab .ant-tabs-tab-active{
+color: white;
+}
+.login-tab .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+background-color: #474444;
+
+  color: white;
 }
 .active-menu{
     background-color: #474444;

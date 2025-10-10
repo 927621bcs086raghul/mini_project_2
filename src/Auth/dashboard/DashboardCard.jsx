@@ -13,9 +13,7 @@ const DashboardCard = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentUsers = AllUser.slice(startIndex, endIndex);
-  console.log(currentUsers);
 const handleEdit=(id)=>{
-console.log(id);
  dispatch(getUserdataReq(id));
   dispatch(modalOperatorOpen({option:'edit',id:id}));
 

@@ -26,11 +26,9 @@ dispatch(AddUserRequest(values));
     
   };
   
-  const formButtonValue=(modalValue=='edit')?"Update":"Add user";
 useEffect(() => {
   console.log("22",EditUserData,modalValue)
-  if (modalValue === "edit" && EditUserData) {
-    console.log("hi")
+  if (modalValue === "edit" && EditUserData && modal) {
     form.setFieldsValue({
       firstName: EditUserData.firstName || "",
       lastName: EditUserData.lastName || "",
@@ -40,7 +38,10 @@ useEffect(() => {
   } else {
     form.resetFields();
   }
+  
 }, [modalValue,EditUserData, form, modal]);
+  const formButtonValue=(modalValue=='edit')?"Update":"Add user";
+
   return (
     <div>
       <Modal

@@ -118,7 +118,7 @@ const Login = () => {
   return (
     <Flex justify="center" align="center" className="flex" vertical>
       <div className="modal-signin-signup login-box">
-        <Tabs onChange={onchange} activeKey={activeKey} items={items}></Tabs>
+        <Tabs onChange={onchange} activeKey={activeKey} className="login-tab" items={items}></Tabs>
         <p></p>
       </div>
     </Flex>

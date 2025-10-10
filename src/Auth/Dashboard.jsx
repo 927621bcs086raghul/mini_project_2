@@ -29,12 +29,10 @@ import {
 const { Header, Footer, Sider, Content } = Layout;
 import { data, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import { calc } from "antd/es/theme/internal";
 import DashboardTable from "./dashboard/DashboardTable";
 import DashboardCard from "./dashboard/DashboardCard";
 import "../Auth/Dashboard.css";
-import { icons } from "antd/es/image/PreviewGroup";
-import NewUser from "./User_CRUD_Operation/NewUser";
+import NewUser from "./User_CRUD_Operation/EditUser";
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -107,13 +105,15 @@ const Dashboard = () => {
       return true;
     }
   };
-  if (user?.data?.username == undefined) {
+  useEffect(()=>{
+ if (user?.data?.username == undefined) {
     dispatch(getLogginedUserDetailsReq());
   }
+  },[user?.data?.username])
+ 
   useEffect(() => {
-    console.log(search);
     dispatch(userSearchRequest({ search: search, users: AllUser }));
-    console.log(AllUser);
+    
   }, [debouncedSearch]);
   useEffect(() => {
     dispatch(getAllUserRequest());
