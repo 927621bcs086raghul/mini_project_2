@@ -19,7 +19,6 @@ const handleEdit=(id)=>{
 
 }
   const handleDelete =(id) =>{
-    console.log(id)
     dispatch(deleteUserRequest(id))
   }
   return (

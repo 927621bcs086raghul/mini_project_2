@@ -153,7 +153,6 @@ const Dashboard = () => {
                 className="input-search-user-dashboard"
                 onChange={(e) => {
                   setSearch(e.target.value);
-                  console.log(search);
                 }}
                 suffix={<SearchOutlined className="search-icon" />}
               />

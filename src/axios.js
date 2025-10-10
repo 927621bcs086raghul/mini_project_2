@@ -85,7 +85,6 @@ export function GetSingleUser(action){
   return API.get(`users/${action}`)
 }
 export function UpdateUSer(action,id){
-  console.log(action,id)
   return API.put(`users/${id}`,action)
 }
 export function DeleteUser(id){

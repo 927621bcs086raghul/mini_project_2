@@ -16,7 +16,6 @@ const EditUser = ({ handleClose, isModalOpen }) => {
   };
   
 useEffect(() => {
-  console.log("22",EditUserData,modalValue)
   if (modalValue === "edit" && EditUserData && modal) {
     form.setFieldsValue({
       firstName: EditUserData.firstName || "",

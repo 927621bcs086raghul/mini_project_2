@@ -44,11 +44,9 @@ import { call, takeLatest, put, take } from "redux-saga/effects";
 import { message } from "antd";
 function* handleLogin(action) {
   try {
-    console.log(action.payload);
     const resp = yield call(LoginRequest, action.payload);
 
     yield put(loginSuccess(resp));
-    console.log(resp);
     localStorage.setItem("token", resp.data.accessToken);
     message.success("login successfully");
   } catch (error) {
@@ -58,10 +56,8 @@ function* handleLogin(action) {
 }
 function* handleRegister(action) {
   try {
-    console.log("hi");
     const resp = yield call(Register, action.payload);
     if (resp?.error) {
-      console.log("hi");
       yield put(registerFailure(resp));
       message.error(resp.error);
     } else {
@@ -69,7 +65,6 @@ function* handleRegister(action) {
       message.success("user successfully registered");
     }
   } catch (error) {
-    console.log("ji");
     yield put(registerFailure());
     message.error("failed to register");
   }
@@ -77,7 +72,6 @@ function* handleRegister(action) {
 function* handleAllUser(action) {
   try {
     const resp = yield call(GetAllUser);
-    console.log(resp);
     const existingUsers = localStorage.getItem("users");
     if (
       !existingUsers ||
@@ -85,7 +79,6 @@ function* handleAllUser(action) {
       existingUsers === "null" ||
       existingUsers.length === 0
     ) {
-      console.log(resp);
       localStorage.setItem("users", JSON.stringify(resp.data.users));
     }
     yield put(getAllUserSuccess(resp.data));
@@ -104,7 +97,6 @@ function* handleLogout() {
 }
 function* handleUserSearch(action) {
   try {
-    console.log(action.payload.search);
     yield put(userSearchSuccess(action.payload));
   } catch {
     yield put(userSearchFailure());
@@ -121,14 +113,11 @@ function* handleLoginedUserDetails() {
 function* handleAddUser(action) {
   try {
     const resp = yield call(Adduser, action.payload);
-    console.log(resp);
     const reducerRes = yield put(AddUserSuccess(resp));
-    console.log("ji");
     yield put(modalOperatorClose());
     message.success("user added successfully");
   } catch (Error) {
     yield put(AddUserFailure());
-    console.log(Error);
     message.error("user already exist");
   }
 }
@@ -140,19 +129,13 @@ function* handleGetSingleUser(action) {
 }
 function* handleUpdateUser(action){
   try{
-    console.log("1",action)
-    console.log(action?.payload?.id)
-    console.log(typeof(action.payload?.id)=='number');
     if(action?.payload?.id > 207 || !(typeof(action.payload?.id)=='number')){
-      console.log(action?.payload?.id)
           yield put(updateUserSuccess(action?.payload));
     yield put(modalOperatorClose());
     message.success("user Updated successfully")
     }
     else{
  const resp= yield call(UpdateUSer,action.payload.values,action.payload.id);
-    console.log(resp)
-    
     yield put(updateUserSuccess(resp));
     yield put(modalOperatorClose());
     message.success("user Updated successfully")

@@ -79,12 +79,10 @@ const DashboardTable = () => {
     },
   ];
   const handleEdit = (id) => {
-    console.log("id",id)
     dispatch(getUserdataReq(id));
     dispatch(modalOperatorOpen({ option: "edit", id: id }));
   };
   const handleDelete =(id) =>{
-    console.log(id)
     dispatch(deleteUserRequest(id))
   }
   return (

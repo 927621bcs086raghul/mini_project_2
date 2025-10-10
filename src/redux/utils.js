@@ -32,7 +32,6 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
       state.formerror = false;
-      console.log(state.formerror);
     },
     loginFailure: (state, action) => {
       state.loading = false;
@@ -45,7 +44,6 @@ const authSlice = createSlice({
       state.loading = false;
       state.user = action.payload;
       state.formerror = false;
-      console.log(state.formerror);
     },
     registerFailure: (state, action) => {
       state.loading = false;
@@ -61,14 +59,10 @@ const authSlice = createSlice({
       state.allUserLoading = true;
     },
     getAllUserSuccess: (state, action) => {
-      debugger
       state.allUserLoading = false;
       state.AllUser = JSON.parse(localStorage.getItem("users"));
       state.refAllUser = state.AllUser;
       state.total = state.AllUser.length;
-      console.log(state.total);
-      console.log(state.AllUser);
-      console.log(state.refAllUser);
     },
     getAllUserFailure: (state, action) => {
       state.allUserLoading = false;
@@ -90,15 +84,12 @@ const authSlice = createSlice({
       if (action.payload.search == "") {
         state.AllUser = state.refAllUser;
       } else {
-        console.log(action.payload.search)
-        console.log(state.AllUser);
 state.AllUser = searcheduser?.filter((user) =>
   (user?.username || "")
     .toLowerCase()
     .includes((action.payload?.search || "").toLowerCase())
 );
 
-        console.log(state.AllUser)
       }
     },
     userSearchFailure: (state, action) => {
@@ -116,9 +107,7 @@ state.AllUser = searcheduser?.filter((user) =>
           const unique_id = uuid();
           const small_id = unique_id.slice(0, 4);
       const idcangedForNewUSer = { ...newUser, id: small_id };
-      console.log(idcangedForNewUSer)
       const userExists = users.some((user) => user.email === newUser.email);
-      console.log(userExists);
       if (userExists) {
         state.error = "user already exist";
         return { error: state.error };
@@ -132,7 +121,7 @@ state.AllUser = searcheduser?.filter((user) =>
       state.userLoading = false;
     },
     modalOperatorOpen: (state, action) => {
-      console.log(action.payload)
+    
       state.modal = true;
       state.modalValue = action?.payload?.option;
       state.userUpdateId=action?.payload?.id;
@@ -170,13 +159,11 @@ state.AllUser = searcheduser?.filter((user) =>
     updateUserSuccess: (state, action) => {
       state.userLoading = false;
       const users = JSON.parse(localStorage.getItem("users"));
-      console.log(users)
+   
       const newUser = action.payload.data || {id:action?.payload.id,email:action?.payload.values.email,firstName:action?.payload.values.firstName,lastName:action?.payload.values.lastName,username:action?.payload.values.username};
-      console.log(newUser)
+   
       const index = users.findIndex((user) => user.id == newUser.id);
-      console.log(index)
       if (index !== -1) {
-      console.log(index)
         users[index] = { ...users[index], ...newUser };
         localStorage.setItem("users", JSON.stringify(users));
       }
@@ -197,7 +184,6 @@ state.AllUser = searcheduser?.filter((user) =>
       const users = JSON.parse(localStorage.getItem("users"));
       state.AllUser=users.filter(user=>user.id != action.payload);
       localStorage.setItem("users", JSON.stringify(state.AllUser));
-      console.log(state.AllUser)
     },
     deleteUserFailed:(state,action)=>{
       state.loading=false;
