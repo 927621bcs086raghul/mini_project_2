@@ -141,18 +141,17 @@ const Dashboard = () => {
   return (
     <div>
       <Header className="header">
-        <MenuUnfoldOutlined />
-        <Flex align="center" gap={"10px"}>
           <p style={{ fontSize: "19px", color: "hsl(0deg 0% 99.22%)" }}>
-            {user?.data?.username}
+            Hello! {user?.data?.username}
           </p>
+        <Flex align="center" gap={"10px"}>
+        
           <Popover content={content} trigger="hover">
             <Avatar
               style={{ cursor: "pointer" }}
               className="header-avatar"
-              size={32}
-              icon={<LogoutOutlined />}
-            />
+              size={37}
+            >{user?.data?.username[0].toUpperCase()}</Avatar>
           </Popover>
         </Flex>
       </Header>

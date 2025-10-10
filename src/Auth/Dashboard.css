@@ -12,7 +12,7 @@
 }
 .header-avatar{
     background: hsl(359.33deg 100% 65.1%);
-    border-radius: 0px;
+    border-radius: 50%;
 }
 .input-search-user-dashboard{
     margin-top:19px ;
