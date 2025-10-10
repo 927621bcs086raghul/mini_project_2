@@ -104,7 +104,9 @@ function* handleUserSearch(action) {
 }
 function* handleLoginedUserDetails() {
   try {
+    console.log("hi")
     const res = yield call(GetloginedUserDetails);
+    console.log(res)
     yield put(getLogginedUserDetailsSuccess(res));
   } catch {
     yield put(getLogginedUserDetailsFail());

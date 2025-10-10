@@ -108,7 +108,7 @@ const Dashboard = () => {
   }
   const content = (
     <div>
-      <p style={{ margin: "0px", cursor: "pointer" }}> 
+      <p style={{ margin: "0px", cursor: "pointer" }} onClick={()=> navigate("/profile")}> 
         <ProfileOutlined style={{paddingRight:"5px"}} />Profile
       </p>
       <hr></hr>

@@ -1,0 +1,29 @@
+.profile{
+    background:#f0f2f5 ;
+    padding: 10px;
+    position: relative;
+}
+.prfile-details-head{
+    margin: 0px;
+    padding-top:3px ;
+}
+.profile-header{
+    padding-top: 60px;
+    padding-left: 100px;
+    position: fixed;
+}
+.basic-details{
+    flex-wrap: wrap;
+    width: 900px;
+    background: whitesmoke;
+}
+.profile-details{
+        align-content: center;
+    flex-wrap: wrap;
+
+}
+.company-details{
+    flex-wrap: wrap;
+    width: 900px;
+    background: whitesmoke;
+}
