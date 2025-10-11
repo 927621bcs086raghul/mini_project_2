@@ -57,9 +57,9 @@
 }
 
 .card-table-user-view .ant-tabs-tab-active {
-  border-color: #1677ff;
-  color: #1677ff;
+
   border:solid 1px #1677ff;
+  background: aliceblue;
 }
 
 

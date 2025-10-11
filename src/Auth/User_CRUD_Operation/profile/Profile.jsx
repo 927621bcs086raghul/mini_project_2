@@ -25,6 +25,9 @@ const Profile = () => {
   function handleLogout() {
     dispatch(userLogoutRequest());
   }
+    useEffect(() => {
+      dispatch(getLogginedUserDetailsReq());
+  }, []);
   useEffect(() => {
     if (user?.data?.username == undefined || user.length == 0) {
       dispatch(getLogginedUserDetailsReq());
@@ -88,11 +91,11 @@ const Profile = () => {
       </Header>
       <Flex className="profile-details" gap={40} vertical>
         <p
-          style={{ cursor: "pointer", color: "#2d81fd", fontSize: "17px" }}
+          style={{ cursor: "pointer", color: "#2d81fd", fontSize: "17px" ,width:"fit-content"}}
           onClick={handleBackToUser}
         >
           <ArrowLeftOutlined
-            style={{ paddingRight: "5px", fontSize: "14px" }}
+            style={{ paddingRight: "5px", fontSize: "14px", }}
           />
           Back to users
         </p>
@@ -113,7 +116,7 @@ const Profile = () => {
             </Text>
           </Flex>
         </Flex>
-        <Flex gap={35} style={{ width: "98.5%" }}>
+        <Flex className="profile-detail-for-moblie" gap={35} style={{ width: "98.5%" }}>
           <Flex className="personal-information" vertical>
             <Title level={3}>Personal Information</Title>
             <hr style={{ width: "100%" }}></hr>

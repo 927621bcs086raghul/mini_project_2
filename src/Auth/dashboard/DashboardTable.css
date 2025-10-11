@@ -6,3 +6,6 @@ table tr td:first-child {
 .user-table{
       width: 94vw;
 }
+.ant-table-wrapper .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover{
+  cursor: pointer;
+}

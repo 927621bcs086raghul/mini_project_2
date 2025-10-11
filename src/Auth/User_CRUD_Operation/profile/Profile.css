@@ -30,6 +30,7 @@
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.15);
     border: none;
     background-color: #ffffff;
+    overflow: clip;
 }
 .details-info{
     font-size: 20px;
@@ -59,4 +60,16 @@
 }
 .flex-professtional-detail1{
     width: 50%;
+}
+@media(min-width:320px) and (max-width:770px){
+   .profile-detail-for-moblie{
+    flex-direction: column;
+   }
+   .personal-information{
+    width: 96.5%;
+    overflow: hidden;
+   }
+   .Professional-Info{
+    width: 98%;
+   }
 }
