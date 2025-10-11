@@ -1,105 +1,198 @@
-import { Avatar, Button, Flex, Typography } from 'antd'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { getLogginedUserDetailsReq } from '../../../redux/utils';
-const { Title,Text } = Typography;
-import './Profile.css'
+import { Avatar, Button, Flex, Layout, Typography, Popover } from "antd";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getLogginedUserDetailsReq,
+  userLogoutRequest,
+} from "../../../redux/utils";
+import {
+  MenuUnfoldOutlined,
+  ProfileOutlined,
+  LogoutOutlined,
+  BackwardOutlined,
+  ArrowLeftOutlined,
+} from "@ant-design/icons";
+const { Title, Text } = Typography;
+const { Header } = Layout;
+import "./Profile.css";
+import { useNavigate } from "react-router-dom";
 const Profile = () => {
-  const dispatch=useDispatch()
-    const { allUserLoading, AllUser, total, user,userLoading } = useSelector(
+  const dispatch = useDispatch();
+  const { allUserLoading, AllUser, total, user, userLoading } = useSelector(
     (state) => state.auth
   );
-  console.log(user)
-  useEffect(()=>{
-     if (user?.data?.username == undefined || user.length==0) {
-        dispatch(getLogginedUserDetailsReq());
-      }
-      },[user?.data?.username]);
-      console.log(user?.data?.image)
-  return (
-    <div className='profile'>
-      <Flex justify='start' gap={10} align='center' className='profile-header'>
-        <Avatar src={user?.data?.image} size={100}></Avatar>
-       
-        <Flex justify='start' vertical>
-          <p className='prfile-details-head'>{user?.data?.firstName} {user?.data?.lastName}</p>
-          <p className='prfile-details-head'>{user?.data?.email}</p>
-          <p className='prfile-details-head'>{user?.data?.phone}</p>
-        </Flex>
-      </Flex>
+  const navigate = useNavigate();
+  function handleLogout() {
+    dispatch(userLogoutRequest());
+  }
+  useEffect(() => {
+    if (user?.data?.username == undefined || user.length == 0) {
+      dispatch(getLogginedUserDetailsReq());
+    }
+  }, [user?.data?.username]);
+  console.log(user?.data?.image);
+  const content = (
+    <div>
+      <p
+        style={{ margin: "0px", cursor: "pointer" }}
+        onClick={() => navigate("/profile")}
+      >
+        <ProfileOutlined style={{ paddingRight: "5px" }} />
+        Profile
+      </p>
       <hr></hr>
-      <Flex vertical  className='profile-details'>
-        <Flex vertical className='basic-details'>
-        <Title level={2} >Basic Details</Title>
-        <Flex gap={100}className='basic-details'>
+      <p style={{ margin: "0px", cursor: "pointer" }} onClick={handleLogout}>
+        <LogoutOutlined style={{ paddingRight: "5px" }} />
+        logout
+      </p>
+    </div>
+  );
+  const handleBackToUser = () => {
+    navigate(-1);
+  };
+  const PersonalDetailsToDisplay = [
+    "username",
+    "age",
+    "gender",
+    "email",
+    "phone",
+    "birthDate",
+    "bloodGroup",
+    "height",
+    "weight",
+    "eyeColor",
+    "university",
+  ];
+  const ProfessionalDeatailToDisplay1 = ["department", "name", "title"];
+  const ProfessionalDeatailToDisplay2 = ["ein", "ssn", "macAddress", "role"];
+  const ProfesstionalDetailsData = user?.data?.company || {};
+
+  const personalDetails = user?.data || {};
+  return (
+    <div className="profile">
+      <Header className="header" >
+        <p style={{ fontSize: "19px", color: "hsl(0deg 0% 99.22%)" }}>
+          Hello! {user?.data?.username}
+        </p>
+        <Flex align="center" gap={"10px"}>
+          <Popover content={content} trigger="hover">
+            <Avatar
+              style={{ cursor: "pointer" }}
+              className="header-avatar"
+              size={37}
+            >
+              {user?.data?.username[0].toUpperCase()}
+            </Avatar>
+          </Popover>
+        </Flex>
+      </Header>
+      <Flex className="profile-details" gap={40} vertical>
+        <p
+          style={{ cursor: "pointer", color: "#2d81fd", fontSize: "17px" }}
+          onClick={handleBackToUser}
+        >
+          <ArrowLeftOutlined
+            style={{ paddingRight: "5px", fontSize: "14px" }}
+          />
+          Back to users
+        </p>
+        <Flex className="profile-details-header" gap={15}>
+          <Avatar
+            src={user?.data?.image}
+            size={150}
+            className="profile-header-header-avatar"
+            shape="circle"
+          ></Avatar>
           <Flex vertical>
-          <Title level={4}>First name</Title>
-          <Text>{user?.data?.firstName}</Text>
+            <Title level={2}>
+              {user?.data?.firstName} {user?.data?.lastName}
+            </Title>
+            <Text style={{ margin: "0", color: "#4a5568" }}>
+              Company: {user?.data?.company?.name} | Department:{" "}
+              {user?.data?.company?.department}
+            </Text>
           </Flex>
-          <Flex vertical>
-          <Title level={4}>Last name</Title>
-          <Text>{user?.data?.lastName}</Text>
+        </Flex>
+        <Flex gap={35} style={{ width: "98.5%" }}>
+          <Flex className="personal-information" vertical>
+            <Title level={3}>Personal Information</Title>
+            <hr style={{ width: "100%" }}></hr>
+            {PersonalDetailsToDisplay.map((key) => (
+              <div className="details-info">
+                <p>{key}:</p>
+                <p>{personalDetails[key]}</p>
+              </div>
+            ))}
           </Flex>
-          <Flex vertical>
-          <Title level={4}>Username</Title>
-          <Text>{user?.data?.username}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Username</Title>
-          <Text>{user?.data?.username}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Gender</Title>
-          <Text>{user?.data?.gender}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Age</Title>
-          <Text>{user?.data?.age}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Blood Group</Title>
-          <Text>{user?.data?.bloodGroup}</Text>
-          </Flex>
-           <Flex vertical>
-          <Title level={4}>Date of Birth</Title>
-          <Text>{user?.data?.birthDate}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Height(cm)</Title>
-          <Text>{user?.data?.height}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Weight(kg)</Title>
-          <Text>{user?.data?.weight}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Nation</Title>
-          <Text>{user?.data?.address?.country}</Text>
+          <Flex vertical style={{ width: "98.5%" }} gap={40}>
+            <Flex className="Professional-Info" vertical>
+              <Title level={3}>Address & Professional-Info</Title>
+              <hr style={{ width: "100%" }}></hr>
+              <Flex gap={30}>
+                <Flex vertical gap={40} className="flex-professtional-detail1">
+                  {ProfessionalDeatailToDisplay1?.map((key) => (
+                    <Flex className="professtional-details-info">
+                      <p>{key}:</p>
+                      <p>{ProfesstionalDetailsData[key]}</p>
+                    </Flex>
+                  ))}
+                  <Flex className="professtional-details-info">
+                    <p>Company Address:</p>
+                    <p>
+                      {user?.data?.company?.address?.address},
+                      {user?.data?.company?.address?.city},
+                      {user?.data?.company?.address?.state},
+                      {user?.data?.company?.address?.postalCode}
+                    </p>
+                  </Flex>
+                </Flex>
+                <Flex vertical gap={40}>
+                  {ProfessionalDeatailToDisplay2?.map((key) => (
+                    <Flex className="professtional-details-info">
+                      <p>{key}:</p>
+                      <p>{personalDetails[key]}</p>
+                    </Flex>
+                  ))}
+                </Flex>
+              </Flex>
+            </Flex>
+            <Flex className="Professional-Info" vertical>
+              <Title level={3}>Address & Professional-Info</Title>
+              <hr style={{ width: "100%" }}></hr>
+              <Flex gap={30}>
+                <Flex vertical gap={40} className="flex-professtional-detail1">
+                  {ProfessionalDeatailToDisplay1?.map((key) => (
+                    <Flex className="professtional-details-info">
+                      <p>{key}:</p>
+                      <p>{ProfesstionalDetailsData[key]}</p>
+                    </Flex>
+                  ))}
+                  <Flex className="professtional-details-info">
+                    <p>Company Address:</p>
+                    <p>
+                      {user?.data?.company?.address?.address},
+                      {user?.data?.company?.address?.city},
+                      {user?.data?.company?.address?.state},
+                      {user?.data?.company?.address?.postalCode}
+                    </p>
+                  </Flex>
+                </Flex>
+                <Flex vertical gap={40}>
+                  {ProfessionalDeatailToDisplay2?.map((key) => (
+                    <Flex className="professtional-details-info">
+                      <p>{key}:</p>
+                      <p>{personalDetails[key]}</p>
+                    </Flex>
+                  ))}
+                </Flex>
+              </Flex>
+            </Flex>
           </Flex>
           
         </Flex>
-        </Flex>
-        <hr></hr>
-        <Flex vertical className='company-details'>
-        <Title level={2}>Company Details</Title>
-        <Flex className='company-details' gap={100}>
-        <Flex vertical>
-          <Title level={4}>Department</Title>
-          <Text>{user?.data?.company?.department}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Company name</Title>
-          <Text>{user?.data?.company?.name}</Text>
-          </Flex>
-          <Flex vertical>
-          <Title level={4}>Role</Title>
-          <Text>{user?.data?.company?.title}</Text>
-          </Flex>
-        </Flex>
-        </Flex>
       </Flex>
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

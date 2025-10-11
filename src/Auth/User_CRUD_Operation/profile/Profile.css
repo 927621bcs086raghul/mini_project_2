@@ -1,29 +1,62 @@
 .profile{
-    background:#f0f2f5 ;
-    padding: 10px;
+    background: #f5f6fa;
     position: relative;
 }
-.prfile-details-head{
-    margin: 0px;
-    padding-top:3px ;
-}
-.profile-header{
-    padding-top: 60px;
-    padding-left: 100px;
-    position: fixed;
-}
-.basic-details{
-    flex-wrap: wrap;
-    width: 900px;
-    background: whitesmoke;
+.header{
+    position: sticky;
+    top: 0;
 }
 .profile-details{
-        align-content: center;
-    flex-wrap: wrap;
+    padding: 50px;
+}
+.profile-details-header{
+    padding: 5px;
+    width: 98%;
+    border-radius: 4px;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.15);
+    border: none;
+    background-color: #ffffff;
+}
+.profile-header-header-avatar{
+                border-radius: 50%;
+                box-shadow: 0px 0px 4px 0px;
+                border: 5px solid #e5e7eb; 
+                margin: 10px;
+}
+.personal-information{
+    padding: 15px;
+    width: 35%;
+    border-radius: 4px;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.15);
+    border: none;
+    background-color: #ffffff;
+}
+.details-info{
+    font-size: 20px;
+    display: flex;
+    color: #6b7280;
+    justify-content: space-between;
+}
+.details-info p{
+    margin-bottom: 0px;
+}
+.Professional-Info{
+        padding: 15px;
+    border-radius: 4px;
+    box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.15);
+    border: none;
+    background-color: #ffffff;
+}
+.professtional-details-info{
+        font-size: 20px;
+    display: flex;
+    color: #6b7280;
+    flex-direction: column;
 
 }
-.company-details{
-    flex-wrap: wrap;
-    width: 900px;
-    background: whitesmoke;
+.professtional-details-info p{
+    margin: 0;
+}
+.flex-professtional-detail1{
+    width: 50%;
 }

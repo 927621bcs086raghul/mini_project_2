@@ -18,6 +18,23 @@ API.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+API.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const { status } = error.response || {};
+
+    if (status === 401 && window.location.pathname !== "/signin") {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+
+    if (status === 404) {
+      setTimeout(() => window.history.back(), 1000);
+    }
+
+    return Promise.reject(error);
+  }
+);
 export  function LoginRequest(action) {
       return API.post("auth/login",
         action,
