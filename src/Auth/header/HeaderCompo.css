@@ -1,0 +1,11 @@
+/* Header component styles: reuse header-avatar class used elsewhere */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-avatar{
+  border-radius: 50%;
+  box-sizing: border-box;
+}

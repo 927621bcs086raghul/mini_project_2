@@ -149,3 +149,34 @@
         
     
 }
+/* for dark mode */
+
+.my-body-class .dashboard{
+    background: #1f2937;
+}
+.my-body-class .dashboard-body{
+    background: #1f2937;
+}
+.my-body-class .input-search-user-dashboard{
+    background: #374151;
+}
+.my-body-class .card-table-user-view .ant-tabs-tab-active {
+    background-color: hsl(207deg 100% 7.84%);
+}
+.my-body-class .ant-tabs .ant-tabs-tab{
+    color: white !important;
+}
+ .my-body-class :where(.css-dev-only-do-not-override-1odpy5d).ant-pagination .ant-pagination-item a {
+    background: #374151;
+    border-radius:5px ;
+    color: white;
+}
+.my-body-class .dashboard .ant-flex h2 {
+    color: white;
+}
+.my-body-class .ant-popover .ant-popover-inner{
+    background: #374151;
+}
+.my-body-class .ant-popover-inner-content p{
+ color: white;
+}

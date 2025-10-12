@@ -9,3 +9,21 @@ table tr td:first-child {
 .ant-table-wrapper .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover{
   cursor: pointer;
 }
+
+/*  for drak mode*/
+
+.my-body-class .user-table th ,.user-table td{
+  color: white;
+}
+.my-body-class .user-table thead tr ,th{
+  background: #374151;
+}
+.my-body-class table thead tr th{
+  background: #374151 !important;
+  color: white;
+
+}
+.my-body-class table tbody td{
+    background: #374151;
+  
+}

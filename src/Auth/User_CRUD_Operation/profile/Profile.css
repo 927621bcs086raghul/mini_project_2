@@ -73,3 +73,23 @@
     width: 98%;
    }
 }
+/* for dark mode */
+
+.my-body-class .profile-details{
+    background: #1f2937;
+}
+.my-body-class .profile-details-header{
+    background: #374151;
+}
+.my-body-class .personal-information{
+    background: #374151;
+}
+.my-body-class .Professional-Info{
+    background: #374151;
+}
+.my-body-class .ant-typography{
+    color: aliceblue !important;
+}
+.my-body-class .professtional-details-info p,.details-info p {
+    color: rgb(198, 204, 209);
+}

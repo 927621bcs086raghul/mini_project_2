@@ -36,6 +36,7 @@ import DashboardCard from "./dashboard/DashboardCard";
 import "../Auth/Dashboard.css";
 import EditUser from "./User_CRUD_Operation/EditUser";
 import NewUser from "./User_CRUD_Operation/NewUser";
+import HeaderCompo from './header/HeaderCompo';
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -90,12 +91,7 @@ const Dashboard = () => {
       return true;
     }
   };
-  useEffect(()=>{
- if (user?.data?.username == undefined) {
-    dispatch(getLogginedUserDetailsReq());
-  }
-  },[user?.data?.username])
- 
+
   useEffect(() => {
     dispatch(userSearchRequest({ search: search, users: AllUser }));
     
@@ -126,21 +122,7 @@ const Dashboard = () => {
   }
   return (
     <div>
-      <Header className="header">
-          <p style={{ fontSize: "19px", color: "hsl(0deg 0% 99.22%)" }}>
-            Hello! {user?.data?.username}
-          </p>
-        <Flex align="center" gap={"10px"}>
-        
-          <Popover content={content} trigger="hover">
-            <Avatar
-              style={{ cursor: "pointer" }}
-              className="header-avatar"
-              size={37}
-            >{user?.data?.username[0].toUpperCase()}</Avatar>
-          </Popover>
-        </Flex>
-      </Header>
+      <HeaderCompo />
 
       <div className="dashboard">
         <div className="dashboard-body">

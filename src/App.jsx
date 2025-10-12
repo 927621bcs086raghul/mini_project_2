@@ -1,7 +1,7 @@
 import React from "react";
 import Login from "./Auth/Login";
 import ForgotPassword from "./Auth/ForgotPassword";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import SignUp from "./Auth/SignUp";
 import Dashboard from "./Auth/Dashboard";
 import { Provider } from "react-redux";
@@ -17,6 +17,7 @@ const ProtectedRoute = ({ component }) => {
   const token = localStorage.getItem("token");  
   return token ? component : <Navigate to="/login" />;
 };
+
 function App() {
 
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<PublicRoute component={<Login/>}/>}/>
         <Route path="*" element={<Navigate to="/login"/>} />
         <Route path="/resetPassword" element={<ForgotPassword/>}/>
+
         <Route path="/dashboard" element={<ProtectedRoute component={<Dashboard/>}/>}/>
         <Route path="/profile" element={<ProtectedRoute component={<Profile/>}/>}/>
         </Routes>

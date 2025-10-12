@@ -1,4 +1,4 @@
-import { Avatar, Button, Flex, Layout, Typography, Popover } from "antd";
+import { Avatar, Button, Flex, Layout, Typography } from "antd";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,7 +13,7 @@ import {
   ArrowLeftOutlined,
 } from "@ant-design/icons";
 const { Title, Text } = Typography;
-const { Header } = Layout;
+import HeaderCompo from '../../header/HeaderCompo';
 import "./Profile.css";
 import { useNavigate } from "react-router-dom";
 const Profile = () => {
@@ -28,11 +28,6 @@ const Profile = () => {
     useEffect(() => {
       dispatch(getLogginedUserDetailsReq());
   }, []);
-  useEffect(() => {
-    if (user?.data?.username == undefined || user.length == 0) {
-      dispatch(getLogginedUserDetailsReq());
-    }
-  }, [user?.data?.username]);
   console.log(user?.data?.image);
   const content = (
     <div>
@@ -73,22 +68,7 @@ const Profile = () => {
   const personalDetails = user?.data || {};
   return (
     <div className="profile">
-      <Header className="header" >
-        <p style={{ fontSize: "19px", color: "hsl(0deg 0% 99.22%)" }}>
-          Hello! {user?.data?.username}
-        </p>
-        <Flex align="center" gap={"10px"}>
-          <Popover content={content} trigger="hover">
-            <Avatar
-              style={{ cursor: "pointer" }}
-              className="header-avatar"
-              size={37}
-            >
-              {user?.data?.username[0].toUpperCase()}
-            </Avatar>
-          </Popover>
-        </Flex>
-      </Header>
+      <HeaderCompo />
       <Flex className="profile-details" gap={40} vertical>
         <p
           style={{ cursor: "pointer", color: "#2d81fd", fontSize: "17px" ,width:"fit-content"}}
