@@ -80,7 +80,7 @@ const DashboardTable = () => {
   ];
   const handleEdit = (id) => {
     dispatch(getUserdataReq(id));
-    dispatch(modalOperatorOpen({ option: "edit", id: id }));
+    dispatch(modalOperatorOpen({ option: "Edit", id: id }));
   };
   const handleDelete =(id) =>{
     dispatch(deleteUserRequest(id))

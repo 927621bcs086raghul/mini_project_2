@@ -1,0 +1,11 @@
+.my-body-class .ant-drawer-header, .my-body-class .ant-drawer-close{
+    background: #1f2937 ;
+    color: white;
+}
+.my-body-class .ant-drawer-body{
+    background: #1f2937 ;
+
+}
+.my-body-class .ant-row .ant-col .ant-form-item-required{
+    color: white;
+}

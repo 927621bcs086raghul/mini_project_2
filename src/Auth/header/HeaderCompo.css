@@ -9,3 +9,14 @@
   border-radius: 50%;
   box-sizing: border-box;
 }
+
+/* dark mode */
+.my-body-class .ant-popover .ant-popover-inner{
+    background: #374151;
+}
+.my-body-class .ant-popover-inner-content p{
+ color: white;
+}
+.my-body-class .ant-popover-arrow::after{
+    background: #374151;
+}

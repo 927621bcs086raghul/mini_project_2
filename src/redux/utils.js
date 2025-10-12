@@ -126,9 +126,16 @@ state.AllUser = searcheduser?.filter((user) =>
       state.modalValue = action?.payload?.option;
       state.userUpdateId=action?.payload?.id;
       const users = JSON.parse(localStorage.getItem("users"));
+      console.log(users)
+
       const ref=users.filter((user=>user?.id==action?.payload?.id));
+      console.log(action?.payload?.id)
+      console.log(action?.payload?.option)
+      console.log(ref)
+      console.log(state.modalValue==undefined)
       if(!(state.modalValue==undefined)){
       state.EditUserData=ref[0];
+      console.log(state.EditUserData)
       }
       else{
         state.modalValue='add'
@@ -149,6 +156,7 @@ state.AllUser = searcheduser?.filter((user) =>
 
     },
     getUserdataSuccess: (state, action) => {
+
     },
     getUserdataFail: (state, action) => {
 

@@ -2,6 +2,7 @@ import { Modal, Form, Input, Button, Flex, Drawer } from "antd";
 import React, { useEffect } from "react";
 import { AddUserRequest } from "../../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
+import './NewUser.css'
 const NewUser = ({ handleClose }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();

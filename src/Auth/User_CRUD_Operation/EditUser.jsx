@@ -1,33 +1,37 @@
 import { Modal, Form, Input, Button, Flex } from "antd";
 import React, { useEffect } from "react";
-import { AddUserRequest,updateUserRequest } from "../../redux/utils";
+import { AddUserRequest, updateUserRequest } from "../../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
+import "./EditUser.css"
 const EditUser = ({ handleClose, isModalOpen }) => {
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
-  const {modal,userLoading,formerror,modalValue,EditUserData,userUpdateId} = useSelector(
-    (state) => state.auth
-  );
-   
+  const {
+    modal,
+    userLoading,
+    formerror,
+    modalValue,
+    EditUserData,
+    userUpdateId,
+  } = useSelector((state) => state.auth);
 
   const onFinish = (values) => {
-      dispatch(updateUserRequest({values:values,id:userUpdateId}))
-   
+    dispatch(updateUserRequest({ values: values, id: userUpdateId }));
   };
-  
-useEffect(() => {
-  if (modalValue === "edit" && EditUserData && modal) {
-    form.setFieldsValue({
-      firstName: EditUserData.firstName || "",
-      lastName: EditUserData.lastName || "",
-      username: EditUserData.username || "",
-      email: EditUserData.email || "",
-    });
-  } else {
-    form.resetFields();
-  }
-  
-}, [modalValue,EditUserData, form, modal]);
+
+  useEffect(() => {
+    console.log(modalValue, EditUserData, modal);
+    if (modalValue === "Edit" && EditUserData && modal) {
+      form.setFieldsValue({
+        firstName: EditUserData.firstName || "",
+        lastName: EditUserData.lastName || "",
+        username: EditUserData.username || "",
+        email: EditUserData.email || "",
+      });
+    } else {
+      form.resetFields();
+    }
+  }, [modalValue, EditUserData, modal]);
 
   return (
     <div>
@@ -38,7 +42,6 @@ useEffect(() => {
         onCancel={() => {
           handleClose();
         }}
-        
       >
         <Form
           form={form}
@@ -47,12 +50,11 @@ useEffect(() => {
           onFinish={onFinish}
           preserve={false}
           initialValues={{
-      firstName: EditUserData.firstName || "",
-      lastName: EditUserData.lastName || "",
-      username: EditUserData.username || "",
-      email: EditUserData.email || "",
-    }}
-          
+            firstName: EditUserData.firstName || "",
+            lastName: EditUserData.lastName || "",
+            username: EditUserData.username || "",
+            email: EditUserData.email || "",
+          }}
         >
           <Form.Item
             label="First name"
@@ -81,8 +83,10 @@ useEffect(() => {
           <Form.Item
             label="email"
             name="email"
-            rules={[{ required: true, message: "Please enter email" },
-    { type: "email", message: "Please enter a valid email address" },]}
+            rules={[
+              { required: true, message: "Please enter email" },
+              { type: "email", message: "Please enter a valid email address" },
+            ]}
           >
             <Input placeholder="email" />
           </Form.Item>

@@ -175,12 +175,7 @@
 .my-body-class .dashboard .ant-flex h2 {
     color: white;
 }
-.my-body-class .ant-popover .ant-popover-inner{
-    background: #374151;
-}
-.my-body-class .ant-popover-inner-content p{
- color: white;
-}
+
 .my-body-class .ant-input ,.my-body-class .ant-input-suffix{
     color: white !important;
 }
