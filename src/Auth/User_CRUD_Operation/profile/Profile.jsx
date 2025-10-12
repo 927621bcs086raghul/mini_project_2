@@ -64,6 +64,10 @@ const Profile = () => {
   const ProfessionalDeatailToDisplay1 = ["department", "name", "title"];
   const ProfessionalDeatailToDisplay2 = ["ein", "ssn", "macAddress", "role"];
   const ProfesstionalDetailsData = user?.data?.company || {};
+  const bankdetails =["cardType","cardNumber","cardExpire"];
+  const cryptodetails =["coin","wallet","network"];
+  const bankdetailsdata=user?.data?.bank || {};
+  const cryptodetailsdata=user?.data?.crypto || {};
 
   const personalDetails = user?.data || {};
   return (
@@ -71,7 +75,7 @@ const Profile = () => {
       <HeaderCompo />
       <Flex className="profile-details" gap={40} vertical>
         <p
-          style={{ cursor: "pointer", color: "#2d81fd", fontSize: "17px" ,width:"fit-content"}}
+          style={{ cursor: "pointer", color: "#2d81fd", fontSize: "17px" ,width:"fit-content",margin:"0px"}}
           onClick={handleBackToUser}
         >
           <ArrowLeftOutlined
@@ -140,31 +144,22 @@ const Profile = () => {
               </Flex>
             </Flex>
             <Flex className="Professional-Info" vertical>
-              <Title level={3}>Address & Professional-Info</Title>
+              <Title level={3}>Bank & Crypto-Info</Title>
               <hr style={{ width: "100%" }}></hr>
               <Flex gap={30}>
                 <Flex vertical gap={40} className="flex-professtional-detail1">
-                  {ProfessionalDeatailToDisplay1?.map((key) => (
+                  {bankdetails?.map((key) => (
                     <Flex className="professtional-details-info">
                       <p>{key}:</p>
-                      <p>{ProfesstionalDetailsData[key]}</p>
+                      <p>{bankdetailsdata[key]}</p>
                     </Flex>
                   ))}
-                  <Flex className="professtional-details-info">
-                    <p>Company Address:</p>
-                    <p>
-                      {user?.data?.company?.address?.address},
-                      {user?.data?.company?.address?.city},
-                      {user?.data?.company?.address?.state},
-                      {user?.data?.company?.address?.postalCode}
-                    </p>
-                  </Flex>
                 </Flex>
                 <Flex vertical gap={40}>
-                  {ProfessionalDeatailToDisplay2?.map((key) => (
+                  {cryptodetails?.map((key) => (
                     <Flex className="professtional-details-info">
                       <p>{key}:</p>
-                      <p>{personalDetails[key]}</p>
+                      <p>{cryptodetailsdata[key]}</p>
                     </Flex>
                   ))}
                 </Flex>

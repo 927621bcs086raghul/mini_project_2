@@ -4,7 +4,7 @@
     align-content: space-around;
     align-items: center;
     background:#f0f2f5 ;
-    height:calc(100vh - 64px) ;
+    min-height:calc(100vh - 64px) ;
         
 }
 .card-table-user-view .ant-tabs-nav-list{
@@ -138,6 +138,7 @@
     .card-table-user-view .ant-tabs-nav{
         width: 600px;
     }
+    
 }
 @media(min-width:410px) and (max-width:600px){
     .user-table{
@@ -179,4 +180,7 @@
 }
 .my-body-class .ant-popover-inner-content p{
  color: white;
+}
+.my-body-class .ant-input ,.my-body-class .ant-input-suffix{
+    color: white !important;
 }

@@ -90,6 +90,6 @@
 .my-body-class .ant-typography{
     color: aliceblue !important;
 }
-.my-body-class .professtional-details-info p,.details-info p {
+.my-body-class .professtional-details-info p,.my-body-class .details-info p {
     color: rgb(198, 204, 209);
 }

@@ -2,7 +2,7 @@ import React,{useEffect} from 'react';
 import { Avatar, Flex, Layout, Popover } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ProfileOutlined, LogoutOutlined,MoonOutlined  } from '@ant-design/icons';
+import { ProfileOutlined, LogoutOutlined,MoonFilled  } from '@ant-design/icons';
 import { userLogoutRequest,getLogginedUserDetailsReq } from '../../redux/utils';
 import './HeaderCompo.css';
 
@@ -58,7 +58,7 @@ const handleTheme =()=>{
     <Header className="header">
       <p style={{ fontSize: '19px', color: 'hsl(0deg 0% 99.22%)' }}>Hello! {user?.data?.username}</p>
       <Flex align="center" gap={'10px'}>
-        <MoonOutlined style={{color:"white"}} onClick={handleTheme}/>
+        <MoonFilled style={{color:"white"}} onClick={handleTheme}/>
         <Popover content={content} trigger="hover">
           <Avatar style={{ cursor: 'pointer' }} className="header-avatar" size={37}>
             {user?.data?.username?.[0]?.toUpperCase()}
