@@ -1,17 +1,20 @@
-import React,{useEffect} from 'react';
+import React,{useEffect, useState} from 'react';
 import { Avatar, Flex, Layout, Popover } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { ProfileOutlined, LogoutOutlined,MoonFilled  } from '@ant-design/icons';
+import { ProfileOutlined, LogoutOutlined,MoonFilled,SunFilled  } from '@ant-design/icons';
 import { userLogoutRequest,getLogginedUserDetailsReq } from '../../redux/utils';
 import './HeaderCompo.css';
-
 const { Header } = Layout;
 
 const HeaderCompo = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+    const [theme, setTheme] = useState(() => {
+      const storedTheme = JSON.parse(localStorage.getItem("userTheme"));
+      return storedTheme || false;
+  });
 
   const handleLogout = () => {
     dispatch(userLogoutRequest());
@@ -21,6 +24,7 @@ const HeaderCompo = () => {
       dispatch(getLogginedUserDetailsReq());
     }
   }, [user?.data?.username]);
+    const userTheme1=JSON.parse(localStorage.getItem("userTheme"));
   useEffect(()=>{
     const userTheme=JSON.parse(localStorage.getItem("userTheme"));
     if(!userTheme || userTheme==undefined ){
@@ -48,17 +52,19 @@ const handleTheme =()=>{
     if(!userTheme || userTheme==undefined ){
         document.body.classList.add('my-body-class');
         localStorage.setItem("userTheme","true");
+        setTheme(true)
     }
     else{
         document.body.classList.remove('my-body-class');
         localStorage.setItem("userTheme","false");
+        setTheme(false)
     }
 }
   return (
     <Header className="header">
       <p style={{ fontSize: '19px', color: 'hsl(0deg 0% 99.22%)' }}>Hello! {user?.data?.username}</p>
       <Flex align="center" gap={'10px'}>
-        <MoonFilled style={{color:"white"}} onClick={handleTheme}/>
+        {!theme?<MoonFilled style={{color:"white"}} onClick={handleTheme}/>:<SunFilled style={{color:"white"}} onClick={handleTheme}/>}
         <Popover content={content} trigger="hover">
           <Avatar style={{ cursor: 'pointer' }} className="header-avatar" size={37}>
             {user?.data?.username?.[0]?.toUpperCase()}

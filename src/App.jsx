@@ -26,11 +26,11 @@ function App() {
       <Router>
         <Routes>
         <Route path="/login" element={<PublicRoute component={<Login/>}/>}/>
-        <Route path="*" element={<Navigate to="/login"/>} />
         <Route path="/resetPassword" element={<ForgotPassword/>}/>
 
         <Route path="/dashboard" element={<ProtectedRoute component={<Dashboard/>}/>}/>
         <Route path="/profile" element={<ProtectedRoute component={<Profile/>}/>}/>
+        <Route path="*" element={<Navigate to="/login"/>} />
         </Routes>
       </Router>
       </Provider>

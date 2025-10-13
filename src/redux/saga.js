@@ -104,9 +104,8 @@ function* handleUserSearch(action) {
 }
 function* handleLoginedUserDetails() {
   try {
-    console.log("hi")
     const res = yield call(GetloginedUserDetails);
-    console.log(res)
+
     yield put(getLogginedUserDetailsSuccess(res));
   } catch {
     yield put(getLogginedUserDetailsFail());
@@ -125,8 +124,10 @@ function* handleAddUser(action) {
 }
 function* handleGetSingleUser(action) {
   try {
+
+
     const resp = yield call(GetSingleUser, action.payload);
-    yield put(getUserdataSuccess());
+    yield put(getUserdataSuccess(action.payload));
   } catch {}
 }
 function* handleUpdateUser(action){

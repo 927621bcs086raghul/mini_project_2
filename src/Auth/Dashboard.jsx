@@ -19,6 +19,8 @@ import {
   modalOperatorOpen,
   drawerOperatorOpen,
   drawerOperatorClose,
+  drawerOperatorViewClose,
+  drawerOperatorViewOpen,
 } from "../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuUnfoldOutlined,ProfileOutlined } from "@ant-design/icons";
@@ -37,6 +39,7 @@ import "../Auth/Dashboard.css";
 import EditUser from "./User_CRUD_Operation/EditUser";
 import NewUser from "./User_CRUD_Operation/NewUser";
 import HeaderCompo from './header/HeaderCompo';
+import ViewDetails from "./User_CRUD_Operation/ViewDEtails";
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -120,6 +123,9 @@ const Dashboard = () => {
     const handleDrawerClose=()=>{
     dispatch(drawerOperatorClose())
   }
+  const handleViewUSer =()=>{
+    dispatch(drawerOperatorViewClose())
+  }
   return (
     <div>
       <HeaderCompo />
@@ -152,6 +158,7 @@ const Dashboard = () => {
         </div>
         <EditUser  handleClose={handleClose}></EditUser>
         <NewUser handleClose={handleDrawerClose}></NewUser>
+        <ViewDetails handleClose={handleViewUSer} ></ViewDetails>
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ const authSlice = createSlice({
     userLoading: false,
     error: "",
     user: [],
+    viewUserData:[],
     formerror: true,
     allUserLoading: false,
     AllUser: [],
@@ -20,6 +21,7 @@ const authSlice = createSlice({
     logoutLoading: false,
     modal: false,
     drawer:false,
+    drawerViewUSer:false,
     total: 0,
     userUpdateId:null,
     loadingId:null
@@ -126,16 +128,11 @@ state.AllUser = searcheduser?.filter((user) =>
       state.modalValue = action?.payload?.option;
       state.userUpdateId=action?.payload?.id;
       const users = JSON.parse(localStorage.getItem("users"));
-      console.log(users)
-
       const ref=users.filter((user=>user?.id==action?.payload?.id));
-      console.log(action?.payload?.id)
-      console.log(action?.payload?.option)
-      console.log(ref)
-      console.log(state.modalValue==undefined)
+  
       if(!(state.modalValue==undefined)){
       state.EditUserData=ref[0];
-      console.log(state.EditUserData)
+ 
       }
       else{
         state.modalValue='add'
@@ -149,14 +146,22 @@ state.AllUser = searcheduser?.filter((user) =>
     drawerOperatorOpen:(state,action)=>{
       state.drawer=true;
     },
-        drawerOperatorClose:(state,action)=>{
+    drawerOperatorClose:(state,action)=>{
       state.drawer=false;
+    },drawerOperatorViewOpen:(state,action)=>{
+      state.drawerViewUSer=true;
+            const users = JSON.parse(localStorage.getItem("users"));
+      state.viewUserData = users.find((user) => user.id == action.payload);
+    },
+    drawerOperatorViewClose:(state,action)=>{
+      state.drawerViewUSer=false;
     },
     getUserdataReq: (state, action) => {
 
     },
     getUserdataSuccess: (state, action) => {
-
+      const users = JSON.parse(localStorage.getItem("users"));
+      state.viewUserData = users.find((user) => user.id == action.payload);
     },
     getUserdataFail: (state, action) => {
 
@@ -186,7 +191,6 @@ state.AllUser = searcheduser?.filter((user) =>
       state.loadingId=action.payload;
     },
     deleteUserSuccess:(state,action)=>{
-      debugger
       state.loading=false;
       state.loadingId=null;
       const users = JSON.parse(localStorage.getItem("users"));
@@ -224,6 +228,8 @@ export const {
   modalOperatorOpen,
   drawerOperatorClose,
   drawerOperatorOpen,
+  drawerOperatorViewClose,
+  drawerOperatorViewOpen,
   getUserdataFail,
   getUserdataReq,
   getUserdataSuccess,

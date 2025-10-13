@@ -13,7 +13,7 @@ table tr td:first-child {
 /*  for drak mode*/
 
 .my-body-class .user-table th , .my-body-class .user-table td{
-  color: white;
+  color: white !important;
 }
 .my-body-class .user-table thead tr ,th{
   background: #374151;

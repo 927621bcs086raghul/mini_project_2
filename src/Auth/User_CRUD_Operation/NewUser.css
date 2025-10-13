@@ -9,3 +9,7 @@
 .my-body-class .ant-row .ant-col .ant-form-item-required{
     color: white;
 }
+.my-body-class .ant-form-item label{
+    color: rgb(155, 153, 153);
+
+}

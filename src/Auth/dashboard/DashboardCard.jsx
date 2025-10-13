@@ -2,7 +2,7 @@ import { Avatar, Card, Flex, Pagination,Button,Popconfirm } from "antd";
 const { Meta } = Card;
 import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserdataReq,modalOperatorOpen,deleteUserRequest } from '../../redux/utils';
+import { getUserdataReq,modalOperatorOpen,deleteUserRequest,drawerOperatorViewClose,drawerOperatorViewOpen } from '../../redux/utils';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./DashboardCard.css";
 const DashboardCard = () => {
@@ -21,6 +21,10 @@ const handleEdit=(id)=>{
   const handleDelete =(id) =>{
     dispatch(deleteUserRequest(id))
   }
+    const handleView=(item)=>{
+      dispatch(getUserdataReq(item.id));
+      dispatch(drawerOperatorViewOpen(item.id));
+    }
   return (
     <div>
       <div className="dashboard-card">
@@ -30,12 +34,14 @@ const handleEdit=(id)=>{
             {/* Remember to add a unique 'key' prop */}
             <Card
             hoverable
+            onClick={()=>handleView(item)}
               style={{ width: "250px" }}
               cover={
                 <Avatar className="avatar-card" src={item.image} size={"large"}>
                   
                 </Avatar>
               }
+              
               className="card-with-hover"
             >
               <Meta
@@ -49,14 +55,18 @@ const handleEdit=(id)=>{
                   shape="circle"
                   icon={<EditOutlined />}
                   className="hover-button"
-                  onClick={()=>handleEdit(item.id)}
+                  onClick={(e)=>{
+                    e.stopPropagation()
+                    handleEdit(item.id)}}
                 />
                 <Popconfirm
                             title="Are you sure to delete this user"
                           placement="top"
                           okText="Yes"
                           cancelText="No"
-                          onConfirm={()=>{handleDelete(item.id)}}
+                          onConfirm={(e)=>{
+                            e.stopPropagation()
+                            handleDelete(item.id)}}
                         >
                 <Button
                   type="primary"

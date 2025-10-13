@@ -2,7 +2,7 @@ import { Tabs, Table, Flex, Avatar, Button,Popconfirm} from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./DashboardTable.css";
-import { getUserdataReq, modalOperatorOpen,deleteUserRequest } from "../../redux/utils";
+import { getUserdataReq, modalOperatorOpen,deleteUserRequest, drawerOperatorOpen,drawerOperatorViewOpen } from "../../redux/utils";
 
 const DashboardTable = () => {
   const { allUserLoading, AllUser, total, modalValue,loading,loadingId } = useSelector(
@@ -38,7 +38,7 @@ const DashboardTable = () => {
       title: "First name",
       dataIndex: "firstname",
       sorter: (a, b) => (a.firstname || "").localeCompare(b.firstname || ""),
-    },
+      },
     {
       title: "Last name",
       dataIndex: "lastname",
@@ -52,7 +52,8 @@ const DashboardTable = () => {
             <Button
               type="primary"
               className="create-user-edit-delete-table-button"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation()
                 handleEdit(record.key);
               }}
             >
@@ -63,13 +64,17 @@ const DashboardTable = () => {
           placement="top"
           okText="Yes"
           cancelText="No"
-          onConfirm={()=>{handleDelete(record.key)}}
+          onConfirm={(e)=>{
+            e.stopPropagation()
+            handleDelete(record.key)}}
         >
             <Button
               type="primary"
               className="create-user-edit-delete-table-button"
               danger
-              // loading={loadingId==record.key}
+              onClick={(e)=>{
+                e.stopPropagation()
+              }}
             >
               Delete
             </Button></Popconfirm>
@@ -81,9 +86,14 @@ const DashboardTable = () => {
   const handleEdit = (id) => {
     dispatch(getUserdataReq(id));
     dispatch(modalOperatorOpen({ option: "Edit", id: id }));
+    
   };
   const handleDelete =(id) =>{
     dispatch(deleteUserRequest(id))
+  }
+  const handleView=(record)=>{
+    dispatch(getUserdataReq(record.key));
+    dispatch(drawerOperatorViewOpen(record.key));
   }
   return (
     <Table
@@ -94,6 +104,11 @@ const DashboardTable = () => {
       scroll={{ y: 390, x: "max-content" }}
       pagination={{
         showSizeChanger: false,
+      }}
+      onRow={(record)=>{
+        return{
+          onClick:()=>{handleView(record)}
+        }
       }}
     ></Table>
   );
