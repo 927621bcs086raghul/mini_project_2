@@ -39,7 +39,7 @@ import { data, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import DashboardUserCard from "./dashboard/DashboardUserCard";
 import DashboardUserTable from "./dashboard/DashboardUserTable";
-import "../Auth/Dashboard.css";
+import "./dashboard.css";
 import EditUser from "./User_CRUD_Operation/EditUser";
 import NewUser from "./User_CRUD_Operation/NewUser";
 import HeaderCompo from "./header/HeaderCompo";

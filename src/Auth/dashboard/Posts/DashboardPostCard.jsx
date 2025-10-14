@@ -48,24 +48,21 @@ const DashboardPostCard = () => {
     dispatch(deleteUserRequest(id));
   };
   const handleView = (item) => {
-    // bump visuals for this item when viewing (open drawer)
-    bumpVisualsForItem(item.id ?? item.key ?? item);
     dispatch(getUserdataReq(item.id));
     dispatch(drawerOperatorViewOpen(item.id));
   };
 
-  const getRandomImageUrl = useCallback(() => {
+  const getRandomImageUrl = () => {
     console.log(currentPage)
     console.log(AllPostData.length)
     const randomIndex = Math.floor(Math.random() * imageSources.length);
     return imageSources[randomIndex];
-  },[])
+  }
     const getRandomColr = (colorArray) => {
   const randomIndex = Math.floor(Math.random() * colorArray.length);
   return colorArray[randomIndex];
 };
 
-  // initialize stable images and tag colors per post item
   useEffect(() => {
     if (!AllPostData || !AllPostData.length) return;
     const newImageMap = {};
@@ -85,36 +82,12 @@ const DashboardPostCard = () => {
     setTagColorMap((prev) => ({ ...newTagColorMap, ...prev }));
   }, [AllPostData]);
 
-  const bumpVisualsForItem = (itemId) => {
-    if (!itemId) return;
-    setImageMap((prev) => {
-      const current = prev[itemId];
-      let next = current;
-      for (let i = 0; i < 10; i++) {
-        const candidate = imageSources[Math.floor(Math.random() * imageSources.length)];
-        if (candidate !== current) {
-          next = candidate;
-          break;
-        }
-      }
-      return { ...prev, [itemId]: next };
-    });
-    setTagColorMap((prev) => {
-      const current = prev[itemId] || [];
-      const rotated = current.length
-        ? current.map((c, i) => colors[(colors.indexOf(c) + 1 + i) % colors.length])
-        : [];
-      return { ...prev, [itemId]: rotated };
-    });
-  };
-
   return (
     <div>
       <div className="dashboard-card">
         {currentUsers.map((item) => (
           <div key={item.id}>
             {" "}
-            {/* Remember to add a unique 'key' prop */}
             <Card
               hoverable
               onClick={() => handleView(item)}
@@ -122,7 +95,7 @@ const DashboardPostCard = () => {
               cover={
                 <Avatar
                   className="post-avatar-card"
-                  src={getRandomImageUrl(imageSources)}
+                  src={imageMap[item.id] ?? getRandomImageUrl(imageSources)}
                   size={"large"}
                 ></Avatar>
               }
@@ -132,8 +105,10 @@ const DashboardPostCard = () => {
                 title={
                   <div>
                     <Flex gap={5}>
-                    {item?.tags?.map((tag)=>(
-                      <Tag color={getRandomColr(colors)}>{tag}</Tag>
+                    {item?.tags?.map((tag, tIdx)=>(
+                      <Tag color={
+                        (tagColorMap[item.id] && tagColorMap[item.id][tIdx]) || getRandomColr(colors)
+                      } key={tag + tIdx}>{tag}</Tag>
                     ))}</Flex>
                     <Flex vertical>
                     {item?.AllPostData?.tags}
