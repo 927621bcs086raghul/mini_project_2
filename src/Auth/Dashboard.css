@@ -4,6 +4,7 @@
         align-content: space-around;
         align-items: center;
     background:#f0f2f5 ;
+    justify-content: space-between;
     min-height:calc(100vh - 64px) ;
         
 }
@@ -118,7 +119,6 @@
 }
 @media(min-width:810px) and (max-width:1200px){
     .dashboard{
-        height: 100vh;
     }
     .user-table{
        width: 800px;

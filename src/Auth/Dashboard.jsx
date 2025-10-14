@@ -107,6 +107,7 @@ const Dashboard = () => {
   const token = localStorage.getItem("token");
   const [selectedKey, setSelectedKey] = useState("Users");
   const [headingText, setHeadingText] = useState("Users");
+   const [collapsed, setCollapsed] = useState(false);
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -134,8 +135,10 @@ const Dashboard = () => {
     dispatch(userSearchRequest({ search: search, users: AllUser }));
   }, [debouncedSearch]);
   useEffect(() => {
-    console.log(AllPostData.length)
-    if(selectedKey=="Users" & AllUser.length<0){
+    console.log(AllPostData?.length)
+    console.log(AllUser)
+    console.log(AllUser?.length)
+    if(selectedKey=="Users" & AllUser?.length<=0){
     dispatch(getAllUserRequest());}
     else if(AllPostData.length<=0){
     dispatch(getAllPostRequest());
@@ -164,7 +167,7 @@ const Dashboard = () => {
       <HeaderCompo />
 
       <div className="dashboard">
-        <Sider className="dashboard-sider">
+        <Sider className="dashboard-sider" collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
           <Menu
             theme="dark"
             mode="inline"
