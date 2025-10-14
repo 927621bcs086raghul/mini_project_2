@@ -52,16 +52,6 @@ const DashboardPostCard = () => {
     dispatch(drawerOperatorViewOpen(item.id));
   };
 
-  const getRandomImageUrl = () => {
-    console.log(currentPage)
-    console.log(AllPostData.length)
-    const randomIndex = Math.floor(Math.random() * imageSources.length);
-    return imageSources[randomIndex];
-  }
-    const getRandomColr = (colorArray) => {
-  const randomIndex = Math.floor(Math.random() * colorArray.length);
-  return colorArray[randomIndex];
-};
 
   useEffect(() => {
     if (!AllPostData || !AllPostData.length) return;
@@ -71,7 +61,6 @@ const DashboardPostCard = () => {
       const key = item.id ?? idx;
       const imageIndex = key % imageSources.length;
       newImageMap[key] = imageSources[imageIndex];
-
       if (Array.isArray(item.tags)) {
         newTagColorMap[key] = item.tags.map((t, ti) => colors[(key + ti) % colors.length]);
       } else {
@@ -80,7 +69,7 @@ const DashboardPostCard = () => {
     });
     setImageMap((prev) => ({ ...newImageMap, ...prev }));
     setTagColorMap((prev) => ({ ...newTagColorMap, ...prev }));
-  }, [AllPostData]);
+  }, []);
 
   return (
     <div>
@@ -95,7 +84,7 @@ const DashboardPostCard = () => {
               cover={
                 <Avatar
                   className="post-avatar-card"
-                  src={imageMap[item.id] ?? getRandomImageUrl(imageSources)}
+                  src={imageMap[item.id]}
                   size={"large"}
                 ></Avatar>
               }
@@ -107,7 +96,7 @@ const DashboardPostCard = () => {
                     <Flex gap={5}>
                     {item?.tags?.map((tag, tIdx)=>(
                       <Tag color={
-                        (tagColorMap[item.id] && tagColorMap[item.id][tIdx]) || getRandomColr(colors)
+                        (tagColorMap[item.id] && tagColorMap[item.id][tIdx]) 
                       } key={tag + tIdx}>{tag}</Tag>
                     ))}</Flex>
                     <Flex vertical>
