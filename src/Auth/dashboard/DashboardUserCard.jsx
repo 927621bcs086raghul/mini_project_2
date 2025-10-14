@@ -52,16 +52,7 @@ const DashboardPostCard = () => {
     dispatch(drawerOperatorViewOpen(item.id));
   };
 
-  const getRandomImageUrl = () => {
-    console.log(currentPage)
-    console.log(AllPostData.length)
-    const randomIndex = Math.floor(Math.random() * imageSources.length);
-    return imageSources[randomIndex];
-  }
-    const getRandomColr = (colorArray) => {
-  const randomIndex = Math.floor(Math.random() * colorArray.length);
-  return colorArray[randomIndex];
-};
+
 
   useEffect(() => {
     if (!AllPostData || !AllPostData.length) return;

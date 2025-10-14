@@ -176,7 +176,6 @@ function* handleAllPost(action){
 console.log("hi")
 console.log(resp)
     yield put(getAllPostSuccess(resp));
-    message.success("post fetched successfully")
   }
   catch{
     yield put(getAllPostFailure());
