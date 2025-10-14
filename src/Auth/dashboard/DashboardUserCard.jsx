@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserdataReq,modalOperatorOpen,deleteUserRequest,drawerOperatorViewClose,drawerOperatorViewOpen } from '../../redux/utils';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import "./DashboardCard.css";
-const DashboardCard = () => {
+import "./DashboardUserCard.css";
+const DashboardUserCard = () => {
   const { allUserLoading, AllUser, total,loading,loadingId } = useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const dispatch=useDispatch();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -92,4 +92,4 @@ const handleEdit=(id)=>{
   );
 };
 
-export default DashboardCard;
+export default DashboardUserCard;

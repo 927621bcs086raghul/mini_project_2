@@ -8,6 +8,7 @@ import {
   Input,
   Button,
   Modal,
+  Menu,
 } from "antd";
 import React, { useEffect, useState } from "react";
 import {
@@ -21,25 +22,30 @@ import {
   drawerOperatorClose,
   drawerOperatorViewClose,
   drawerOperatorViewOpen,
+  getAllPostRequest,
 } from "../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
-import { MenuUnfoldOutlined,ProfileOutlined } from "@ant-design/icons";
+import { MenuUnfoldOutlined, ProfileOutlined } from "@ant-design/icons";
 import {
   SearchOutlined,
   TableOutlined,
   UnorderedListOutlined,
   LogoutOutlined,
+  DesktopOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
 import { data, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import DashboardTable from "./dashboard/DashboardTable";
-import DashboardCard from "./dashboard/DashboardCard";
+import DashboardUserCard from "./dashboard/DashboardUserCard";
+import DashboardUserTable from "./dashboard/DashboardUserTable";
 import "../Auth/Dashboard.css";
 import EditUser from "./User_CRUD_Operation/EditUser";
 import NewUser from "./User_CRUD_Operation/NewUser";
-import HeaderCompo from './header/HeaderCompo';
+import HeaderCompo from "./header/HeaderCompo";
 import ViewDetails from "./User_CRUD_Operation/ViewDEtails";
+import DashboardPostCard from "./dashboard/Posts/DashboardPostCard";
+import DashboardPostTable from "./dashboard/Posts/DashboardPostTable";
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -49,34 +55,63 @@ function useDebounce(value, delay) {
   return debounced;
 }
 
-const items = [
+const itemsuser = [
   {
     key: "Table",
     label: "Table",
-    children: <DashboardTable />,
+    children: <DashboardUserTable />,
     icon: <TableOutlined />,
   },
   {
     key: "card",
     label: "card",
-    children: <DashboardCard />,
+    children: <DashboardUserCard />,
     icon: <UnorderedListOutlined />,
+  },
+];
+const itemspost = [
+  {
+    key: "Table",
+    label: "Table",
+    children: <DashboardPostTable />,
+    icon: <TableOutlined />,
+  },
+  {
+    key: "card",
+    label: "card",
+    children: <DashboardPostCard />,
+    icon: <UnorderedListOutlined />,
+  },
+];
+
+const menuItems = [
+  {
+    key: "Users",
+    icon: <UserOutlined />,
+    label: "User",
+  },
+  {
+    key: "Posts",
+    icon: <DesktopOutlined />,
+    label: "Post",
   },
 ];
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allUserLoading, AllUser, total, user,userLoading } = useSelector(
+  const { allUserLoading, AllUser, AllPostData,total, user, userLoading } = useSelector(
     (state) => state.auth
   );
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
+  const token = localStorage.getItem("token");
+  const [selectedKey, setSelectedKey] = useState("Users");
+  const [headingText, setHeadingText] = useState("Users");
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
+    if (!token) {
       navigate("/login");
     }
-  }, [localStorage.getItem("token")]);
-  const token = localStorage.getItem("token");
+  }, [token]);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (isTokenExpired(token)) {
@@ -97,43 +132,51 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(userSearchRequest({ search: search, users: AllUser }));
-    
   }, [debouncedSearch]);
   useEffect(() => {
-    dispatch(getAllUserRequest());
-  }, []);
-  function handleLogout() {
-    dispatch(userLogoutRequest());
-  }
-  const content = (
-    <div>
-      <p style={{ margin: "0px", cursor: "pointer" }} onClick={()=> navigate("/profile")}> 
-        <ProfileOutlined style={{paddingRight:"5px"}} />Profile
-      </p>
-      <hr></hr>
-      <p style={{ margin: "0px", cursor: "pointer" }} onClick={handleLogout}>
-        <LogoutOutlined style={{paddingRight:"5px"}}/>logout
-      </p>
-    </div>
-  );
+    console.log(AllPostData.length)
+    if(selectedKey=="Users" & AllUser.length<0){
+    dispatch(getAllUserRequest());}
+    else if(AllPostData.length<=0){
+    dispatch(getAllPostRequest());
+    }
+  }, [selectedKey]);
 
-  const handleClose=()=>{
-    dispatch(modalOperatorClose())
-  }
-    const handleDrawerClose=()=>{
-    dispatch(drawerOperatorClose())
-  }
-  const handleViewUSer =()=>{
-    dispatch(drawerOperatorViewClose())
-  }
+  const handleClose = () => {
+    dispatch(modalOperatorClose());
+  };
+  const handleDrawerClose = () => {
+    dispatch(drawerOperatorClose());
+  };
+  const handleViewUSer = () => {
+    dispatch(drawerOperatorViewClose());
+  };
+  const handleMenuSelect = ({ key }) => {
+    console.log(key)
+    setSelectedKey(key);
+    const selectedItem = menuItems.find((item) => item.key === key);
+    if (selectedItem) {
+      setHeadingText(selectedItem.label);
+    }
+  };
   return (
     <div>
       <HeaderCompo />
 
       <div className="dashboard">
+        <Sider className="dashboard-sider">
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[selectedKey]}
+            defaultSelectedKeys={["1"]}
+            onSelect={handleMenuSelect}
+            items={menuItems}
+          />
+        </Sider>
         <div className="dashboard-body">
           <Flex className="table-heading" justify="space-between">
-            <h2>Users</h2>
+            <h2>{selectedKey}</h2>
             <Flex gap={15}>
               <Input
                 placeholder="Input search text "
@@ -148,17 +191,19 @@ const Dashboard = () => {
                 type="primary"
                 className="create-user-edit-delete-table-button"
                 style={{ marginTop: "19px", borderRadius: "0" }}
-                onClick={()=>{dispatch(drawerOperatorOpen())}}
+                onClick={() => {
+                  dispatch(drawerOperatorOpen());
+                }}
               >
-                Create User
+                {selectedKey=="Users" ? "Create User" :"Create Post"}
               </Button>
             </Flex>
           </Flex>
-          <Tabs className="card-table-user-view" items={items}></Tabs>
+          <Tabs className="card-table-user-view" items={ selectedKey=="Users"?itemsuser:itemspost}></Tabs>
         </div>
-        <EditUser  handleClose={handleClose}></EditUser>
+        <EditUser handleClose={handleClose}></EditUser>
         <NewUser handleClose={handleDrawerClose}></NewUser>
-        <ViewDetails handleClose={handleViewUSer} ></ViewDetails>
+        <ViewDetails handleClose={handleViewUSer}></ViewDetails>
       </div>
     </div>
   );

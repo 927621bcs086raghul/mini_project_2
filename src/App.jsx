@@ -13,6 +13,7 @@ const PublicRoute = ({ component }) => {
   return !token ? component : <Navigate to="/dashboard" />;
 };
 
+
 const ProtectedRoute = ({ component }) => {
   const token = localStorage.getItem("token");  
   return token ? component : <Navigate to="/login" />;

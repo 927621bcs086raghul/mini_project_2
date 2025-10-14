@@ -107,3 +107,6 @@ export function UpdateUSer(action,id){
 export function DeleteUser(id){
   return API.delete(`users/${id}`)
 }
+export function GetAllPost(){
+  return API.get('/posts?limit=0')
+}

@@ -24,7 +24,10 @@ const authSlice = createSlice({
     drawerViewUSer:false,
     total: 0,
     userUpdateId:null,
-    loadingId:null
+    loadingId:null,
+    AllPostLoading:false,
+    AllPostData:[],
+    postTotal:0,
   },
   reducers: {
     loginRequest: (state) => {
@@ -199,6 +202,17 @@ state.AllUser = searcheduser?.filter((user) =>
     },
     deleteUserFailed:(state,action)=>{
       state.loading=false;
+    },
+    getAllPostRequest:(state,action)=>{
+      state.AllPostLoading=true;
+    },
+    getAllPostSuccess:(state,action)=>{
+      state.AllPostLoading=false,
+      state.AllPostData=action?.payload?.data?.posts;
+      state.postTotal=action?.payload?.data?.total
+    },
+    getAllPostFailure:(state,action)=>{
+      state.AllPostLoading=false
     }
   },
 });
@@ -239,5 +253,8 @@ export const {
   deleteUserFailed,
   deleteUserSuccess,
   deleteUserRequest,
+  getAllPostFailure,
+  getAllPostRequest,
+  getAllPostSuccess,
 } = authSlice.actions;
 export default authSlice.reducer;

@@ -1,8 +1,8 @@
 .dashboard{
-        display: flex;
-    flex-direction: column;
-    align-content: space-around;
-    align-items: center;
+            display: flex;
+        flex-direction: row;
+        align-content: space-around;
+        align-items: center;
     background:#f0f2f5 ;
     min-height:calc(100vh - 64px) ;
         
@@ -94,7 +94,7 @@
 }
 .dashboard-body{
     background: white;
-    width: calc(100vw - 80px);
+    width: calc(100vw - 80px - 200px);
     margin: 20px;
 }
 .table-heading{
@@ -110,6 +110,11 @@
 } 
 .card-table-user-view .ant-tabs-content-holder{
     display: flex;
+}
+
+/* sider bar */
+.dashboard-sider{
+    height: calc(100vh - 64px);
 }
 @media(min-width:810px) and (max-width:1200px){
     .dashboard{

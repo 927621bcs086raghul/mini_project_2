@@ -6,6 +6,7 @@
         justify-content: space-between;
 }
 .ant-card .avatar-card{
+  margin-top: 20px;
     border-radius: 50%;
     width: 100px;
     height: 100px;
@@ -13,7 +14,6 @@
     font-size: 34px;
 }
 .ant-card-cover{
-    padding-top: 20px;
         display: flex;
     justify-content: center;
 }

@@ -29,6 +29,9 @@ import {
   deleteUserFailed,
   deleteUserRequest,
   deleteUserSuccess,
+  getAllPostFailure,
+  getAllPostRequest,
+  getAllPostSuccess,
 } from "./utils";
 import {
   LoginRequest,
@@ -38,7 +41,8 @@ import {
   Adduser,
   GetSingleUser,
   UpdateUSer,
-  DeleteUser
+  DeleteUser,
+  GetAllPost
 } from "../axios";
 import { call, takeLatest, put, take } from "redux-saga/effects";
 import { message } from "antd";
@@ -166,6 +170,19 @@ function* handleDeleteUser(action){
     
   }
 }
+function* handleAllPost(action){
+  try{
+    const resp =yield call(GetAllPost);
+console.log("hi")
+console.log(resp)
+    yield put(getAllPostSuccess(resp));
+    message.success("post fetched successfully")
+  }
+  catch{
+    yield put(getAllPostFailure());
+    message.error("failed to fetch posts")
+  }
+}
 export default function* rootSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(registerRequest.type, handleRegister);
@@ -176,5 +193,6 @@ export default function* rootSaga() {
   yield takeLatest(AddUserRequest.type, handleAddUser);
   yield takeLatest(getUserdataReq.type, handleGetSingleUser);
   yield takeLatest(updateUserRequest.type,handleUpdateUser);
-  yield takeLatest(deleteUserRequest.type,handleDeleteUser)
+  yield takeLatest(deleteUserRequest.type,handleDeleteUser);
+  yield takeLatest(getAllPostRequest.type,handleAllPost)
 }

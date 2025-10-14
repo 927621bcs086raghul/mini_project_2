@@ -1,11 +1,11 @@
 import { Tabs, Table, Flex, Avatar, Button,Popconfirm} from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./DashboardTable.css";
+import "./DashboardUserTable.css";
 import { getUserdataReq, modalOperatorOpen,deleteUserRequest, drawerOperatorOpen,drawerOperatorViewOpen } from "../../redux/utils";
 
-const DashboardTable = () => {
-  const { allUserLoading, AllUser, total, modalValue,loading,loadingId } = useSelector(
+const DashboardUserTable = () => {
+  const { allUserLoading, AllUser,postTotal, modalValue,loading,loadingId } = useSelector(
     (state) => state.auth
   );
   const dataSource = AllUser?.map((user) => ({
@@ -114,4 +114,4 @@ const DashboardTable = () => {
   );
 };
 
-export default DashboardTable;
+export default DashboardUserTable;
