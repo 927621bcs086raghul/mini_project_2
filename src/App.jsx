@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import store from "./redux/middleware";
 import '@ant-design/v5-patch-for-react-19';
 import Profile from "./Auth/User_CRUD_Operation/profile/Profile";
+import ViewPost from "./Auth/dashboard/Posts/ViewPost";
 const PublicRoute = ({ component }) => {
   const token = localStorage.getItem("token");
   return !token ? component : <Navigate to="/dashboard" />;
@@ -28,9 +29,9 @@ function App() {
         <Routes>
         <Route path="/login" element={<PublicRoute component={<Login/>}/>}/>
         <Route path="/resetPassword" element={<ForgotPassword/>}/>
-
         <Route path="/dashboard" element={<ProtectedRoute component={<Dashboard/>}/>}/>
         <Route path="/profile" element={<ProtectedRoute component={<Profile/>}/>}/>
+        <Route path="/post/:id" element={<ProtectedRoute component={<ViewPost/>}/>}/>
         <Route path="*" element={<Navigate to="/login"/>} />
         </Routes>
       </Router>

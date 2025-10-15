@@ -137,6 +137,7 @@
 }
 @media(min-width:810px) and (max-width:1200px){
     .dashboard{
+        
     }
     .user-table{
        width: 800px;

@@ -11,7 +11,7 @@ const authSlice = createSlice({
     userLoading: false,
     error: "",
     user: [],
-    viewUserData:[],
+    viewUserData: [],
     formerror: true,
     allUserLoading: false,
     AllUser: [],
@@ -20,14 +20,15 @@ const authSlice = createSlice({
     EditUserData: [],
     logoutLoading: false,
     modal: false,
-    drawer:false,
-    drawerViewUSer:false,
+    drawer: false,
+    drawerViewUSer: false,
     total: 0,
-    userUpdateId:null,
-    loadingId:null,
-    AllPostLoading:false,
-    AllPostData:[],
-    postTotal:0,
+    userUpdateId: null,
+    loadingId: null,
+    AllPostLoading: false,
+    AllPostData: [],
+    postTotal: 0,
+    postref:[]
   },
   reducers: {
     loginRequest: (state) => {
@@ -84,17 +85,16 @@ const authSlice = createSlice({
     userSearchSuccess: (state, action) => {
       state.allUserLoading = false;
       state.AllUser = JSON.parse(localStorage.getItem("users"));
-      state.refAllUser =state.AllUser
+      state.refAllUser = state.AllUser;
       const searcheduser = state.refAllUser;
       if (action.payload.search == "") {
         state.AllUser = state.refAllUser;
       } else {
-state.AllUser = searcheduser?.filter((user) =>
-  (user?.username || "")
-    .toLowerCase()
-    .includes((action.payload?.search || "").toLowerCase())
-);
-
+        state.AllUser = searcheduser?.filter((user) =>
+          (user?.username || "")
+            .toLowerCase()
+            .includes((action.payload?.search || "").toLowerCase())
+        );
       }
     },
     userSearchFailure: (state, action) => {
@@ -109,8 +109,8 @@ state.AllUser = searcheduser?.filter((user) =>
       state.formerror = false;
       const users = JSON.parse(localStorage.getItem("users"));
       const newUser = action.payload.data;
-          const unique_id = uuid();
-          const small_id = unique_id.slice(0, 4);
+      const unique_id = uuid();
+      const small_id = unique_id.slice(0, 4);
       const idcangedForNewUSer = { ...newUser, id: small_id };
       const userExists = users.some((user) => user.email === newUser.email);
       if (userExists) {
@@ -119,101 +119,112 @@ state.AllUser = searcheduser?.filter((user) =>
       } else {
         users.push(idcangedForNewUSer);
         localStorage.setItem("users", JSON.stringify(users));
-        state.AllUser=users
+        state.AllUser = users;
       }
     },
     AddUserFailure: (state, action) => {
       state.userLoading = false;
     },
     modalOperatorOpen: (state, action) => {
-    
       state.modal = true;
       state.modalValue = action?.payload?.option;
-      state.userUpdateId=action?.payload?.id;
+      state.userUpdateId = action?.payload?.id;
       const users = JSON.parse(localStorage.getItem("users"));
-      const ref=users.filter((user=>user?.id==action?.payload?.id));
-  
-      if(!(state.modalValue==undefined)){
-      state.EditUserData=ref[0];
- 
-      }
-      else{
-        state.modalValue='add'
-        state.EditUserData=[];
-      }
+      const ref = users.filter((user) => user?.id == action?.payload?.id);
 
+      if (!(state.modalValue == undefined)) {
+        state.EditUserData = ref[0];
+      } else {
+        state.modalValue = "add";
+        state.EditUserData = [];
+      }
     },
     modalOperatorClose: (state, action) => {
       state.modal = false;
     },
-    drawerOperatorOpen:(state,action)=>{
-      state.drawer=true;
+    drawerOperatorOpen: (state, action) => {
+      state.drawer = true;
     },
-    drawerOperatorClose:(state,action)=>{
-      state.drawer=false;
-    },drawerOperatorViewOpen:(state,action)=>{
-      state.drawerViewUSer=true;
-            const users = JSON.parse(localStorage.getItem("users"));
+    drawerOperatorClose: (state, action) => {
+      state.drawer = false;
+    },
+    drawerOperatorViewOpen: (state, action) => {
+      state.drawerViewUSer = true;
+      const users = JSON.parse(localStorage.getItem("users"));
       state.viewUserData = users.find((user) => user.id == action.payload);
     },
-    drawerOperatorViewClose:(state,action)=>{
-      state.drawerViewUSer=false;
+    drawerOperatorViewClose: (state, action) => {
+      state.drawerViewUSer = false;
     },
-    getUserdataReq: (state, action) => {
-
-    },
+    getUserdataReq: (state, action) => {},
     getUserdataSuccess: (state, action) => {
       const users = JSON.parse(localStorage.getItem("users"));
       state.viewUserData = users.find((user) => user.id == action.payload);
     },
-    getUserdataFail: (state, action) => {
-
-    },
+    getUserdataFail: (state, action) => {},
     updateUserRequest: (state, action) => {
       state.userLoading = true;
     },
     updateUserSuccess: (state, action) => {
       state.userLoading = false;
       const users = JSON.parse(localStorage.getItem("users"));
-   
-      const newUser = action.payload.data || {id:action?.payload.id,email:action?.payload.values.email,firstName:action?.payload.values.firstName,lastName:action?.payload.values.lastName,username:action?.payload.values.username};
-   
+
+      const newUser = action.payload.data || {
+        id: action?.payload.id,
+        email: action?.payload.values.email,
+        firstName: action?.payload.values.firstName,
+        lastName: action?.payload.values.lastName,
+        username: action?.payload.values.username,
+      };
+
       const index = users.findIndex((user) => user.id == newUser.id);
       if (index !== -1) {
         users[index] = { ...users[index], ...newUser };
         localStorage.setItem("users", JSON.stringify(users));
       }
-      state.AllUser=users
+      state.AllUser = users;
     },
-    
-    updateUserFailed:(state,action)=>{
-      state.userLoading=false;
+
+    updateUserFailed: (state, action) => {
+      state.userLoading = false;
     },
-    deleteUserRequest:(state,action)=>{
-      state.loading=true;
-      state.loadingId=action.payload;
+    deleteUserRequest: (state, action) => {
+      state.loading = true;
+      state.loadingId = action.payload;
     },
-    deleteUserSuccess:(state,action)=>{
-      state.loading=false;
-      state.loadingId=null;
+    deleteUserSuccess: (state, action) => {
+      state.loading = false;
+      state.loadingId = null;
       const users = JSON.parse(localStorage.getItem("users"));
-      state.AllUser=users.filter(user=>user.id != action.payload);
+      state.AllUser = users.filter((user) => user.id != action.payload);
       localStorage.setItem("users", JSON.stringify(state.AllUser));
     },
-    deleteUserFailed:(state,action)=>{
-      state.loading=false;
+    deleteUserFailed: (state, action) => {
+      state.loading = false;
     },
-    getAllPostRequest:(state,action)=>{
-      state.AllPostLoading=true;
+    getAllPostRequest: (state, action) => {
+      state.AllPostLoading = true;
     },
-    getAllPostSuccess:(state,action)=>{
-      state.AllPostLoading=false,
-      state.AllPostData=action?.payload?.data?.posts;
-      state.postTotal=action?.payload?.data?.total
+    getAllPostSuccess: (state, action) => {
+      (state.AllPostLoading = false),
+        (state.AllPostData = action?.payload?.data?.posts);
+      state.postTotal = action?.payload?.data?.total;
     },
-    getAllPostFailure:(state,action)=>{
-      state.AllPostLoading=false
-    }
+    getAllPostFailure: (state, action) => {
+      state.AllPostLoading = false;
+    },
+    setSeacrhPOst: (state, action) => {
+      const posts = state.AllPostData;
+      if (action.payload.search == "") {
+        return
+      } else {
+        state.AllPostData = posts?.filter((post) =>
+          (post?.title || "")
+            .toLowerCase()
+            .includes((action.payload?.search || "").toLowerCase())
+        );
+      }
+    },
   },
 });
 
@@ -256,5 +267,6 @@ export const {
   getAllPostFailure,
   getAllPostRequest,
   getAllPostSuccess,
+  setSeacrhPOst,
 } = authSlice.actions;
 export default authSlice.reducer;

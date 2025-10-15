@@ -23,6 +23,7 @@ import {
   drawerOperatorViewClose,
   drawerOperatorViewOpen,
   getAllPostRequest,
+  setSeacrhPOst,
 } from "../redux/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { MenuUnfoldOutlined, ProfileOutlined } from "@ant-design/icons";
@@ -99,15 +100,14 @@ const menuItems = [
 const Dashboard = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { allUserLoading, AllUser, AllPostData,total, user, userLoading } = useSelector(
-    (state) => state.auth
-  );
+  const { allUserLoading, AllUser, AllPostData, total, user, userLoading } =
+    useSelector((state) => state.auth);
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
   const token = localStorage.getItem("token");
   const [selectedKey, setSelectedKey] = useState("Users");
   const [headingText, setHeadingText] = useState("Users");
-   const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
   useEffect(() => {
     if (!token) {
       navigate("/login");
@@ -132,16 +132,20 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    dispatch(userSearchRequest({ search: search, users: AllUser }));
+    if (selectedKey == "Users") {
+      dispatch(userSearchRequest({ search: search }));
+    } else {
+      dispatch(setSeacrhPOst({ search: search }));
+    }
   }, [debouncedSearch]);
   useEffect(() => {
-    console.log(AllPostData?.length)
-    console.log(AllUser)
-    console.log(AllUser?.length)
-    if(selectedKey=="Users" & AllUser?.length<=0){
-    dispatch(getAllUserRequest());}
-    else if(AllPostData.length<=0){
-    dispatch(getAllPostRequest());
+    console.log(AllPostData?.length);
+    console.log(AllUser);
+    console.log(AllUser?.length);
+    if ((selectedKey == "Users") & (AllUser?.length <= 0)) {
+      dispatch(getAllUserRequest());
+    } else if (AllPostData.length <= 0) {
+      dispatch(getAllPostRequest());
     }
   }, [selectedKey]);
 
@@ -155,7 +159,7 @@ const Dashboard = () => {
     dispatch(drawerOperatorViewClose());
   };
   const handleMenuSelect = ({ key }) => {
-    console.log(key)
+    console.log(key);
     setSelectedKey(key);
     const selectedItem = menuItems.find((item) => item.key === key);
     if (selectedItem) {
@@ -167,7 +171,15 @@ const Dashboard = () => {
       <HeaderCompo />
 
       <div className="dashboard">
-        <Sider className="dashboard-sider"breakpoint="lg" width={150} collapsedWidth={0} collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+        <Sider
+          className="dashboard-sider"
+          breakpoint="lg"
+          width={150}
+          collapsedWidth={0}
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+        >
           <Menu
             theme="dark"
             mode="inline"
@@ -190,19 +202,24 @@ const Dashboard = () => {
                 }}
                 suffix={<SearchOutlined className="search-icon" />}
               />
-              <Button
-                type="primary"
-                className="create-user-edit-delete-table-button"
-                style={{ marginTop: "19px", borderRadius: "0" }}
-                onClick={() => {
-                  dispatch(drawerOperatorOpen());
-                }}
-              >
-                {selectedKey=="Users" ? "Create User" :"Create Post"}
-              </Button>
+              {selectedKey === "Users" && (
+                <Button
+                  type="primary"
+                  className="create-user-edit-delete-table-button"
+                  style={{ marginTop: "19px", borderRadius: "0" }}
+                  onClick={() => {
+                    dispatch(drawerOperatorOpen());
+                  }}
+                >
+                  Create user
+                </Button>
+              )}
             </Flex>
           </Flex>
-          <Tabs className="card-table-user-view" items={ selectedKey=="Users"?itemsuser:itemspost}></Tabs>
+          <Tabs
+            className="card-table-user-view"
+            items={selectedKey == "Users" ? itemsuser : itemspost}
+          ></Tabs>
         </div>
         <EditUser handleClose={handleClose}></EditUser>
         <NewUser handleClose={handleDrawerClose}></NewUser>

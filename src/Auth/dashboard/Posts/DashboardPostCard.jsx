@@ -148,7 +148,7 @@ const DashboardPostCard = () => {
                         size={40}
                         style={{ fontSize: "20px", background: "#e3d5d5" }}
                       ></Avatar>
-                      <h3  className="card-owner" >
+                      <h3  className="card-owner" style={{display:"flex",margin:"0",alignItems:"center"}}>
                         {AllUser?.find((u) => u.id === item.userId)?.username}
                       </h3>
                     </Flex>

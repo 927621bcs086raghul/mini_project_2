@@ -3,6 +3,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../DashboardUserTable.css";
 import { getUserdataReq, modalOperatorOpen,deleteUserRequest, drawerOperatorOpen,drawerOperatorViewOpen } from "../../../redux/utils";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPostTable = () => {
   const { allUserLoading, AllPostData, total, modalValue,loading,loadingId } = useSelector(
@@ -13,9 +14,11 @@ const DashboardPostTable = () => {
     title:user.title,
     reactions: user.reactions.likes,
     views:user.views,
-    userId:user.userId
+    userId:user.userId,
+    postTags:user.tags
   }));
   const dispatch = useDispatch();
+  const navigate= useNavigate();
   const columns = [
     {
       title: "Title",
@@ -35,6 +38,16 @@ const DashboardPostTable = () => {
       title: "Created User Id",
       dataIndex: "userId",
 
+    },
+    {
+      title:"Tags",
+      dataIndex:"tags",
+      render:(_,record)=>{
+        const tags=record?.postTags
+        return(
+         <p>{tags?.join(', ')}</p>
+        )
+      }
     },
     {
       title: "Action",
@@ -84,8 +97,7 @@ const DashboardPostTable = () => {
     dispatch(deleteUserRequest(id))
   }
   const handleView=(record)=>{
-    dispatch(getUserdataReq(record.key));
-    dispatch(drawerOperatorViewOpen(record.key));
+      navigate(`/post/${record.key}`);
   }
   return (
     <Table
@@ -102,6 +114,7 @@ const DashboardPostTable = () => {
           onClick:()=>{handleView(record)}
         }
       }}
+      
     ></Table>
   );
 };
