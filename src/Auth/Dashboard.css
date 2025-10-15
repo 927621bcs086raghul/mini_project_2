@@ -115,7 +115,7 @@
 
 /* sider bar */
 .dashboard-sider{
-    height: calc(100vh - 64px);
+    height: -webkit-fill-available;
 }
 @media(min-width:810px) and (max-width:1200px){
     .dashboard{

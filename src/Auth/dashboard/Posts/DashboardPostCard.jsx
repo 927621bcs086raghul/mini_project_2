@@ -26,7 +26,7 @@ const imageSources = [
 const colors = ['#874242ff', '#558155ff', '#7777c2ff'];
 console.log(colors, 'colors')
 const DashboardPostCard = () => {
-  const { allUserLoading, AllPostData, total, loading, loadingId } = useSelector(
+  const { allUserLoading, AllPostData, total, loading, loadingId,AllUser } = useSelector(
     (state) => state.auth
   );
   const [currentPage, setCurrentPage] = useState(1);
@@ -57,6 +57,7 @@ const DashboardPostCard = () => {
     if (!AllPostData || !AllPostData.length) return;
     const newImageMap = {};
     const newTagColorMap = {};
+  
     AllPostData.forEach((item, idx) => {
       const key = item.id ?? idx;
       const imageIndex = key % imageSources.length;
@@ -68,7 +69,9 @@ const DashboardPostCard = () => {
       }
     });
     setImageMap((prev) => ({ ...newImageMap, ...prev }));
+    console.log(imageMap)
     setTagColorMap((prev) => ({ ...newTagColorMap, ...prev }));
+    console.log(tagColorMap)
   }, []);
 
   return (
@@ -94,19 +97,30 @@ const DashboardPostCard = () => {
                 title={
                   <div>
                     <Flex gap={5}>
-                    {item?.tags?.map((tag, tIdx)=>(
+                    {item?.tags?.map((tag, tIdx)=>{
+                      console.log(item)
+                      return(
                       <Tag color={
                         (tagColorMap[item.id] && tagColorMap[item.id][tIdx]) 
                       } key={tag + tIdx}>{tag}</Tag>
-                    ))}</Flex>
+        )})}</Flex>
                     <Flex vertical>
                     {item?.AllPostData?.tags}
                     <Title  ellipsis style={{maxWidth: '200px' ,marginTop:"5px"}} level={4}>{item.title}</Title>
                     </Flex>
                   </div>}
                 style={{ textAlign: "center" }}
-                description={
+                description={<Flex vertical>
                   <Paragraph style={{textAlign:"start"}} ellipsis={{ rows: 2 }}>{item.body}</Paragraph>
+                 <Flex gap={10}>
+                  <Avatar src={AllUser?.find(u => u.id === item.userId)?.image} size={40} style={{fontSize:"20px",background:"#e3d5d5"}}>
+                  </Avatar>
+                  <h3>
+                      {AllUser?.find(u => u.id === item.userId)?.username}
+
+                  </h3>
+                 </Flex>
+                 </Flex>
                   }
               />
               <div className="hover-buttons">

@@ -7,13 +7,13 @@
 
 /*  for drak mode*/
 
-.my-body-class .user-table th , .my-body-class .user-table td{
+.my-body-class .user-table th , .my-body-class .user-table td,.my-body-class .user-table td .ant-table-column-sort,.my-body-class .ant-table-wrapper td.ant-table-column-sort{
   color: white !important;
 }
 .my-body-class .user-table thead tr ,th{
   background: #374151;
 }
-.my-body-class table thead tr th{
+.my-body-class table thead tr th,.my-body-class .ant-table-wrapper td.ant-table-column-sort{
   background: #374151 !important;
   color: white;
 
