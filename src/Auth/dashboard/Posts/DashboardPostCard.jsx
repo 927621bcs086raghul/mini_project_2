@@ -199,7 +199,6 @@ const DashboardPostCard = () => {
         showSizeChanger={false}
         onChange={(page) => setCurrentPage(page)}
       />
-      <ViewPost></ViewPost>
     </div>
   );
 };

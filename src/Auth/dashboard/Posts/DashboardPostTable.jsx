@@ -77,7 +77,8 @@ const DashboardPostTable = () => {
     dispatch(deleteUserRequest(id))
   }
   const handleView=(record)=>{
-      navigate(`/post/${record.key}`);
+    console.log("hi")
+      navigate(`/dashboard/post/${record.key}`);
   }
   return (
     <Table

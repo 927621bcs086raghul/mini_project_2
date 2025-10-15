@@ -1,7 +1,7 @@
-import React from "react";
-import { Layout, Menu } from "antd";
-const { Sider } = Layout;
+import React from 'react';
+import { Layout, Menu } from 'antd';
 
+const { Sider } = Layout;
 const SideBar = ({ selectedKey, onSelect, collapsed, onCollapse, menuItems }) => {
   return (
     <Sider
@@ -17,7 +17,7 @@ const SideBar = ({ selectedKey, onSelect, collapsed, onCollapse, menuItems }) =>
         theme="dark"
         mode="inline"
         selectedKeys={[selectedKey]}
-        defaultSelectedKeys={["1"]}
+        defaultSelectedKeys={[String(menuItems?.[0]?.key ?? '1')]}
         onSelect={onSelect}
         items={menuItems}
       />

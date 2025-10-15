@@ -38,15 +38,8 @@ const handleBack =()=>{
 }
   return (
     <div>
-      <HeaderCompo />
       <div className='dashboard'>
-        <SideBar
-          selectedKey={'Posts'}
-          onSelect={() => {}}
-          collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
-          menuItems={menuItems}
-        />
+
         <div className='body-post'>
         <div className='view-post view-post-details'>
           <Flex vertical gap={10}>

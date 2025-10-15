@@ -102,7 +102,7 @@
 }
 .create-user-edit-delete-table-button{
     border-radius: 0;
-    
+
 }
 .card-table-user-view .ant-tabs-nav .ant-tabs-nav-wrap{
     display: flex;
@@ -233,6 +233,9 @@
 }
 .my-body-class .input-search-user-dashboard{
     background: #374151;
+}
+.my-body-class .dashboard-body{
+    color: white;
 }
 .my-body-class .card-table-user-view .ant-tabs-tab-active {
     background-color: hsl(207deg 100% 7.84%);

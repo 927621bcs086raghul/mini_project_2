@@ -1,15 +1,4 @@
-import {
-  Layout,
-  Table,
-  Avatar,
-  Popover,
-  Flex,
-  Tabs,
-  Input,
-  Button,
-  Modal,
-  Menu,
-} from "antd";
+import { Layout, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import {
   getAllUserRequest,
@@ -36,67 +25,25 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 const { Header, Footer, Sider, Content } = Layout;
-import { data, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
-import DashboardUserCard from "./dashboard/DashboardUserCard";
-import DashboardUserTable from "./dashboard/DashboardUserTable";
+import { useNavigate, useLocation, Outlet } from "react-router-dom";
+import {jwtDecode} from "jwt-decode";
 import "./dashboard.css";
 import EditUser from "./User_CRUD_Operation/EditUser";
 import NewUser from "./User_CRUD_Operation/NewUser";
 import HeaderCompo from "./header/HeaderCompo";
 import SideBar from "./header/SideBar";
 import ViewDetails from "./User_CRUD_Operation/ViewDEtails";
-import DashboardPostCard from "./dashboard/Posts/DashboardPostCard";
-import DashboardPostTable from "./dashboard/Posts/DashboardPostTable";
 import ViewPost from "./dashboard/Posts/ViewPost";
-function useDebounce(value, delay) {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const handler = setTimeout(() => setDebounced(value), delay);
-    return () => clearTimeout(handler);
-  }, [value, delay]);
-  return debounced;
-}
-
-const itemsuser = [
-  {
-    key: "Table",
-    label: "Table",
-    children: <DashboardUserTable />,
-    icon: <TableOutlined />,
-  },
-  {
-    key: "card",
-    label: "card",
-    children: <DashboardUserCard />,
-    icon: <UnorderedListOutlined />,
-  },
-];
-const itemspost = [
-  {
-    key: "Table",
-    label: "Table",
-    children: <DashboardPostTable />,
-    icon: <TableOutlined />,
-  },
-  {
-    key: "card",
-    label: "card",
-    children: <DashboardPostCard />,
-    icon: <UnorderedListOutlined />,
-  },
-];
-
 const menuItems = [
   {
-    key: "Users",
+    key: "users",
     icon: <UserOutlined />,
-    label: "User",
+    label: "Users",
   },
   {
-    key: "Posts",
+    key: "posts",
     icon: <DesktopOutlined />,
-    label: "Post",
+    label: "Posts",
   },
 ];
 const Dashboard = () => {
@@ -104,10 +51,8 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const { allUserLoading, AllUser, AllPostData, total, user, userLoading } =
     useSelector((state) => state.auth);
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebounce(search, 500);
   const token = localStorage.getItem("token");
-  const [selectedKey, setSelectedKey] = useState("Users");
+  const [selectedKey, setSelectedKey] = useState("users");
   const [headingText, setHeadingText] = useState("Users");
   const [collapsed, setCollapsed] = useState(false);
   useEffect(() => {
@@ -133,23 +78,20 @@ const Dashboard = () => {
     }
   };
 
+  // keep Dashboard as a layout; the detailed Users/Posts hooks/UI live in
+  // the nested components (UsersView / PostsView). Update selectedKey
+  // based on current location so the sidebar highlights correctly.
+  const location = useLocation();
   useEffect(() => {
-    if (selectedKey == "Users") {
-      dispatch(userSearchRequest({ search: search }));
-    } else {
-      dispatch(setSeacrhPOst({ search: search }));
-    }
-  }, [debouncedSearch]);
-  useEffect(() => {
-    console.log(AllPostData?.length);
-    console.log(AllUser);
-    console.log(AllUser?.length);
-    if ((selectedKey == "Users") & (AllUser?.length <= 0)) {
-      dispatch(getAllUserRequest());
-    } else if (AllPostData.length <= 0) {
-      dispatch(getAllPostRequest());
-    }
-  }, [selectedKey]);
+    const parts = location.pathname.split("/").filter(Boolean);
+    const last = parts[parts.length - 1] || "users";
+    // normalize to our keys
+    const key = last === "dashboard" ? "users" : last;
+    setSelectedKey(key);
+    const selectedItem = menuItems.find((item) => item.key === key);
+    if (selectedItem) setHeadingText(selectedItem.label);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   const handleClose = () => {
     dispatch(modalOperatorClose());
@@ -163,13 +105,11 @@ const Dashboard = () => {
   const handleMenuSelect = ({ key }) => {
     console.log(key);
     setSelectedKey(key);
-    const selectedItem = menuItems.find((item) => item.key === key);
-    if (selectedItem) {
-      setHeadingText(selectedItem.label);
-    }
+    navigate(`/dashboard/${key}`);
   };
   const handlePostViewBack =()=>{
     setSelectedKey("posts");
+    navigate(`/dashboard/posts`);
   }
   return (
     <div>
@@ -184,36 +124,8 @@ const Dashboard = () => {
           menuItems={menuItems}
         />
         <div className="dashboard-body">
-          <Flex className="table-heading" justify="space-between">
-            <h2>{selectedKey}</h2>
-            <Flex gap={15}>
-              <Input
-                placeholder="Input search text "
-                value={search}
-                className="input-search-user-dashboard"
-                onChange={(e) => {
-                  setSearch(e.target.value);
-                }}
-                suffix={<SearchOutlined className="search-icon" />}
-              />
-              {selectedKey === "Users" && (
-                <Button
-                  type="primary"
-                  className="create-user-edit-delete-table-button"
-                  style={{ marginTop: "19px", borderRadius: "0" }}
-                  onClick={() => {
-                    dispatch(drawerOperatorOpen());
-                  }}
-                >
-                  Create user
-                </Button>
-              )}
-            </Flex>
-          </Flex>
-          <Tabs
-            className="card-table-user-view"
-            items={selectedKey == "Users" ? itemsuser : itemspost}
-          ></Tabs>
+          {/* Nested routes will render here */}
+          <Outlet />
         </div>
         <EditUser handleClose={handleClose}></EditUser>
         <NewUser handleClose={handleDrawerClose}></NewUser>

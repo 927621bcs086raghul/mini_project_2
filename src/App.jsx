@@ -4,6 +4,8 @@ import ForgotPassword from "./Auth/ForgotPassword";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet } from "react-router-dom";
 import SignUp from "./Auth/SignUp";
 import Dashboard from "./Auth/Dashboard";
+import UsersView from "./Auth/UsersView";
+import PostsView from "./Auth/PostsView";
 import { Provider } from "react-redux";
 import store from "./redux/middleware";
 import '@ant-design/v5-patch-for-react-19';
@@ -29,9 +31,13 @@ function App() {
         <Routes>
         <Route path="/login" element={<PublicRoute component={<Login/>}/>}/>
         <Route path="/resetPassword" element={<ForgotPassword/>}/>
-        <Route path="/dashboard" element={<ProtectedRoute component={<Dashboard/>}/>}/>
+        <Route path="/dashboard" element={<ProtectedRoute component={<Dashboard/>}/> }>
+          <Route index element={<Navigate to="users" replace />} />
+          <Route path="users" element={<ProtectedRoute component={<UsersView/>}/>} />
+          <Route path="posts" element={<ProtectedRoute component={<PostsView/>}/>} />
+          <Route path="post/:id" element={<ProtectedRoute component={<ViewPost/>}/>} />
+        </Route>
         <Route path="/profile" element={<ProtectedRoute component={<Profile/>}/>}/>
-        <Route path="/post/:id" element={<ProtectedRoute component={<ViewPost/>}/>}/>
         <Route path="*" element={<Navigate to="/login"/>} />
         </Routes>
       </Router>
