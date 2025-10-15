@@ -45,7 +45,7 @@ const DashboardPostTable = () => {
       render:(_,record)=>{
         const tags=record?.postTags
         return(
-         <p>{tags?.join(', ')}</p>
+         <>{tags?.join(', ')}</>
         )
       }
     },
@@ -55,34 +55,14 @@ const DashboardPostTable = () => {
         return (
           <Flex gap={15}>
             <Button
-              type="primary"
-              className="create-user-edit-delete-table-button"
+              className="create-post-view-table-button"
               onClick={(e) => {
                 e.stopPropagation()
                 handleEdit(record.key);
               }}
             >
-              Edit
+              View
             </Button>
-            <Popconfirm
-            title="Are you sure to delete this user"
-          placement="top"
-          okText="Yes"
-          cancelText="No"
-          onConfirm={(e)=>{
-            e.stopPropagation()
-            handleDelete(record.key)}}
-        >
-            <Button
-              type="primary"
-              className="create-user-edit-delete-table-button"
-              danger
-              onClick={(e)=>{
-                e.stopPropagation()
-              }}
-            >
-              Delete
-            </Button></Popconfirm>
           </Flex>
         );
       },

@@ -4,7 +4,11 @@
 .ant-table-wrapper .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover{
   cursor: pointer;
 }
-
+.create-post-view-table-button{
+  background: rgb(1, 153, 145);
+  border: none;
+  border-radius: 0;
+}
 /*  for drak mode*/
 
 .my-body-class .user-table th , .my-body-class .user-table td,.my-body-class .user-table td .ant-table-column-sort,.my-body-class .ant-table-wrapper td.ant-table-column-sort{

@@ -24,6 +24,7 @@ import "../DashboardUserCard.css";
 import "./DashboardPostCard.css";
 import Paragraph from "antd/es/typography/Paragraph";
 import { useMemo } from "react";
+import ViewPost from "./ViewPost";
 const { Title } = Typography;
 
 const imageSources = [
@@ -198,6 +199,7 @@ const DashboardPostCard = () => {
         showSizeChanger={false}
         onChange={(page) => setCurrentPage(page)}
       />
+      <ViewPost></ViewPost>
     </div>
   );
 };

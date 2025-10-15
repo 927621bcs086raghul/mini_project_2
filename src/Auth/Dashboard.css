@@ -102,6 +102,7 @@
 }
 .create-user-edit-delete-table-button{
     border-radius: 0;
+    
 }
 .card-table-user-view .ant-tabs-nav .ant-tabs-nav-wrap{
     display: flex;
@@ -136,9 +137,6 @@
     transition: background 0.3s ease;
 }
 @media(min-width:810px) and (max-width:1200px){
-    .dashboard{
-        
-    }
     .user-table{
        width: 800px;
     }

@@ -44,9 +44,11 @@ import "./dashboard.css";
 import EditUser from "./User_CRUD_Operation/EditUser";
 import NewUser from "./User_CRUD_Operation/NewUser";
 import HeaderCompo from "./header/HeaderCompo";
+import SideBar from "./header/SideBar";
 import ViewDetails from "./User_CRUD_Operation/ViewDEtails";
 import DashboardPostCard from "./dashboard/Posts/DashboardPostCard";
 import DashboardPostTable from "./dashboard/Posts/DashboardPostTable";
+import ViewPost from "./dashboard/Posts/ViewPost";
 function useDebounce(value, delay) {
   const [debounced, setDebounced] = useState(value);
   useEffect(() => {
@@ -166,29 +168,21 @@ const Dashboard = () => {
       setHeadingText(selectedItem.label);
     }
   };
+  const handlePostViewBack =()=>{
+    setSelectedKey("posts");
+  }
   return (
     <div>
       <HeaderCompo />
 
       <div className="dashboard">
-        <Sider
-          className="dashboard-sider"
-          breakpoint="lg"
-          width={150}
-          collapsedWidth={0}
-          collapsible
+        <SideBar
+          selectedKey={selectedKey}
+          onSelect={handleMenuSelect}
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-        >
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={[selectedKey]}
-            defaultSelectedKeys={["1"]}
-            onSelect={handleMenuSelect}
-            items={menuItems}
-          />
-        </Sider>
+          menuItems={menuItems}
+        />
         <div className="dashboard-body">
           <Flex className="table-heading" justify="space-between">
             <h2>{selectedKey}</h2>
