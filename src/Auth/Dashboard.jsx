@@ -78,19 +78,14 @@ const Dashboard = () => {
     }
   };
 
-  // keep Dashboard as a layout; the detailed Users/Posts hooks/UI live in
-  // the nested components (UsersView / PostsView). Update selectedKey
-  // based on current location so the sidebar highlights correctly.
   const location = useLocation();
   useEffect(() => {
     const parts = location.pathname.split("/").filter(Boolean);
     const last = parts[parts.length - 1] || "users";
-    // normalize to our keys
     const key = last === "dashboard" ? "users" : last;
     setSelectedKey(key);
     const selectedItem = menuItems.find((item) => item.key === key);
     if (selectedItem) setHeadingText(selectedItem.label);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   const handleClose = () => {
@@ -124,7 +119,6 @@ const Dashboard = () => {
           menuItems={menuItems}
         />
         <div className="dashboard-body">
-          {/* Nested routes will render here */}
           <Outlet />
         </div>
         <EditUser handleClose={handleClose}></EditUser>

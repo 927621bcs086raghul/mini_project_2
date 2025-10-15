@@ -38,14 +38,12 @@ export default function PostsView() {
 
   useEffect(() => {
     dispatch(setSeacrhPOst({ search }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
   useEffect(() => {
     if (!AllPostData || AllPostData.length === 0) {
       dispatch(getAllPostRequest());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

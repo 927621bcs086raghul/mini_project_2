@@ -40,18 +40,14 @@ export default function UsersView() {
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search, 500);
 
-  // trigger search when debounced value changes
   useEffect(() => {
     dispatch(userSearchRequest({ search }));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch]);
 
-  // fetch initial users if none present
   useEffect(() => {
     if (!AllUser || AllUser.length === 0) {
       dispatch(getAllUserRequest());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
