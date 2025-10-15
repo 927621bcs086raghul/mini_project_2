@@ -167,7 +167,7 @@ const Dashboard = () => {
       <HeaderCompo />
 
       <div className="dashboard">
-        <Sider className="dashboard-sider" collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
+        <Sider className="dashboard-sider"breakpoint="lg" width={150} collapsedWidth={0} collapsible collapsed={collapsed} onCollapse={value => setCollapsed(value)}>
           <Menu
             theme="dark"
             mode="inline"

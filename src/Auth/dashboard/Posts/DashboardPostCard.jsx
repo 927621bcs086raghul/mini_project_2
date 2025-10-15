@@ -1,4 +1,14 @@
-import { Avatar, Card, Flex, Pagination, Button, Popconfirm, Typography, Space, Tag } from "antd";
+import {
+  Avatar,
+  Card,
+  Flex,
+  Pagination,
+  Button,
+  Popconfirm,
+  Typography,
+  Space,
+  Tag,
+} from "antd";
 const { Meta } = Card;
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +21,7 @@ import {
 } from "../../../redux/utils";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "../DashboardUserCard.css";
-import './DashboardPostCard.css'
+import "./DashboardPostCard.css";
 import Paragraph from "antd/es/typography/Paragraph";
 import { useMemo } from "react";
 const { Title } = Typography;
@@ -23,12 +33,11 @@ const imageSources = [
   "https://tinypng.com/images/social/website.jpg",
   "https://tinypng.com/images/social/developer-api.jpg",
 ];
-const colors = ['#874242ff', '#558155ff', '#7777c2ff'];
-console.log(colors, 'colors')
+const colors = ["#874242ff", "#558155ff", "#7777c2ff"];
+console.log(colors, "colors");
 const DashboardPostCard = () => {
-  const { allUserLoading, AllPostData, total, loading, loadingId,AllUser } = useSelector(
-    (state) => state.auth
-  );
+  const { allUserLoading, AllPostData, total, loading, loadingId, AllUser } =
+    useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(4);
   const [imageMap, setImageMap] = useState({});
@@ -36,10 +45,10 @@ const DashboardPostCard = () => {
   const dispatch = useDispatch();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-    const currentUsers = useMemo(() => {
+  const currentUsers = useMemo(() => {
     console.log("Slicing data...");
     return AllPostData.slice(startIndex, endIndex);
-  }, [AllPostData, startIndex, endIndex]); 
+  }, [AllPostData, startIndex, endIndex]);
   const handleEdit = (id) => {
     dispatch(getUserdataReq(id));
     dispatch(modalOperatorOpen({ option: "edit", id: id }));
@@ -52,26 +61,27 @@ const DashboardPostCard = () => {
     dispatch(drawerOperatorViewOpen(item.id));
   };
 
-
   useEffect(() => {
     if (!AllPostData || !AllPostData.length) return;
     const newImageMap = {};
     const newTagColorMap = {};
-  
+
     AllPostData.forEach((item, idx) => {
       const key = item.id ?? idx;
       const imageIndex = key % imageSources.length;
       newImageMap[key] = imageSources[imageIndex];
       if (Array.isArray(item.tags)) {
-        newTagColorMap[key] = item.tags.map((t, ti) => colors[(key + ti) % colors.length]);
+        newTagColorMap[key] = item.tags.map(
+          (t, ti) => colors[(key + ti) % colors.length]
+        );
       } else {
         newTagColorMap[key] = [];
       }
     });
     setImageMap((prev) => ({ ...newImageMap, ...prev }));
-    console.log(imageMap)
+    console.log(imageMap);
     setTagColorMap((prev) => ({ ...newTagColorMap, ...prev }));
-    console.log(tagColorMap)
+    console.log(tagColorMap);
   }, []);
 
   return (
@@ -97,31 +107,53 @@ const DashboardPostCard = () => {
                 title={
                   <div>
                     <Flex gap={5}>
-                    {item?.tags?.map((tag, tIdx)=>{
-                      console.log(item)
-                      return(
-                      <Tag color={
-                        (tagColorMap[item.id] && tagColorMap[item.id][tIdx]) 
-                      } key={tag + tIdx}>{tag}</Tag>
-        )})}</Flex>
-                    <Flex vertical>
-                    {item?.AllPostData?.tags}
-                    <Title  ellipsis style={{maxWidth: '200px' ,marginTop:"5px"}} level={4}>{item.title}</Title>
+                      {item?.tags?.map((tag, tIdx) => {
+                        console.log(item);
+                        return (
+                          <Tag
+                            color={
+                              tagColorMap[item.id] && tagColorMap[item.id][tIdx]
+                            }
+                            key={tag + tIdx}
+                          >
+                            {tag}
+                          </Tag>
+                        );
+                      })}
                     </Flex>
-                  </div>}
+                    <Flex vertical>
+                      {item?.AllPostData?.tags}
+                      <Title
+                        ellipsis
+                        style={{ maxWidth: "200px", marginTop: "5px" }}
+                        level={4}
+                      >
+                        {item.title}
+                      </Title>
+                    </Flex>
+                  </div>
+                }
                 style={{ textAlign: "center" }}
-                description={<Flex vertical>
-                  <Paragraph style={{textAlign:"start"}} ellipsis={{ rows: 2 }}>{item.body}</Paragraph>
-                 <Flex gap={10}>
-                  <Avatar src={AllUser?.find(u => u.id === item.userId)?.image} size={40} style={{fontSize:"20px",background:"#e3d5d5"}}>
-                  </Avatar>
-                  <h3>
-                      {AllUser?.find(u => u.id === item.userId)?.username}
-
-                  </h3>
-                 </Flex>
-                 </Flex>
-                  }
+                description={
+                  <Flex vertical>
+                    <Paragraph
+                      style={{ textAlign: "start" }}
+                      ellipsis={{ rows: 2 }}
+                    >
+                      {item.body}
+                    </Paragraph>
+                    <Flex gap={10}>
+                      <Avatar
+                        src={AllUser?.find((u) => u.id === item.userId)?.image}
+                        size={40}
+                        style={{ fontSize: "20px", background: "#e3d5d5" }}
+                      ></Avatar>
+                      <h3  className="card-owner" >
+                        {AllUser?.find((u) => u.id === item.userId)?.username}
+                      </h3>
+                    </Flex>
+                  </Flex>
+                }
               />
               <div className="hover-buttons">
                 <Button

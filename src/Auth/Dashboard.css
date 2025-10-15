@@ -17,7 +17,6 @@
 }
 .input-search-user-dashboard{
     margin-top:19px ;
-    width: 200px;
     border-radius:0px ;
 }
 .dashboard .ant-tabs{
@@ -117,11 +116,33 @@
 .dashboard-sider{
     height: -webkit-fill-available;
 }
+.ant-layout-sider .ant-layout-sider-zero-width-trigger {
+    position: fixed;
+    top: 12px;
+    left: 0px;
+    inset-inline-end: -40px;
+    z-index: 999;
+    width: 40px;
+    height: 40px;
+    color: #fff;
+    font-size: 20px;
+    display: flex
+;
+    align-items: center;
+    justify-content: center;
+    background: #001529;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
 @media(min-width:810px) and (max-width:1200px){
     .dashboard{
     }
     .user-table{
        width: 800px;
+    }
+    .dashboard-body{
+            width: calc(100vw - 80px );
     }
 }
 
@@ -135,8 +156,14 @@
     .dashboard .ant-tabs{
         display: flex;
     }
-    
-    
+    .dashboard-body{
+            width: calc(100vw )
+    }
+    .ant-layout-sider{
+        position: absolute;
+        z-index: 2222;
+        top: 64px;
+    }
     .user-table{
         width: 600px;
     }
@@ -148,12 +175,54 @@
 @media(min-width:410px) and (max-width:600px){
     .user-table{
         width: 410px;
+        padding: 0;
+    }
+    .card-table-user-view .ant-tabs-nav{
+        width: 410px;
+        padding: 0;
+    }
+    .dashboard-body{
+            width: calc(100vw  );
+            margin: 0;
+    }   
+        .ant-layout-sider{
+        position: absolute;
+        z-index: 2222;
+        top: 64px;
+    }
+    .table-heading{
+        padding: 0%;
+    }
+    
+    
+}
+@media(min-width:320px) and (max-width:410px){
+    .dashboard-body{
+            width: calc(100vw - 80px );
+    }   
+        .ant-layout-sider{
+        position: fixed;
+                top: 65px;
+        z-index: 2222;
+    }
+    .user-table{
+             width: 310px;
+        padding: 0;
     }
     .card-table-user-view .ant-tabs-nav{
         width: 310px;
+        padding: 0;
     }
-        
-    
+    .dashboard-body{
+            width: calc(100vw  );
+    }   
+        .ant-layout-sider{
+        position: absolute;
+        z-index: 2222;
+    }
+    .table-heading{
+        padding: 0%;
+    }
 }
 /* for dark mode */
 

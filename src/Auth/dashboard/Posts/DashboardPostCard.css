@@ -1,3 +1,9 @@
 .ant-card .post-avatar-card{
    height: 250px;
 }
+.card-owner{
+       display: flex
+;
+    margin: 0px;
+    align-items: center;
+}

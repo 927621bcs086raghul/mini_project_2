@@ -51,8 +51,13 @@
 
 @media(min-width:610px) and (max-width:1100px){
     .dashboard-card{
-        width:600px ;
+        justify-content: space-evenly;
     }
+}
+@media(min-width:310px) and (max-width:610px){
+  .dashboard-card{
+    justify-content: center;
+  }
 }
 /*  for dark mode */
 
