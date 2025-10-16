@@ -28,7 +28,9 @@ const authSlice = createSlice({
     AllPostLoading: false,
     AllPostData: [],
     postTotal: 0,
-    postref:[]
+    postref:[],
+    singlePostLoading:false,
+    singlePost:null
   },
   reducers: {
     loginRequest: (state) => {
@@ -225,6 +227,16 @@ const authSlice = createSlice({
         );
       }
     },
+    getSinglePostReq:(state,action)=>{
+      state.singlePostLoading=true;
+    },
+    getSinglePostSuccess:(state,action)=>{
+      state.singlePostLoading=false;
+      state.singlePost=action.payload.data;
+    },
+    getSinglePostFailure:(state,action)=>{
+      state.singlePostLoading=false;
+    }
   },
 });
 
@@ -268,5 +280,8 @@ export const {
   getAllPostRequest,
   getAllPostSuccess,
   setSeacrhPOst,
+  getSinglePostFailure,
+  getSinglePostReq,
+  getSinglePostSuccess,
 } = authSlice.actions;
 export default authSlice.reducer;

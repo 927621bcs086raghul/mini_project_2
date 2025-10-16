@@ -110,3 +110,6 @@ export function DeleteUser(id){
 export function GetAllPost(){
   return API.get('/posts?limit=0')
 }
+export function GetSinglePost(action){
+  return API.get(`posts/${action}`)
+}

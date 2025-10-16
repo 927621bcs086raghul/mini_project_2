@@ -25,3 +25,9 @@
         justify-content: center;
     align-items: center;
 }
+.ant-image-mask{
+    width: 100%;
+}
+.my-body-class .view-post{
+    background: #374151;
+}

@@ -18,6 +18,7 @@ import {
   deleteUserRequest,
   drawerOperatorViewClose,
   drawerOperatorViewOpen,
+  getSinglePostReq,
 } from "../../../redux/utils";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "../DashboardUserCard.css";
@@ -25,6 +26,7 @@ import "./DashboardPostCard.css";
 import Paragraph from "antd/es/typography/Paragraph";
 import { useMemo } from "react";
 import ViewPost from "./ViewPost";
+import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 
 const imageSources = [
@@ -44,45 +46,51 @@ const DashboardPostCard = () => {
   const [imageMap, setImageMap] = useState({});
   const [tagColorMap, setTagColorMap] = useState({});
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+    const [tagsColor,setTagsColor]=useState({});
+    useEffect(()=>{
+      const color={};
+      AllPostData?.map((post)=>{
+        const tags=post?.tags;
+        tags.map((tag)=>{
+          if(color[`${tag}`]==undefined){
+            color[`${tag}`]=getRandomRGBA();
+          }
+        })
+      })
+      setTagsColor(color);
+      console.log(tagsColor);
+       function getRandomRGBA() {
+        const r = Math.floor(Math.random() * 256);
+        const g = Math.floor(Math.random() * 256);
+        const b = Math.floor(Math.random() * 256);
+        const a = 0.8; 
+        return `rgba(${r}, ${g}, ${b}, ${a})`;
+      };
+  
+    },[AllPostData]);
   const currentUsers = useMemo(() => {
     console.log("Slicing data...");
     return AllPostData.slice(startIndex, endIndex);
   }, [AllPostData, startIndex, endIndex]);
-  const handleEdit = (id) => {
-    dispatch(getUserdataReq(id));
-    dispatch(modalOperatorOpen({ option: "edit", id: id }));
-  };
-  const handleDelete = (id) => {
-    dispatch(deleteUserRequest(id));
-  };
+
   const handleView = (item) => {
-    dispatch(getUserdataReq(item.id));
-    dispatch(drawerOperatorViewOpen(item.id));
+    navigate(`/dashboard/post/${item?.id}`);
   };
 
   useEffect(() => {
     if (!AllPostData || !AllPostData.length) return;
     const newImageMap = {};
-    const newTagColorMap = {};
-
     AllPostData.forEach((item, idx) => {
       const key = item.id ?? idx;
       const imageIndex = key % imageSources.length;
       newImageMap[key] = imageSources[imageIndex];
-      if (Array.isArray(item.tags)) {
-        newTagColorMap[key] = item.tags.map(
-          (t, ti) => colors[(key + ti) % colors.length]
-        );
-      } else {
-        newTagColorMap[key] = [];
-      }
+
     });
     setImageMap((prev) => ({ ...newImageMap, ...prev }));
     console.log(imageMap);
-    setTagColorMap((prev) => ({ ...newTagColorMap, ...prev }));
-    console.log(tagColorMap);
   }, []);
 
   return (
@@ -108,19 +116,15 @@ const DashboardPostCard = () => {
                 title={
                   <div>
                     <Flex gap={5}>
-                      {item?.tags?.map((tag, tIdx) => {
-                        console.log(item);
-                        return (
-                          <Tag
-                            color={
-                              tagColorMap[item.id] && tagColorMap[item.id][tIdx]
-                            }
-                            key={tag + tIdx}
-                          >
-                            {tag}
-                          </Tag>
-                        );
-                      })}
+                     {item?.tags?.map((tag)=>{
+                               return(
+                                 <Tag color={
+                                   tagsColor[tag]
+                                 }>
+                                     {tag}
+                                 </Tag>
+                               )
+                              })}
                     </Flex>
                     <Flex vertical>
                       {item?.AllPostData?.tags}
@@ -156,37 +160,7 @@ const DashboardPostCard = () => {
                   </Flex>
                 }
               />
-              <div className="hover-buttons">
-                <Button
-                  type="primary"
-                  shape="circle"
-                  icon={<EditOutlined />}
-                  className="hover-button"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleEdit(item.id);
-                  }}
-                />
-                <Popconfirm
-                  title="Are you sure to delete this user"
-                  placement="top"
-                  okText="Yes"
-                  cancelText="No"
-                  onConfirm={(e) => {
-                    e.stopPropagation();
-                    handleDelete(item.id);
-                  }}
-                >
-                  <Button
-                    type="primary"
-                    danger
-                    shape="circle"
-                    loading={loading}
-                    icon={<DeleteOutlined />}
-                    className="hover-button"
-                  />
-                </Popconfirm>
-              </div>
+              
             </Card>
           </div>
         ))}

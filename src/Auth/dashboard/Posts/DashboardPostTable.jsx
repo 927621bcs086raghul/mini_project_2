@@ -1,5 +1,5 @@
-import { Tabs, Table, Flex, Avatar, Button,Popconfirm} from "antd";
-import React from "react";
+import { Tabs, Table, Flex, Avatar, Button,Popconfirm, Tag} from "antd";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "../DashboardUserTable.css";
 import { getUserdataReq, modalOperatorOpen,deleteUserRequest, drawerOperatorOpen,drawerOperatorViewOpen } from "../../../redux/utils";
@@ -17,6 +17,29 @@ const DashboardPostTable = () => {
     userId:user.userId,
     postTags:user.tags
   }));
+  const [tagsColor,setTagsColor]=useState({});
+  useEffect(()=>{
+    const color={};
+    AllPostData?.map((post)=>{
+      const tags=post?.tags;
+      tags.map((tag)=>{
+        if(color[`${tag}`]==undefined){
+          color[`${tag}`]=getRandomRGBA();
+        }
+      })
+    })
+    setTagsColor(color);
+    console.log(tagsColor);
+     function getRandomRGBA() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      const a = 0.8; 
+      return `rgba(${r}, ${g}, ${b}, ${a})`;
+    };
+
+  },[AllPostData]);
+  console.log(tagsColor)
   const dispatch = useDispatch();
   const navigate= useNavigate();
   const columns = [
@@ -35,17 +58,20 @@ const DashboardPostTable = () => {
       dataIndex: "views",
       },
     {
-      title: "Created User Id",
-      dataIndex: "userId",
-
-    },
-    {
       title:"Tags",
       dataIndex:"tags",
       render:(_,record)=>{
         const tags=record?.postTags
         return(
-         <>{tags?.join(', ')}</>
+         <>{tags?.map((tag)=>{
+          return(
+            <Tag color={
+              tagsColor[tag]
+            }>
+                {tag}
+            </Tag>
+          )
+         })}</>
         )
       }
     },
@@ -56,10 +82,7 @@ const DashboardPostTable = () => {
           <Flex gap={15}>
             <Button
               className="create-post-view-table-button"
-              onClick={(e) => {
-                e.stopPropagation()
-                handleEdit(record.key);
-              }}
+              
             >
               View
             </Button>
@@ -68,16 +91,8 @@ const DashboardPostTable = () => {
       },
     },
   ];
-  const handleEdit = (id) => {
-    dispatch(getUserdataReq(id));
-    dispatch(modalOperatorOpen({ option: "Edit", id: id }));
-    
-  };
-  const handleDelete =(id) =>{
-    dispatch(deleteUserRequest(id))
-  }
+
   const handleView=(record)=>{
-    console.log("hi")
       navigate(`/dashboard/post/${record.key}`);
   }
   return (
