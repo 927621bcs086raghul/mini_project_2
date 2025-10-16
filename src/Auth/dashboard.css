@@ -202,7 +202,7 @@
             margin: 0;
     }   
         .ant-layout-sider{
-        position: absolute;
+        position: sticky;
         z-index: 2222;
         top: 64px;
     }
@@ -232,10 +232,7 @@
     .dashboard-body{
             width: calc(100vw  );
     }   
-        .ant-layout-sider{
-        position: absolute;
-        z-index: 2222;
-    }
+
     .table-heading{
         padding: 0%;
         flex-direction: column;
