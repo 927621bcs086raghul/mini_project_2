@@ -219,7 +219,7 @@ const authSlice = createSlice({
       state.AllPostLoading = false;
     },
     setSeacrhPOst: (state, action) => {
-      const posts = state.AllPostData;
+      const posts = state.postref;
       console.log()
       if (action.payload.search == "") {
        state.AllPostData= state.postref
