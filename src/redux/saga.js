@@ -35,6 +35,9 @@ import {
   getSinglePostFailure,
   getSinglePostReq,
   getSinglePostSuccess,
+    getAllCommentsReq,
+  getAllCommentsSuccess,
+  getAllCommentsFailure,
 } from "./utils";
 import {
   LoginRequest,
@@ -47,6 +50,7 @@ import {
   DeleteUser,
   GetAllPost,
   GetSinglePost,
+  GetAllComments,
 } from "../axios";
 import { call, takeLatest, put, take } from "redux-saga/effects";
 import { message } from "antd";
@@ -197,6 +201,17 @@ function* handleSinglepost(action){
     message.error("failed to detch post")
   }
 }
+function* handlegetAllComments(action){
+  try{
+    const resq =yield call(GetAllComments);
+    console.log(action.payload)
+    yield put(getAllCommentsSuccess({resp:resq.data,id:action.payload}));
+  }
+  catch{
+    yield put(getAllCommentsFailure());
+
+  }
+}
 export default function* rootSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(registerRequest.type, handleRegister);
@@ -209,5 +224,6 @@ export default function* rootSaga() {
   yield takeLatest(updateUserRequest.type,handleUpdateUser);
   yield takeLatest(deleteUserRequest.type,handleDeleteUser);
   yield takeLatest(getAllPostRequest.type,handleAllPost);
-  yield takeLatest(getSinglePostReq.type,handleSinglepost)
+  yield takeLatest(getSinglePostReq.type,handleSinglepost);
+  yield takeLatest(getAllCommentsReq.type,handlegetAllComments)
 }

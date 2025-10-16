@@ -6,7 +6,7 @@ import { getUserdataReq, modalOperatorOpen,deleteUserRequest, drawerOperatorOpen
 import { useNavigate } from "react-router-dom";
 
 const DashboardPostTable = () => {
-  const { allUserLoading, AllPostData, total, modalValue,loading,loadingId } = useSelector(
+  const { allUserLoading, AllPostData, total, modalValue,loading,loadingId,AllPostLoading } = useSelector(
     (state) => state.auth
   );
   const dataSource = AllPostData?.map((user) => ({
@@ -100,7 +100,7 @@ const DashboardPostTable = () => {
       columns={columns}
       className="user-table"
       dataSource={dataSource}
-      loading={allUserLoading||loading}
+      loading={AllPostLoading||loading}
       scroll={{ y: 390, x: "max-content" }}
       pagination={{
         showSizeChanger: false,

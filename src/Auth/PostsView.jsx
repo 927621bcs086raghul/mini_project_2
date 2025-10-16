@@ -61,7 +61,7 @@ export default function PostsView() {
         </div>
       </div>
 
-      <Tabs className="card-table-user-view" items={itemspost}></Tabs>
+      <Tabs className="card-table-user-view"  items={itemspost}></Tabs>
     </div>
   );
 }

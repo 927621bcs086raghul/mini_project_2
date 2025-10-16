@@ -30,7 +30,9 @@ const authSlice = createSlice({
     postTotal: 0,
     postref:[],
     singlePostLoading:false,
-    singlePost:null
+    singlePost:null,
+    commentLoading:false,
+    comments:[]
   },
   reducers: {
     loginRequest: (state) => {
@@ -211,14 +213,16 @@ const authSlice = createSlice({
       (state.AllPostLoading = false),
         (state.AllPostData = action?.payload?.data?.posts);
       state.postTotal = action?.payload?.data?.total;
+      state.postref=state.AllPostData;
     },
     getAllPostFailure: (state, action) => {
       state.AllPostLoading = false;
     },
     setSeacrhPOst: (state, action) => {
       const posts = state.AllPostData;
+      console.log()
       if (action.payload.search == "") {
-        return
+       state.AllPostData= state.postref
       } else {
         state.AllPostData = posts?.filter((post) =>
           (post?.title || "")
@@ -236,6 +240,25 @@ const authSlice = createSlice({
     },
     getSinglePostFailure:(state,action)=>{
       state.singlePostLoading=false;
+    },
+    getAllCommentsReq:(state,action)=>{
+      state.commentLoading=true;
+    },
+    getAllCommentsSuccess:(state,action)=>{
+      console.log(action)
+      state.commentLoading=false;
+      console.log(action.payload);
+      state.comments=action.payload.resp;
+      const ref=state.comments.comments
+      console.log(ref);
+      console.log(action.payload.id)
+      const commentforpost=ref.filter((comment)=> comment.postId == action.payload.id);
+      state.comments=commentforpost;
+      console.log(state.comments)
+
+    },
+    getAllCommentsFailure:(state,action)=>{
+      state.commentLoading=false;
     }
   },
 });
@@ -283,5 +306,8 @@ export const {
   getSinglePostFailure,
   getSinglePostReq,
   getSinglePostSuccess,
+  getAllCommentsReq,
+  getAllCommentsSuccess,
+  getAllCommentsFailure,
 } = authSlice.actions;
 export default authSlice.reducer;

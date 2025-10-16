@@ -136,6 +136,14 @@
     cursor: pointer;
     transition: background 0.3s ease;
 }
+.ant-menu-root{
+    position: sticky;
+    top:64px;
+}
+.ant-menu-inline-collapsed{
+    top:0
+}
+
 @media(min-width:810px) and (max-width:1200px){
     .user-table{
        width: 800px;

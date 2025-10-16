@@ -49,28 +49,27 @@ const DashboardPostCard = () => {
   const navigate = useNavigate();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-    const [tagsColor,setTagsColor]=useState({});
-    useEffect(()=>{
-      const color={};
-      AllPostData?.map((post)=>{
-        const tags=post?.tags;
-        tags.map((tag)=>{
-          if(color[`${tag}`]==undefined){
-            color[`${tag}`]=getRandomRGBA();
-          }
-        })
-      })
-      setTagsColor(color);
-      console.log(tagsColor);
-       function getRandomRGBA() {
-        const r = Math.floor(Math.random() * 256);
-        const g = Math.floor(Math.random() * 256);
-        const b = Math.floor(Math.random() * 256);
-        const a = 0.8; 
-        return `rgba(${r}, ${g}, ${b}, ${a})`;
-      };
-  
-    },[AllPostData]);
+  const [tagsColor, setTagsColor] = useState({});
+  useEffect(() => {
+    const color = {};
+    AllPostData?.map((post) => {
+      const tags = post?.tags;
+      tags.map((tag) => {
+        if (color[`${tag}`] == undefined) {
+          color[`${tag}`] = getRandomRGBA();
+        }
+      });
+    });
+    setTagsColor(color);
+    console.log(tagsColor);
+    function getRandomRGBA() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      const a = 0.8;
+      return `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
+  }, [AllPostData]);
   const currentUsers = useMemo(() => {
     console.log("Slicing data...");
     return AllPostData.slice(startIndex, endIndex);
@@ -87,7 +86,6 @@ const DashboardPostCard = () => {
       const key = item.id ?? idx;
       const imageIndex = key % imageSources.length;
       newImageMap[key] = imageSources[imageIndex];
-
     });
     setImageMap((prev) => ({ ...newImageMap, ...prev }));
     console.log(imageMap);
@@ -116,15 +114,9 @@ const DashboardPostCard = () => {
                 title={
                   <div>
                     <Flex gap={5}>
-                     {item?.tags?.map((tag)=>{
-                               return(
-                                 <Tag color={
-                                   tagsColor[tag]
-                                 }>
-                                     {tag}
-                                 </Tag>
-                               )
-                              })}
+                      {item?.tags?.map((tag) => {
+                        return <Tag color={tagsColor[tag]}>{tag}</Tag>;
+                      })}
                     </Flex>
                     <Flex vertical>
                       {item?.AllPostData?.tags}
@@ -153,14 +145,20 @@ const DashboardPostCard = () => {
                         size={40}
                         style={{ fontSize: "20px", background: "#e3d5d5" }}
                       ></Avatar>
-                      <h3  className="card-owner" style={{display:"flex",margin:"0",alignItems:"center"}}>
+                      <h3
+                        className="card-owner"
+                        style={{
+                          display: "flex",
+                          margin: "0",
+                          alignItems: "center",
+                        }}
+                      >
                         {AllUser?.find((u) => u.id === item.userId)?.username}
                       </h3>
                     </Flex>
                   </Flex>
                 }
               />
-              
             </Card>
           </div>
         ))}

@@ -113,3 +113,6 @@ export function GetAllPost(){
 export function GetSinglePost(action){
   return API.get(`posts/${action}`)
 }
+export function GetAllComments(action){
+  return API.get('comments?limit=0');
+}

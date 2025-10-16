@@ -43,9 +43,9 @@ export default function UsersView() {
   useEffect(() => {
     dispatch(userSearchRequest({ search }));
   }, [debouncedSearch]);
-
+const userfromstorage=JSON.parse(localStorage.getItem("users"))
   useEffect(() => {
-    if (!AllUser || AllUser.length === 0) {
+    if (!userfromstorage || userfromstorage.length === 0) {
       dispatch(getAllUserRequest());
     }
   }, []);

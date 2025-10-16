@@ -102,10 +102,6 @@ const Dashboard = () => {
     setSelectedKey(key);
     navigate(`/dashboard/${key}`);
   };
-  const handlePostViewBack =()=>{
-    setSelectedKey("posts");
-    navigate(`/dashboard/posts`);
-  }
   return (
     <div>
       <HeaderCompo />
