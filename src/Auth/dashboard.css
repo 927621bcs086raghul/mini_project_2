@@ -202,7 +202,7 @@
             margin: 0;
     }   
         .ant-layout-sider{
-        position: absolute;
+        position: sticky;
         z-index: 2222;
         top: 64px;
     }

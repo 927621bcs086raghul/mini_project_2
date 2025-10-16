@@ -32,7 +32,7 @@ import EditUser from "./User_CRUD_Operation/EditUser";
 import NewUser from "./User_CRUD_Operation/NewUser";
 import HeaderCompo from "./header/HeaderCompo";
 import SideBar from "./header/SideBar";
-import ViewDetails from "./User_CRUD_Operation/ViewDEtails";
+import ViewDetails from "./User_CRUD_Operation/ViewDetails";
 import ViewPost from "./dashboard/Posts/ViewPost";
 const menuItems = [
   {
