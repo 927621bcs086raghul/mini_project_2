@@ -238,6 +238,8 @@
     }
     .table-heading{
         padding: 0%;
+        flex-direction: column;
+
     }
 }
 /* for dark mode */
