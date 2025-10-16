@@ -51,6 +51,7 @@ const DashboardPostCard = () => {
   const endIndex = startIndex + itemsPerPage;
   const [tagsColor, setTagsColor] = useState({});
   useEffect(() => {
+    debugger
     const color = {};
     AllPostData?.map((post) => {
       const tags = post?.tags;
@@ -69,7 +70,7 @@ const DashboardPostCard = () => {
       const a = 0.8;
       return `rgba(${r}, ${g}, ${b}, ${a})`;
     }
-  }, [AllPostData]);
+  }, []);
   const currentUsers = useMemo(() => {
     console.log("Slicing data...");
     return AllPostData.slice(startIndex, endIndex);

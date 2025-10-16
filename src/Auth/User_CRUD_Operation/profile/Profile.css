@@ -47,6 +47,7 @@
     box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.15);
     border: none;
     background-color: #ffffff;
+    overflow-y: hidden;
 }
 .professtional-details-info{
         font-size: 20px;

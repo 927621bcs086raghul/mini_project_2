@@ -218,7 +218,7 @@
     }   
         .ant-layout-sider{
         position: fixed;
-                top: 65px;
+                top: 64px;
         z-index: 2222;
     }
     .user-table{
@@ -232,12 +232,10 @@
     .dashboard-body{
             width: calc(100vw  );
     }   
-        .ant-layout-sider{
-        position: absolute;
-        z-index: 2222;
-    }
+
     .table-heading{
         padding: 0%;
+        flex-direction: column;
     }
 }
 /* for dark mode */
