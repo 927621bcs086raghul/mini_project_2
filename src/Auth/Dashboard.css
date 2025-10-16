@@ -24,6 +24,15 @@
      justify-items: center;
      align-items: center;
 }
+.table-heading h2{
+    margin: 0;
+    display: flex
+;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    padding-top: 13px;
+}
 .card-table-user-view .ant-tabs-nav{
     padding: 0px 50px;
     margin: 0px;
