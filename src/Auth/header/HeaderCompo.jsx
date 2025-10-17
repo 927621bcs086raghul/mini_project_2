@@ -64,7 +64,7 @@ const handleTheme =()=>{
     <Header className="header">
       <p style={{ fontSize: '19px', color: 'hsl(0deg 0% 99.22%)' }}>Hello! {user?.data?.username}</p>
       <Flex align="center" gap={'10px'}>
-        {!theme?<MoonFilled style={{color:"white"}} onClick={handleTheme}/>:<SunFilled style={{color:"white"}} onClick={handleTheme}/>}
+        {!theme?<MoonFilled style={{color:"white"}} onClick={() => handleTheme()}/>:<SunFilled style={{color:"white"}} onClick={() => handleTheme()}/>}
         <Popover content={content} trigger="hover">
           <Avatar style={{ cursor: 'pointer' }} className="header-avatar" size={37}>
             {user?.data?.username?.[0]?.toUpperCase()}
