@@ -46,3 +46,6 @@
 .ant-flex .commented-user{
     margin: 0;
 }
+.my-body-class .body-post{
+    background: #1f2937;
+}
