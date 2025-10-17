@@ -1,5 +1,6 @@
 .user-table{
-      width: 80vw;
+      width: 77vw;
+          padding-top: 20px;
 }
 .ant-table-wrapper .ant-table-tbody .ant-table-row >.ant-table-cell-row-hover{
   cursor: pointer;

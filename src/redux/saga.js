@@ -38,6 +38,7 @@ import {
     getAllCommentsReq,
   getAllCommentsSuccess,
   getAllCommentsFailure,
+  drawerOperatorClose,
 } from "./utils";
 import {
   LoginRequest,
@@ -127,7 +128,7 @@ function* handleAddUser(action) {
   try {
     const resp = yield call(Adduser, action.payload);
     const reducerRes = yield put(AddUserSuccess(resp));
-    yield put(modalOperatorClose());
+    yield put(drawerOperatorClose());
     message.success("user added successfully");
   } catch (Error) {
     yield put(AddUserFailure());

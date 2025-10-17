@@ -51,7 +51,6 @@ const DashboardPostCard = () => {
   const endIndex = startIndex + itemsPerPage;
   const [tagsColor, setTagsColor] = useState({});
   useEffect(() => {
-    debugger
     const color = {};
     AllPostData?.map((post) => {
       const tags = post?.tags;

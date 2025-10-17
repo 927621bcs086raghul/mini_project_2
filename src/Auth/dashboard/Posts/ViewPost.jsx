@@ -5,7 +5,7 @@ import "./ViewPost.css";
 import { useNavigate, useParams } from "react-router-dom";
 import HeaderCompo from "../../header/HeaderCompo";
 import SideBar from "../../header/SideBar";
-import { LikeOutlined } from "@ant-design/icons";
+import { LikeOutlined,ArrowLeftOutlined } from "@ant-design/icons";
 
 import { getSinglePostReq, getAllCommentsReq } from "../../../redux/utils";
 const { Title, Text } = Typography;
@@ -58,72 +58,85 @@ const ViewPost = () => {
   };
   return (
     <div>
-      <div className="dashboard">
+      <div className="viewpost-dashboard">
         <div className="body-post">
           <div className="view-post view-post-details">
-            {singlePostLoading ? (
-              <div style={{ width: "700px" }}>
-                <Skeleton active avatar title paragraph={{ rows: 6 }} />
-              </div>
-            ) : (
-              <Flex vertical gap={10}>
-                <Button
-                  style={{
-                    width: "100px",
-                    height: "50px",
-                    background: "#7588ff",
-                    padding: "5px",
-                  }}
-                  type={"primary"}
-                  onClick={handleBack}
-                >
-                  back
-                </Button>
-                <Title style={{ margin: 0 }}>{singlePost?.title}</Title>
-                <Image
-                  src="https://cdn.pixabay.com/photo/2018/08/04/11/30/draw-3583548_1280.png"
-                  className="post-image"
-                ></Image>
-                <Flex gap={5}>
-                  {singlePost?.tags?.map((tag) => (
-                    <Tag color={getRandomColr(colors)} key={tag}>
-                      {tag}
-                    </Tag>
-                  ))}
-                </Flex>
-                <Text className="post-body">{singlePost?.body}</Text>
-                <Flex vertical gap={5}>
-                  {comments.length >0 && 
-                  
-                  (
-                  <><Title level={4}>comments</Title>
-                  <Flex vertical gap={10}>
-                    {comments?.map((comment) => {
-                      return (
-                        <>
-                          <Flex gap={5} align="center">
-                            <Avatar size={40}>
-                              {comment?.user?.username[0]?.toUpperCase()}
-                            </Avatar>
+            <Flex vertical gap={10}>
+            <Flex>
+              <Button
+              icon={<ArrowLeftOutlined/>}
+                style={{
+                  width: "100px",
+                  height: "50px",
+                  background: "#7588ff",
+                  padding: "5px",
+                }}
+                type={"primary"}
+                onClick={handleBack}
+              >
+                back
+              </Button>
+            </Flex>
+            <div className="postview">
+              {singlePostLoading ? (
+                <div style={{ width: "700px" }}>
+                  <Skeleton active avatar title paragraph={{ rows: 6 }} />
+                </div>
+              ) : (
+                <Flex vertical gap={10}>
+                  <Title style={{ margin: 0 }}>{singlePost?.title}</Title>
+                  <Image
+                    src="https://cdn.pixabay.com/photo/2018/08/04/11/30/draw-3583548_1280.png"
+                    className="post-image"
+                  ></Image>
+                  <Flex gap={5}>
+                    {singlePost?.tags?.map((tag) => (
+                      <Tag color={getRandomColr(colors)} key={tag}>
+                        {tag}
+                      </Tag>
+                    ))}
+                  </Flex>
+                  <Text className="post-body">{singlePost?.body}</Text>
+                  <Flex vertical gap={5}>
+                    {comments.length > 0 && (
+                      <>
+                        <Title level={4}>comments</Title>
+                        <Flex vertical gap={10}>
+                          {comments?.map((comment) => {
+                            return (
+                              <>
+                                <Flex gap={5} align="center">
+                                  <Avatar size={40}>
+                                    {comment?.user?.username[0]?.toUpperCase()}
+                                  </Avatar>
 
-                            <Flex vertical>
-                              <Flex gap={10}>
-                                <Title level={5} className="commented-user">
-                                  {comment?.user?.username}
-                                </Title>
-                                <LikeOutlined />
-                                <Text>{comment?.likes}</Text>
-                              </Flex>
-                              <Text className="post-body">{comment?.body}</Text>
-                            </Flex>
-                          </Flex>
-                        </>
-                      );
-                    })}
-                  </Flex></>)}
+                                  <Flex vertical>
+                                    <Flex gap={10}>
+                                      <Title
+                                        level={5}
+                                        className="commented-user"
+                                      >
+                                        {comment?.user?.username}
+                                      </Title>
+                                      <LikeOutlined />
+                                      <Text>{comment?.likes}</Text>
+                                    </Flex>
+                                    <Text className="post-body">
+                                      {comment?.body}
+                                    </Text>
+                                  </Flex>
+                                </Flex>
+                              </>
+                            );
+                          })}
+                        </Flex>
+                      </>
+                    )}
+                  </Flex>
                 </Flex>
-              </Flex>
-            )}
+              )}
+            </div>
+            </Flex>
           </div>
         </div>
       </div>

@@ -22,8 +22,20 @@
     width: -webkit-fill-available;
     height: -webkit-fill-available;
     display: flex;
+    background: #f0f2f5;
         justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+.postview{
+        height: 500px;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.viewpost{
+    flex-direction: column;display: flex;
+    justify-content: none;
 }
 .ant-image-mask{
     width: 100%;

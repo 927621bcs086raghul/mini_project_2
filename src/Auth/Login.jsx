@@ -55,7 +55,7 @@ const Login = () => {
           initialValues={{}}
         >
           <Form.Item
-            label="username"
+            label="User Name"
             name="username"
             className="login-label"
             rules={[{ required: true, message: "Please input your username!" }]}
@@ -98,7 +98,8 @@ const Login = () => {
           >
             Forgot Password
           </p>
-          <Form.Item label={null}>
+          <Form.Item label={null}
+           style={{marginBottom:"12px"}}>
             {
               <Button
                 type="primary"
@@ -119,7 +120,6 @@ const Login = () => {
     <Flex justify="center" align="center" className="flex" vertical>
       <div className="modal-signin-signup login-box">
         <Tabs onChange={onchange} activeKey={activeKey} className="login-tab" items={items}></Tabs>
-        <p></p>
       </div>
     </Flex>
   );

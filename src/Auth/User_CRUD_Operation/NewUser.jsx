@@ -20,11 +20,17 @@ const NewUser = ({ handleClose }) => {
   const onFinish = (values) => {
     dispatch(AddUserRequest(values));
   };
-
+  useEffect(()=>{
+    console.log("ji")
+    console.log(formerror)
+    if(!formerror){
+      form.resetFields();
+    }
+  },[formerror])
   return (
     <div>
       <Drawer
-        title="New user"
+        title="Add user"
         open={drawer}
         onClose={() => {
           handleClose();
@@ -38,7 +44,7 @@ const NewUser = ({ handleClose }) => {
           preserve={false}
         >
           <Form.Item
-            label="First name"
+            label="First Name"
             name="firstName"
             rules={[{ required: true, message: "Please enter first name" }]}
           >
@@ -46,7 +52,7 @@ const NewUser = ({ handleClose }) => {
           </Form.Item>
 
           <Form.Item
-            label="Last name"
+            label="Last Name"
             name="lastName"
             rules={[{ required: true, message: "Please enter last name" }]}
           >
@@ -54,7 +60,7 @@ const NewUser = ({ handleClose }) => {
           </Form.Item>
 
           <Form.Item
-            label="Username"
+            label="User Name"
             name="username"
             rules={[{ required: true, message: "Please enter username" }]}
           >
@@ -62,14 +68,14 @@ const NewUser = ({ handleClose }) => {
           </Form.Item>
 
           <Form.Item
-            label="email"
+            label="Email"
             name="email"
             rules={[
               { required: true, message: "Please enter email" },
               { type: "email", message: "Please enter a valid email address" },
             ]}
           >
-            <Input placeholder="email" />
+            <Input placeholder="email" className="email-input-field"/>
           </Form.Item>
           <Flex justify="end" gap={10} className="form-buttons">
             <Button
@@ -82,7 +88,7 @@ const NewUser = ({ handleClose }) => {
               Cancel
             </Button>
             <Button type="primary" htmlType="submit" loading={userLoading}>
-              AddUser
+              Add
             </Button>
           </Flex>
         </Form>

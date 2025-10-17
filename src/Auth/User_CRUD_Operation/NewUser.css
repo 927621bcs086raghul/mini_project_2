@@ -13,3 +13,6 @@
     color: rgb(155, 153, 153);
 
 }
+.my-body-class .email-input-field{
+    background: #1f2937 !important;
+}
