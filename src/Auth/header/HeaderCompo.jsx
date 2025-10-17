@@ -27,7 +27,7 @@ const HeaderCompo = () => {
     const userTheme1=JSON.parse(localStorage.getItem("userTheme"));
   useEffect(()=>{
     const userTheme=JSON.parse(localStorage.getItem("userTheme"));
-    if(!userTheme || userTheme==undefined ){
+    if(userTheme || userTheme==undefined ){
         document.body.classList.add('my-body-class');
         localStorage.setItem("userTheme","true");
     }
