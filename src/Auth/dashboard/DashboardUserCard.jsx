@@ -12,13 +12,11 @@ const DashboardUserCard = () => {
   const dispatch=useDispatch();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  console.log()
   const currentUsers = AllUser.slice(startIndex, endIndex);
   console.log(currentUsers);
-  console.log(AllUser)
   const handleEdit=(id)=>{
   dispatch(getUserdataReq(id));
-    dispatch(modalOperatorOpen({option:'edit',id:id}));
+    dispatch(modalOperatorOpen({option:'Edit',id:id}));
 
   }
   const handleDelete =(id) =>{

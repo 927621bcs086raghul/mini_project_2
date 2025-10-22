@@ -132,12 +132,16 @@ const authSlice = createSlice({
     modalOperatorOpen: (state, action) => {
       state.modal = true;
       state.modalValue = action?.payload?.option;
+      console.log(action.payload.option)
+
       state.userUpdateId = action?.payload?.id;
       const users = JSON.parse(localStorage.getItem("users"));
       const ref = users.filter((user) => user?.id == action?.payload?.id);
-
+      console.log(state.EditUserData)
       if (!(state.modalValue == undefined)) {
         state.EditUserData = ref[0];
+      console.log(state.EditUserData)
+
       } else {
         state.modalValue = "add";
         state.EditUserData = [];
