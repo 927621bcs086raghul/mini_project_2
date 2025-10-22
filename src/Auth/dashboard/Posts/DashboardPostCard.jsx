@@ -41,7 +41,7 @@ const DashboardPostCard = () => {
   const { allUserLoading, AllPostData, total, loading, loadingId, AllUser } =
     useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const [itemsPerPage, setItemsPerPage] = useState(4);
   const [imageMap, setImageMap] = useState({});
   const [tagColorMap, setTagColorMap] = useState({});
   const dispatch = useDispatch();

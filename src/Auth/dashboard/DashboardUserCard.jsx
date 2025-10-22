@@ -8,7 +8,7 @@ import "./DashboardUserCard.css";
 const DashboardUserCard = () => {
   const { allUserLoading, AllUser, total,loading,loadingId } = useSelector((state) => state.auth);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [itemsPerPage, setItemsPerPage] = useState(8);
   const dispatch=useDispatch();
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
