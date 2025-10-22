@@ -258,7 +258,7 @@
 .my-body-class .ant-tabs .ant-tabs-tab{
     color: white !important;
 }
- .my-body-class :where(.css-dev-only-do-not-override-1odpy5d).ant-pagination .ant-pagination-item a {
+ .my-body-class .ant-pagination .ant-pagination-item a {
     background: #374151;
     border-radius:5px ;
     color: white;
