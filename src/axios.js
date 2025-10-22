@@ -29,7 +29,7 @@ API.interceptors.response.use(
     }
 
     if (status === 404) {
-      setTimeout(() => window.history.back(), 1000);
+      swindow.location.href = "/NotFound";
     }
 
     return Promise.reject(error);

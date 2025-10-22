@@ -16,20 +16,20 @@ const DashboardUserCard = () => {
   const currentUsers = AllUser.slice(startIndex, endIndex);
   console.log(currentUsers);
   console.log(AllUser)
-const handleEdit=(id)=>{
- dispatch(getUserdataReq(id));
-  dispatch(modalOperatorOpen({option:'edit',id:id}));
+  const handleEdit=(id)=>{
+  dispatch(getUserdataReq(id));
+    dispatch(modalOperatorOpen({option:'edit',id:id}));
 
-}
+  }
   const handleDelete =(id) =>{
     dispatch(deleteUserRequest(id))
   }
-    const handleView=(item)=>{
-      dispatch(getUserdataReq(item.id));
-      dispatch(drawerOperatorViewOpen(item.id));
-    }
+  const handleView=(item)=>{
+    dispatch(getUserdataReq(item.id));
+    dispatch(drawerOperatorViewOpen(item.id));
+  }
   return (
-    <div>
+    <>
       <div className="dashboard-card">
         {currentUsers.map((item) => (
           <div key={item.id}>
@@ -67,8 +67,11 @@ const handleEdit=(id)=>{
                           placement="top"
                           okText="Yes"
                           cancelText="No"
+                          onCancel={(e)=>{
+                            e.stopPropagation();
+                          }}
                           onConfirm={(e)=>{
-                            e.stopPropagation()
+                            e.stopPropagation();
                             handleDelete(item.id)}}
                         >
                 <Button
@@ -78,6 +81,7 @@ const handleEdit=(id)=>{
                   loading={loading}
                   icon={<DeleteOutlined />}
                   className="hover-button"
+                  onClick={(e)=>{e.stopPropagation()}}
                 /></Popconfirm>
               </div>
             </Card>
@@ -92,7 +96,7 @@ const handleEdit=(id)=>{
         pageSize={itemsPerPage}
         onChange={(page) => setCurrentPage(page)}
       />
-    </div>
+    </>
   );
 };
 
