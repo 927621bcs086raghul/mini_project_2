@@ -21,8 +21,7 @@ const NewUser = ({ handleClose }) => {
     dispatch(AddUserRequest(values));
   };
   useEffect(()=>{
-    console.log("ji")
-    console.log(formerror)
+
     if(!formerror){
       form.resetFields();
     }

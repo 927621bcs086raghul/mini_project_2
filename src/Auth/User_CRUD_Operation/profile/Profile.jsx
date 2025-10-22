@@ -28,7 +28,6 @@ const Profile = () => {
     useEffect(() => {
       dispatch(getLogginedUserDetailsReq());
   }, []);
-  console.log(user?.data?.image);
   const content = (
     <div>
       <p

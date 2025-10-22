@@ -20,12 +20,8 @@ const EditUser = ({ handleClose, isModalOpen }) => {
   };
 
   useEffect(() => {
-    debugger
-    console.log(modalValue)
-    console.log(modal)
-    console.log(EditUserData)
+
     if (modalValue === "Edit" && EditUserData && modal) {
-      console.log(EditUserData)
       form.setFieldsValue({
         firstName: EditUserData.firstName || "",
         lastName: EditUserData.lastName || "",

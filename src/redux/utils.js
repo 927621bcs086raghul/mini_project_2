@@ -132,15 +132,12 @@ const authSlice = createSlice({
     modalOperatorOpen: (state, action) => {
       state.modal = true;
       state.modalValue = action?.payload?.option;
-      console.log(action.payload.option)
 
       state.userUpdateId = action?.payload?.id;
       const users = JSON.parse(localStorage.getItem("users"));
       const ref = users.filter((user) => user?.id == action?.payload?.id);
-      console.log(state.EditUserData)
       if (!(state.modalValue == undefined)) {
         state.EditUserData = ref[0];
-      console.log(state.EditUserData)
 
       } else {
         state.modalValue = "add";
@@ -224,7 +221,6 @@ const authSlice = createSlice({
     },
     setSeacrhPOst: (state, action) => {
       const posts = state.postref;
-      console.log()
       if (action.payload.search == ""){
        state.AllPostData= state.postref
       } else {
@@ -249,16 +245,11 @@ const authSlice = createSlice({
       state.commentLoading=true;
     },
     getAllCommentsSuccess:(state,action)=>{
-      console.log(action)
       state.commentLoading=false;
-      console.log(action.payload);
       state.comments=action.payload.resp;
       const ref=state.comments.comments
-      console.log(ref);
-      console.log(action.payload.id)
       const commentforpost=ref.filter((comment)=> comment.postId == action.payload.id);
       state.comments=commentforpost;
-      console.log(state.comments)
 
     },
     getAllCommentsFailure:(state,action)=>{

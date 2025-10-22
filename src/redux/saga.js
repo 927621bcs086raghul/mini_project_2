@@ -182,8 +182,7 @@ function* handleDeleteUser(action){
 function* handleAllPost(action){
   try{
     const resp =yield call(GetAllPost);
-console.log("hi")
-console.log(resp)
+
     yield put(getAllPostSuccess(resp));
   }
   catch{
@@ -205,7 +204,6 @@ function* handleSinglepost(action){
 function* handlegetAllComments(action){
   try{
     const resq =yield call(GetAllComments);
-    console.log(action.payload)
     yield put(getAllCommentsSuccess({resp:resq.data,id:action.payload}));
   }
   catch{

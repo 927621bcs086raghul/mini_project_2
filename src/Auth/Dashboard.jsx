@@ -80,7 +80,6 @@ const Dashboard = () => {
 
   const location = useLocation();
   useEffect(() => {
-    console.log(location.pathname);
     const parts = location.pathname.split("/").filter(Boolean);
     const last = parts[parts.length - 1] || "users";
     const key = last === "dashboard" ? "users" : last;
@@ -99,7 +98,7 @@ const Dashboard = () => {
     dispatch(drawerOperatorViewClose());
   };
   const handleMenuSelect = ({ key }) => {
-    console.log(key);
+  
     setSelectedKey(key);
     navigate(`/dashboard/${key}`);
   };

@@ -37,7 +37,6 @@ const imageSources = [
   "https://tinypng.com/images/social/developer-api.jpg",
 ];
 const colors = ["#874242ff", "#558155ff", "#7777c2ff"];
-console.log(colors, "colors");
 const DashboardPostCard = () => {
   const { allUserLoading, AllPostData, total, loading, loadingId, AllUser } =
     useSelector((state) => state.auth);
@@ -61,7 +60,6 @@ const DashboardPostCard = () => {
       });
     });
     setTagsColor(color);
-    console.log(tagsColor);
     function getRandomRGBA() {
       const r = Math.floor(Math.random() * 256);
       const g = Math.floor(Math.random() * 256);
@@ -71,7 +69,6 @@ const DashboardPostCard = () => {
     }
   }, []);
   const currentUsers = useMemo(() => {
-    console.log("Slicing data...");
     return AllPostData.slice(startIndex, endIndex);
   }, [AllPostData, startIndex, endIndex]);
 
@@ -88,7 +85,6 @@ const DashboardPostCard = () => {
       newImageMap[key] = imageSources[imageIndex];
     });
     setImageMap((prev) => ({ ...newImageMap, ...prev }));
-    console.log(imageMap);
   }, []);
 
   return (
