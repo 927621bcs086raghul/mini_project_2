@@ -9,7 +9,7 @@ const ServerError = ({ retryUrl = '/' }) => {
         <p className="server-error-message">Server error</p>
         <p className="server-error-description">Something went wrong on our end. Please try again later.</p>
         <div className="server-error-actions">
-          <a className="server-error-btn" href={retryUrl}>Retry</a>
+          <a className="server-error-btn" href='/'>Retry</a>
           <a className="server-error-home" href="/">Home</a>
         </div>
       </div>

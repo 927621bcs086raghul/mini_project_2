@@ -12,6 +12,7 @@ import '@ant-design/v5-patch-for-react-19';
 import Profile from "./Auth/User_CRUD_Operation/profile/Profile";
 import ViewPost from "./Auth/dashboard/Posts/ViewPost";
 import NotFound from "./NotFound";
+import ServerError from "./ServerError";
 const PublicRoute = ({ component }) => {
   const token = localStorage.getItem("token");
   return !token ? component : <Navigate to="/dashboard" />;
@@ -31,6 +32,7 @@ function App() {
       <Router>
         <Routes>
         <Route path="/login" element={<PublicRoute component={<Login/>}/>}/>
+  <Route path="/serverError" element={<ServerError/>} />
         <Route path="/NotFound" element={<NotFound/>}/>
         
         <Route path="/resetPassword" element={<ForgotPassword/>}/>
@@ -42,6 +44,7 @@ function App() {
         </Route>
         <Route path="/profile" element={<ProtectedRoute component={<Profile/>}/>}/>
         <Route path="/" element={<Navigate to="/login"/>} />
+
         <Route path="*" element={<NotFound/>} />
         </Routes>
       </Router>
