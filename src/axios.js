@@ -29,9 +29,11 @@ API.interceptors.response.use(
     }
 
     if (status === 404) {
-      swindow.location.href = "/NotFound";
+      window.location.href = "/NotFound";
     }
-
+    if(status === 500){
+      window.location.href ="/serverError";
+    }
     return Promise.reject(error);
   }
 );
